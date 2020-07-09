@@ -11,6 +11,7 @@ using BehaviourPatterns.Command;
 using StrucutralPatterns.Adapter;
 using Other.BusinessDelegate;
 using Other.DataTransferObject;
+using Ohter.UnitOfWork;
 
 namespace Patterns
 {
@@ -49,6 +50,10 @@ namespace Patterns
 			//Command
 			ComandExample comandExample = new ComandExample();
 			comandExample.Main();
+
+			//UnitOfWork
+			UnitOFWorkExample unitOFWorkExample = new UnitOFWorkExample();
+			unitOFWorkExample.Demo();
 		}
 	}
 }

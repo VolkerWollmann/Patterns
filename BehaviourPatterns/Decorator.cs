@@ -35,11 +35,6 @@ namespace BehaviourPatterns.Decorator
             this._component = component;
         }
 
-        public void SetComponent(Component component)
-        {
-            this._component = component;
-        }
-
         // The Decorator delegates all work to the wrapped component.
         public override string Operation()
         {

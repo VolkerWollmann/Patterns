@@ -176,6 +176,7 @@ namespace Other.DataTransferObject
             string strXml = DTOSerializerHelper.SerializeDTO(dto);
 
             // Write the serialized dto as xml.
+            Console.WriteLine();
             Console.WriteLine("Serialized DTO");
             Console.WriteLine("=======================");
             Console.WriteLine("\r");
