@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="BehaviourPatterns\Command.cs" />
     <Compile Include="BehaviourPatterns\Decorator.cs" />
+    <Compile Include="BehaviourPatterns\Observer.cs" />
     <Compile Include="Other\UnitOfWork.cs" />
     <Compile Include="BehaviourPatterns\Visitor.cs" />
     <Compile Include="CreationalPatterns\AbstractFactory.cs" />
