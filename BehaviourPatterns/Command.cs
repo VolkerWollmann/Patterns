@@ -113,7 +113,7 @@ namespace BehaviourPatterns.Command
 
     public class ComandExample
     {
-        public  void Main()
+        public static void Command()
         {
             // The client code can parameterize an invoker with any commands.
             Invoker invoker = new Invoker();

@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BehaviourPatterns.Visitor;
 using BehaviourPatterns.VisitorExample;
 using BehaviourPatterns.Strategy;
+using BehaviourPatterns.Command;
 
 namespace PatternTests
 {
@@ -33,6 +34,12 @@ namespace PatternTests
         public void Strategy()
         {
             StrategyExample.Strategy();
+        }
+
+        [TestMethod]
+        public void Command()
+        {
+            ComandExample.Command();
         }
     }
 }
