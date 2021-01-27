@@ -21,15 +21,19 @@ namespace BehaviourPatterns.VisitorExample
 
         public void Visit(IVisitor visitor)
         {
-            visitor.DoIt(Left);
-            visitor.DoIt(Right);
+            if (Left != null)
+                Left.Visit(visitor);
+            if (Right != null)
+                Right.Visit(visitor);
+            visitor.DoIt(this);
         }
 
         public Expression Visit(ITransformingVisitor visitor)
         {
-            Left = visitor.DoIt(Left);
-            Right = visitor.DoIt(Right);
-
+            if (Left != null)
+                Left = Left.Visit(visitor);
+            if (Right != null)
+                Right = Right.Visit(visitor);
             return visitor.DoIt(this);
         }
     }
@@ -156,7 +160,7 @@ namespace BehaviourPatterns.VisitorExample
             MaxFinder maxfinder = new MaxFinder();
             expression.Visit(maxfinder);
 
-            Assert.Equals(maxfinder.Max, 8);
+            Assert.AreEqual<int>(maxfinder.Max, 8);
         }
 
         public static void TransformingVisitor()
