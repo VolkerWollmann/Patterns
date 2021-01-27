@@ -169,13 +169,11 @@ namespace BehaviourPatterns.VisitorExample
 
             Expression expression = new Addition(new Multiplication(one, three), new Multiplication(five, eight));
 
-            Adder adder = new Adder();
-            Multiplier multiplier = new Multiplier();
-
+            List<ITransformingVisitor> vistors = new List<ITransformingVisitor>() { new Adder(), new Multiplier() };
+         
             while( ! (expression is Number) )
             {
-                expression = expression.Visit(adder);
-                expression = expression.Visit(multiplier);
+                vistors.ForEach(vistor => { expression = expression.Visit(vistor); });
             }
 
             Assert.AreEqual<int>((expression as Number).Value, 43);
