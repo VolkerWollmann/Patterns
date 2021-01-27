@@ -161,12 +161,13 @@ namespace BehaviourPatterns.VisitorExample
 
         public static void TransformingVisitor()
         {
-            // 3 + ( 5 * 8 )
+            // (1 * 3) + ( 5 * 8 )
+            Expression one = new Number(1);
             Expression three = new Number(3);
             Expression five = new Number(5);
             Expression eight = new Number(8);
 
-            Expression expression = new Addition(three, new Multiplication(five, eight));
+            Expression expression = new Addition(new Multiplication(one, three), new Multiplication(five, eight));
 
             Adder adder = new Adder();
             Multiplier multiplier = new Multiplier();
@@ -177,7 +178,7 @@ namespace BehaviourPatterns.VisitorExample
                 expression = expression.Visit(multiplier);
             }
 
-            Assert.Equals((expression as Number).Value, 43);
+            Assert.AreEqual<int>((expression as Number).Value, 43);
         }
 
 
