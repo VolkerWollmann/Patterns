@@ -55,6 +55,7 @@
     <Compile Include="BehaviourPatterns\Command.cs" />
     <Compile Include="BehaviourPatterns\Decorator.cs" />
     <Compile Include="BehaviourPatterns\Observer.cs" />
+    <Compile Include="BehaviourPatterns\ExampleVisitor.cs" />
     <Compile Include="Other\DataTransferObject.cs" />
     <Compile Include="Other\UnitOfWork.cs" />
     <Compile Include="BehaviourPatterns\Visitor.cs" />
