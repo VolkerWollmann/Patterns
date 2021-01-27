@@ -3,7 +3,8 @@ using System.Xml.Serialization;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-// Source : https://www.codeproject.com/Articles/8824/C-Data-Transfer-Object
+// Description : https://en.wikipedia.org/wiki/Data_transfer_object
+// Source      : https://www.codeproject.com/Articles/8824/C-Data-Transfer-Object
 
 namespace Other.DataTransferObject
 {
