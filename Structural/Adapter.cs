@@ -39,7 +39,7 @@ namespace StrucutralPatterns.Adapter
 
 	public class AdapterExample
 	{
-		public void Main()
+		public static void Adapter()
 		{
 			Adaptee adaptee = new Adaptee();
 			ITarget target = new Adapter(adaptee);

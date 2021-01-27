@@ -31,8 +31,7 @@ namespace Patterns
 			#endregion
 
 			//Adapter
-			AdapterExample adapterExample = new AdapterExample();
-			adapterExample.Main();
+			AdapterExample.Adapter();
 
             #region beavioural Patterns
             // Visitor

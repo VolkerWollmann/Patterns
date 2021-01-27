@@ -4,6 +4,7 @@ using BehaviourPatterns.Visitor;
 using BehaviourPatterns.VisitorExample;
 using BehaviourPatterns.Strategy;
 using BehaviourPatterns.Command;
+using StrucutralPatterns.Adapter;
 
 namespace PatternTests
 {
@@ -40,6 +41,12 @@ namespace PatternTests
         public void Command()
         {
             ComandExample.Command();
+        }
+
+        [TestMethod]
+        public void Adapter()
+        {
+            AdapterExample.Adapter();
         }
     }
 }
