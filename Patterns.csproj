@@ -55,12 +55,12 @@
     <Compile Include="BehaviourPatterns\Command.cs" />
     <Compile Include="BehaviourPatterns\Decorator.cs" />
     <Compile Include="BehaviourPatterns\Observer.cs" />
+    <Compile Include="Other\DataTransferObject.cs" />
     <Compile Include="Other\UnitOfWork.cs" />
     <Compile Include="BehaviourPatterns\Visitor.cs" />
     <Compile Include="CreationalPatterns\AbstractFactory.cs" />
     <Compile Include="CreationalPatterns\FactoryMethod.cs" />
     <Compile Include="Other\BusinessDelegate.cs" />
-    <Compile Include="Other\DataTtransferObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structural\Adapter.cs" />
