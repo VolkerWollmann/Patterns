@@ -177,7 +177,7 @@ namespace BehaviourPatterns.VisitorExample
                 expression = expression.Visit(multiplier);
             }
 
-            Assert.Equals((expression as Number).Value, 8);
+            Assert.Equals((expression as Number).Value, 43);
         }
 
 
