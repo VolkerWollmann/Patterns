@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BehaviourPatterns.Visitor;
 using BehaviourPatterns.VisitorExample;
+using BehaviourPatterns.Strategy;
 
 namespace PatternTests
 {
@@ -26,6 +27,12 @@ namespace PatternTests
         public void TestTransformingVisitor()
         {
             VisitorExample.TransformingVisitor();
+        }
+
+        [TestMethod]
+        public void Strategy()
+        {
+            StrategyExample.Strategy();
         }
     }
 }
