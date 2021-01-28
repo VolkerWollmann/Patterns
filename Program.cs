@@ -50,8 +50,7 @@ namespace Patterns
 			#endregion
 
 			//BusinessDelegate
-			BusinessDelegateExample businessDelegateExample = new BusinessDelegateExample();
-			businessDelegateExample.Main();
+			BusinessDelegateExample.BusinessDelegate();
 
 			//DataTransferObject
 			DataTransferObjectExample transferObjectExample = new DataTransferObjectExample();

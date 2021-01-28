@@ -11,6 +11,7 @@ using CreationalPatterns.AbstractFactory;
 using CreationalPatterns.FactoryMethod;
 using Other.DataTransferObject;
 using Other.UnitOfWork;
+using Other.BusinessDelegate;
 
 namespace PatternTests
 {
@@ -90,6 +91,12 @@ namespace PatternTests
         public void UnitOFWork()
         {
             UnitOFWorkExample.UnitOfWork();
+        }
+
+        [TestMethod]
+        public void BusinessDelegate()
+        {
+            BusinessDelegateExample.BusinessDelegate();
         }
     }
 }

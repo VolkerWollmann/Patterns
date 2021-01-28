@@ -1,7 +1,7 @@
 ﻿using System;
 
 // Source : https://www.geeksforgeeks.org/business-delegate-pattern/
-
+// https://en.wikipedia.org/wiki/Business_delegate_pattern
 namespace Other.BusinessDelegate
 {
 
@@ -76,7 +76,7 @@ namespace Other.BusinessDelegate
 
 	public class BusinessDelegateExample
 	{
-		public void Main()
+		public static void BusinessDelegate()
 		{
 			BusinessDelegate businessDelegate = new BusinessDelegate();
 			businessDelegate.SetServiceType("One");
