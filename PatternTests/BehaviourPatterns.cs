@@ -16,7 +16,7 @@ using Other.BusinessDelegate;
 namespace PatternTests
 {
     [TestClass]
-    public class UnitTest1
+    public class BehaviourPatterns
     {
         [TestMethod]
         public void Visitor()
@@ -51,52 +51,9 @@ namespace PatternTests
         }
 
         [TestMethod]
-        public void Adapter()
-        {
-            AdapterExample.Adapter();
-        }
-
-        [TestMethod]
-        public void Composite()
-        {
-            CompositeExample.Composite();
-        }
-
-        [TestMethod]
         public void Decorator()
         {
             DecoratorExample.Decorator();
-        }
-
-        [TestMethod]
-        public void AbstractFactory()
-        {
-            AbstractFactoryExample.AbstractFactory();
-        }
-
-        [TestMethod]
-        public void FactoryMethod()
-        {
-            FactoryMethodExample.FactoryMethod();
-        }
-
-        [TestMethod]
-        public void DataTransferObject()
-        {
-            DataTransferObjectExample dataTransferObjectExample = new DataTransferObjectExample();
-            dataTransferObjectExample.StartDemo();
-        }
-
-        [TestMethod]
-        public void UnitOFWork()
-        {
-            UnitOFWorkExample.UnitOfWork();
-        }
-
-        [TestMethod]
-        public void BusinessDelegate()
-        {
-            BusinessDelegateExample.BusinessDelegate();
         }
     }
 }
