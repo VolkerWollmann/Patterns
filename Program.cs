@@ -13,6 +13,7 @@ using StrucutralPatterns.Adapter;
 using Other.BusinessDelegate;
 using Other.DataTransferObject;
 using Ohter.UnitOfWork;
+using CreationalPatterns.AbstractFactory;
 
 namespace Patterns
 {
@@ -20,10 +21,9 @@ namespace Patterns
 	{
 		static void Main(string[] args)
 		{
-            #region Creational Patterns
-            //Abstract Facotry;
-            AbstactFactoryClient abstractFactoryClient = new AbstactFactoryClient();
-			abstractFactoryClient.Main();
+			#region Creational Patterns
+			//Abstract Facotry;
+			AbstractFactoryExample.AbstractFactory();
 
 			//Factory Method;
 			FactoryMethod factoryMethod = new FactoryMethod();

@@ -7,6 +7,7 @@ using BehaviourPatterns.Command;
 using StrucutralPatterns.Adapter;
 using StrucutralPatterns.Composite;
 using BehaviourPatterns.Decorator;
+using CreationalPatterns.AbstractFactory;
 
 namespace PatternTests
 {
@@ -61,6 +62,12 @@ namespace PatternTests
         public void Decorator()
         {
             DecoratorExample.Decorator();
+        }
+
+        [TestMethod]
+        public void AbstractFactory()
+        {
+            AbstractFactoryExample.AbstractFactory();
         }
     }
 }

@@ -1,154 +1,144 @@
 ﻿using System;
 
-// Source : https://refactoring.guru/design-patterns/abstract-factory/csharp/example
-
 namespace CreationalPatterns.AbstractFactory
 {
-	// The Abstract Factory interface declares a set of methods that return
-	// different abstract products. These products are called a family and are
-	// related by a high-level theme or concept. Products of one family are
-	// usually able to collaborate among themselves. A family of products may
-	// have several variants, but the products of one variant are incompatible
-	// with products of another.
-	public interface IAbstractFactory
-	{
-		IAbstractProductA CreateProductA();
+    /// https://www.dofactory.com/net/abstract-factory-design-pattern
+    /// Provide an interface for creating families of related or dependent 
+    /// objects without specifying their concrete classes. 
 
-		IAbstractProductB CreateProductB();
-	}
+    /// <summary>
+    /// The 'AbstractFactory' abstract class
+    /// </summary>
+    abstract class AbstractFactory
+    {
+        public abstract AbstractProductA CreateProductA();
+        public abstract AbstractProductB CreateProductB();
+    }
 
-	// Concrete Factories produce a family of products that belong to a single
-	// variant. The factory guarantees that resulting products are compatible.
-	// Note that signatures of the Concrete Factory's methods return an abstract
-	// product, while inside the method a concrete product is instantiated.
-	class ConcreteFactory1 : IAbstractFactory
-	{
-		public IAbstractProductA CreateProductA()
-		{
-			return new ConcreteProductA1();
-		}
+    /// <summary>
+    /// The 'ConcreteFactory1' class
+    /// </summary>
+    class ConcreteFactory1 : AbstractFactory
+    {
+        public override AbstractProductA CreateProductA()
+        {
+            return new ProductA1();
+        }
+        public override AbstractProductB CreateProductB()
+        {
+            return new ProductB1();
+        }
+    }
 
-		public IAbstractProductB CreateProductB()
-		{
-			return new ConcreteProductB1();
-		}
-	}
+    /// <summary>
+    /// The 'ConcreteFactory2' class
+    /// </summary>
+    class ConcreteFactory2 : AbstractFactory
+    {
+        public override AbstractProductA CreateProductA()
+        {
+            return new ProductA2();
+        }
+        public override AbstractProductB CreateProductB()
+        {
+            return new ProductB2();
+        }
+    }
 
-	// Each Concrete Factory has a corresponding product variant.
-	class ConcreteFactory2 : IAbstractFactory
-	{
-		public IAbstractProductA CreateProductA()
-		{
-			return new ConcreteProductA2();
-		}
+    /// <summary>
+    /// The 'AbstractProductA' abstract class
+    /// </summary>
+    abstract class AbstractProductA
+    {
+    }
 
-		public IAbstractProductB CreateProductB()
-		{
-			return new ConcreteProductB2();
-		}
-	}
+    /// <summary>
+    /// The 'AbstractProductB' abstract class
+    /// </summary>
+    abstract class AbstractProductB
+    {
+        public abstract void Interact(AbstractProductA a);
+    }
 
-	// Each distinct product of a product family should have a base interface.
-	// All variants of the product must implement this interface.
-	public interface IAbstractProductA
-	{
-		string UsefulFunctionA();
-	}
 
-	// Concrete Products are created by corresponding Concrete Factories.
-	class ConcreteProductA1 : IAbstractProductA
-	{
-		public string UsefulFunctionA()
-		{
-			return "The result of the product A1.";
-		}
-	}
+    /// <summary>
+    /// The 'ProductA1' class
+    /// </summary>
+    class ProductA1 : AbstractProductA
+    {
+    }
 
-	class ConcreteProductA2 : IAbstractProductA
-	{
-		public string UsefulFunctionA()
-		{
-			return "The result of the product A2.";
-		}
-	}
+    /// <summary>
+    /// The 'ProductB1' class
+    /// </summary>
+    class ProductB1 : AbstractProductB
+    {
+        public override void Interact(AbstractProductA a)
+        {
+            Console.WriteLine(this.GetType().Name +
+              " interacts with " + a.GetType().Name);
+        }
+    }
 
-	// Here's the the base interface of another product. All products can
-	// interact with each other, but proper interaction is possible only between
-	// products of the same concrete variant.
-	public interface IAbstractProductB
-	{
-		// Product B is able to do its own thing...
-		string UsefulFunctionB();
+    /// <summary>
+    /// The 'ProductA2' class
+    /// </summary>
+    class ProductA2 : AbstractProductA
+    {
+    }
 
-		// ...but it also can collaborate with the ProductA.
-		//
-		// The Abstract Factory makes sure that all products it creates are of
-		// the same variant and thus, compatible.
-		string AnotherUsefulFunctionB(IAbstractProductA collaborator);
-	}
+    /// <summary>
+    /// The 'ProductB2' class
+    /// </summary>
+    class ProductB2 : AbstractProductB
+    {
+        public override void Interact(AbstractProductA a)
+        {
+            Console.WriteLine(this.GetType().Name +
+              " interacts with " + a.GetType().Name);
+        }
+    }
 
-	// Concrete Products are created by corresponding Concrete Factories.
-	class ConcreteProductB1 : IAbstractProductB
-	{
-		public string UsefulFunctionB()
-		{
-			return "The result of the product B1.";
-		}
+    /// <summary>
+    /// The 'Client' class. Interaction environment for the products.
+    /// </summary>
+    class Client
+    {
+        private AbstractProductA _abstractProductA;
+        private AbstractProductB _abstractProductB;
 
-		// The variant, Product B1, is only able to work correctly with the
-		// variant, Product A1. Nevertheless, it accepts any instance of
-		// AbstractProductA as an argument.
-		public string AnotherUsefulFunctionB(IAbstractProductA collaborator)
-		{
-			var result = collaborator.UsefulFunctionA();
+        // Constructor
+        public Client(AbstractFactory factory)
+        {
+            _abstractProductB = factory.CreateProductB();
+            _abstractProductA = factory.CreateProductA();
+        }
 
-			return $"The result of the B1 collaborating with the ({result})";
-		}
-	}
+        public void Run()
+        {
+            _abstractProductB.Interact(_abstractProductA);
+        }
+    }
+    /// <summary>
+    /// MainApp startup class for Structural
+    /// Abstract Factory Design Pattern.
+    /// </summary>
+    public class AbstractFactoryExample 
+    {
+        /// <summary>
+        /// Entry point into console application.
+        /// </summary>
+        public static void AbstractFactory()
+        {
+            // Abstract factory #1
+            AbstractFactory factory1 = new ConcreteFactory1();
+            Client client1 = new Client(factory1);
+            client1.Run();
 
-	class ConcreteProductB2 : IAbstractProductB
-	{
-		public string UsefulFunctionB()
-		{
-			return "The result of the product B2.";
-		}
-
-		// The variant, Product B2, is only able to work correctly with the
-		// variant, Product A2. Nevertheless, it accepts any instance of
-		// AbstractProductA as an argument.
-		public string AnotherUsefulFunctionB(IAbstractProductA collaborator)
-		{
-			var result = collaborator.UsefulFunctionA();
-
-			return $"The result of the B2 collaborating with the ({result})";
-		}
-	}
-
-	// The client code works with factories and products only through abstract
-	// types: AbstractFactory and AbstractProduct. This lets you pass any
-	// factory or product subclass to the client code without breaking it.
-	public class AbstactFactoryClient
-	{
-		public void Main()
-		{
-			// The client code can work with any concrete factory class.
-			Console.WriteLine("Client: Testing client code with the first factory type...");
-			ClientMethod(new ConcreteFactory1());
-			Console.WriteLine();
-
-			Console.WriteLine("Client: Testing the same client code with the second factory type...");
-			ClientMethod(new ConcreteFactory2());
-
-			Console.WriteLine("");
-		}
-
-		public void ClientMethod(IAbstractFactory factory)
-		{
-			var productA = factory.CreateProductA();
-			var productB = factory.CreateProductB();
-
-			Console.WriteLine(productB.UsefulFunctionB());
-			Console.WriteLine(productB.AnotherUsefulFunctionB(productA));
-		}
-	}
+            // Abstract factory #2
+            AbstractFactory factory2 = new ConcreteFactory2();
+            Client client2 = new Client(factory2);
+            client2.Run();
+        }
+    }
 }
