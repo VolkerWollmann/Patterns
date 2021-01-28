@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StrucutralPatterns.Adapter;
 using StrucutralPatterns.Composite;
 using StrucutralPatterns.Facade;
+using StrucutralPatterns.Iterator;
 
 namespace PatternTests
 {
@@ -25,6 +26,12 @@ namespace PatternTests
         public void Facade()
         {
             FacadeExample.Facade();
+        }
+
+        [TestMethod]
+        public void Iterator()
+        {
+            IteratorExample.Iterator();
         }
     }
 }
