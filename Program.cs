@@ -39,8 +39,7 @@ namespace Patterns
 			visitor.Main();
 
 			//Decorator
-			DecoratorExample decoratorExample = new DecoratorExample();
-			decoratorExample.Main();
+			DecoratorExample.Decorator();
 
 			//Command
 			CommandExample.Command();

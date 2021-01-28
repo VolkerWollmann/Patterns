@@ -6,6 +6,7 @@ using BehaviourPatterns.Strategy;
 using BehaviourPatterns.Command;
 using StrucutralPatterns.Adapter;
 using StrucutralPatterns.Composite;
+using BehaviourPatterns.Decorator;
 
 namespace PatternTests
 {
@@ -54,6 +55,12 @@ namespace PatternTests
         public void Composite()
         {
             CompositeExample.Composite();
+        }
+
+        [TestMethod]
+        public void Decorator()
+        {
+            DecoratorExample.Decorator();
         }
     }
 }

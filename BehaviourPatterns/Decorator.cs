@@ -1,115 +1,101 @@
 ﻿using System;
 
-// Source : https://refactoring.guru/design-patterns/decorator/csharp/example
-
 namespace BehaviourPatterns.Decorator
 {
-    // The base Component interface defines operations that can be altered by
-    // decorators.
-    public abstract class Component
+    /// https://www.dofactory.com/net/decorator-design-pattern
+
+    /// <summary>
+    /// The 'Component' abstract class
+    /// </summary>
+    abstract class Component
     {
-        public abstract string Operation();
+        public abstract void Operation();
     }
 
-    // Concrete Components provide default implementations of the operations.
-    // There might be several variations of these classes.
+    /// <summary>
+    /// The 'ConcreteComponent' class
+    /// </summary>
     class ConcreteComponent : Component
     {
-        public override string Operation()
+        public override void Operation()
         {
-            return "ConcreteComponent";
+            Console.WriteLine("ConcreteComponent.Operation()");
         }
     }
 
-    // The base Decorator class follows the same interface as the other
-    // components. The primary purpose of this class is to define the wrapping
-    // interface for all concrete decorators. The default implementation of the
-    // wrapping code might include a field for storing a wrapped component and
-    // the means to initialize it.
+    /// <summary>
+    /// The 'Decorator' abstract class
+    /// </summary>
     abstract class Decorator : Component
     {
-        protected Component _component;
+        protected Component component;
 
-        public Decorator(Component component)
+        public void SetComponent(Component component)
         {
-            this._component = component;
+            this.component = component;
         }
 
-        // The Decorator delegates all work to the wrapped component.
-        public override string Operation()
+        public override void Operation()
         {
-            if (this._component != null)
+            if (component != null)
             {
-                return this._component.Operation();
-            }
-            else
-            {
-                return string.Empty;
+                component.Operation();
             }
         }
     }
 
-    // Concrete Decorators call the wrapped object and alter its result in some
-    // way.
+    /// <summary>
+    /// The 'ConcreteDecoratorA' class
+    /// </summary>
     class ConcreteDecoratorA : Decorator
     {
-        public ConcreteDecoratorA(Component comp) : base(comp)
+        public override void Operation()
         {
-        }
-
-        // Decorators may call parent implementation of the operation, instead
-        // of calling the wrapped object directly. This approach simplifies
-        // extension of decorator classes.
-        public override string Operation()
-        {
-            return $"ConcreteDecoratorA({base.Operation()})";
+            base.Operation();
+            Console.WriteLine("ConcreteDecoratorA.Operation()");
         }
     }
 
-    // Decorators can execute their behavior either before or after the call to
-    // a wrapped object.
+    /// <summary>
+    /// The 'ConcreteDecoratorB' class
+    /// </summary>
     class ConcreteDecoratorB : Decorator
     {
-        public ConcreteDecoratorB(Component comp) : base(comp)
+        public override void Operation()
         {
+            base.Operation();
+            AddedBehavior();
+            Console.WriteLine("ConcreteDecoratorB.Operation()");
         }
 
-        public override string Operation()
+        void AddedBehavior()
         {
-            return $"ConcreteDecoratorB({base.Operation()})";
         }
     }
 
-    public class Client
-    {
-        // The client code works with all objects using the Component interface.
-        // This way it can stay independent of the concrete classes of
-        // components it works with.
-        public void ClientCode(Component component)
-        {
-            Console.WriteLine("RESULT: " + component.Operation());
-        }
-    }
-
+    /// <summary>
+    /// MainApp startup class for Structural 
+    /// Decorator Design Pattern.
+    /// </summary>
     public class DecoratorExample
     {
-        public void Main()
+        /// <summary>
+        /// Entry point into console application.
+        /// </summary>
+        public static void Decorator()
         {
-            Client client = new Client();
+            // Create ConcreteComponent and two Decorators
+            ConcreteComponent c = new ConcreteComponent();
+            ConcreteDecoratorA d1 = new ConcreteDecoratorA();
+            ConcreteDecoratorB d2 = new ConcreteDecoratorB();
 
-            var simple = new ConcreteComponent();
-            Console.WriteLine("Client: I get a simple component:");
-            client.ClientCode(simple);
-            Console.WriteLine();
+            // Link decorators
+            d1.SetComponent(c);
+            d2.SetComponent(d1);
 
-            // ...as well as decorated ones.
-            //
-            // Note how decorators can wrap not only simple components but the
-            // other decorators as well.
-            ConcreteDecoratorA decorator1 = new ConcreteDecoratorA(simple);
-            ConcreteDecoratorB decorator2 = new ConcreteDecoratorB(decorator1);
-            Console.WriteLine("Client: Now I've got a decorated component:");
-            client.ClientCode(decorator2);
+            d2.Operation();
+
         }
     }
+
 }
