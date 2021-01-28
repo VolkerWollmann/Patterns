@@ -4,14 +4,9 @@ using BehaviourPatterns.Visitor;
 using BehaviourPatterns.VisitorExample;
 using BehaviourPatterns.Strategy;
 using BehaviourPatterns.Command;
-using StrucutralPatterns.Adapter;
-using StrucutralPatterns.Composite;
 using BehaviourPatterns.Decorator;
-using CreationalPatterns.AbstractFactory;
-using CreationalPatterns.FactoryMethod;
-using Other.DataTransferObject;
-using Other.UnitOfWork;
-using Other.BusinessDelegate;
+
+using BehaviourPatterns.Observer;
 
 namespace PatternTests
 {
@@ -54,6 +49,12 @@ namespace PatternTests
         public void Decorator()
         {
             DecoratorExample.Decorator();
+        }
+
+        [TestMethod]
+        public void Observer()
+        {
+            ObserverExample.Observer();
         }
     }
 }

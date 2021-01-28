@@ -1,126 +1,111 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-// Source : https://refactoring.guru/design-patterns/observer/csharp/example#example-0
 
 namespace BehaviourPatterns.Observer
 {
-    public interface IObserver
+    /// https://www.dofactory.com/net/observer-design-pattern
+ 
+    /// <summary>
+    /// The 'Subject' abstract class
+    /// </summary>
+    abstract class Subject
     {
-        // Receive update from subject
-        void Update(ISubject subject);
-    }
+        private List<Observer> _observers = new List<Observer>();
 
-    public interface ISubject
-    {
-        // Attach an observer to the subject.
-        void Attach(IObserver observer);
-
-        // Detach an observer from the subject.
-        void Detach(IObserver observer);
-
-        // Notify all observers about an event.
-        void Notify();
-    }
-
-    // The Subject owns some important state and notifies observers when the
-    // state changes.
-    public class Subject : ISubject
-    {
-        // For the sake of simplicity, the Subject's state, essential to all
-        // subscribers, is stored in this variable.
-        public int State { get; set; } = -0;
-
-        // List of subscribers. In real life, the list of subscribers can be
-        // stored more comprehensively (categorized by event type, etc.).
-        private List<IObserver> _observers = new List<IObserver>();
-
-        // The subscription management methods.
-        public void Attach(IObserver observer)
+        public void Attach(Observer observer)
         {
-            Console.WriteLine("Subject: Attached an observer.");
-            this._observers.Add(observer);
+            _observers.Add(observer);
         }
 
-        public void Detach(IObserver observer)
+        public void Detach(Observer observer)
         {
-            this._observers.Remove(observer);
-            Console.WriteLine("Subject: Detached an observer.");
+            _observers.Remove(observer);
         }
 
-        // Trigger an update in each subscriber.
         public void Notify()
         {
-            Console.WriteLine("Subject: Notifying observers...");
-
-            foreach (var observer in _observers)
+            foreach (Observer o in _observers)
             {
-                observer.Update(this);
+                o.Update();
             }
-        }
-
-        // Usually, the subscription logic is only a fraction of what a Subject
-        // can really do. Subjects commonly hold some important business logic,
-        // that triggers a notification method whenever something important is
-        // about to happen (or after it).
-        public void SomeBusinessLogic()
-        {
-            Console.WriteLine("\nSubject: I'm doing something important.");
-            this.State = new Random().Next(0, 10);
-
-            Thread.Sleep(15);
-
-            Console.WriteLine("Subject: My state has just changed to: " + this.State);
-            this.Notify();
         }
     }
 
-    // Concrete Observers react to the updates issued by the Subject they had
-    // been attached to.
-    class ConcreteObserverA : IObserver
+    /// <summary>
+    /// The 'ConcreteSubject' class
+    /// </summary>
+    class ConcreteSubject : Subject
     {
-        public void Update(ISubject subject)
+        private string _subjectState;
+
+        // Gets or sets subject state
+        public string SubjectState
         {
-            if ((subject as Subject).State < 3)
-            {
-                Console.WriteLine("ConcreteObserverA: Reacted to the event.");
-            }
+            get { return _subjectState; }
+            set { _subjectState = value; }
         }
     }
 
-    class ConcreteObserverB : IObserver
+    /// <summary>
+    /// The 'Observer' abstract class
+    /// </summary>
+    abstract class Observer
     {
-        public void Update(ISubject subject)
-        {
-            if ((subject as Subject).State == 0 || (subject as Subject).State >= 2)
-            {
-                Console.WriteLine("ConcreteObserverB: Reacted to the event.");
-            }
-        }
+        public abstract void Update();
     }
 
+    /// <summary>
+    /// The 'ConcreteObserver' class
+    /// </summary>
+    class ConcreteObserver : Observer
+    {
+        private string _name;
+        private string _observerState;
+        private ConcreteSubject _subject;
+
+        // Constructor
+        public ConcreteObserver(
+          ConcreteSubject subject, string name)
+        {
+            this._subject = subject;
+            this._name = name;
+        }
+
+        public override void Update()
+        {
+            _observerState = _subject.SubjectState;
+            Console.WriteLine("Observer {0}'s new state is {1}",
+              _name, _observerState);
+        }
+
+        // Gets or sets subject
+        public ConcreteSubject Subject
+        {
+            get { return _subject; }
+            set { _subject = value; }
+        }
+    }
+    /// <summary>
+    /// MainApp startup class for Structural 
+    /// Observer Design Pattern.
+    /// </summary>
     public class ObserverExample
-    { 
-        public void Main()
+    {
+        /// <summary>
+        /// Entry point into console application.
+        /// </summary>
+        public static void Observer()
         {
-            // The client code.
-            var subject = new Subject();
-            var observerA = new ConcreteObserverA();
-            subject.Attach(observerA);
+            // Configure Observer pattern
+            ConcreteSubject s = new ConcreteSubject();
 
-            var observerB = new ConcreteObserverB();
-            subject.Attach(observerB);
+            s.Attach(new ConcreteObserver(s, "X"));
+            s.Attach(new ConcreteObserver(s, "Y"));
+            s.Attach(new ConcreteObserver(s, "Z"));
 
-            subject.SomeBusinessLogic();
-            subject.SomeBusinessLogic();
-
-            subject.Detach(observerB);
-
-            subject.SomeBusinessLogic();
+            // Change subject and notify observers
+            s.SubjectState = "ABC";
+            s.Notify();
         }
     }
 }

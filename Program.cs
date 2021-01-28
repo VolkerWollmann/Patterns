@@ -44,8 +44,7 @@ namespace Patterns
 			CommandExample.Command();
 
 			//Observer
-			ObserverExample observerExample = new ObserverExample();
-			observerExample.Main();
+			ObserverExample.Observer();
 
 			#endregion
 
