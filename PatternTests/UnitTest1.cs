@@ -41,7 +41,7 @@ namespace PatternTests
         [TestMethod]
         public void Command()
         {
-            ComandExample.Command();
+            CommandExample.Command();
         }
 
         [TestMethod]

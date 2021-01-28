@@ -43,7 +43,7 @@ namespace Patterns
 			decoratorExample.Main();
 
 			//Command
-			ComandExample.Command();
+			CommandExample.Command();
 
 			//Observer
 			ObserverExample observerExample = new ObserverExample();
