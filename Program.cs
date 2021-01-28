@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CreationalPatterns.AbstractFactory;
-using CreationalPatterns.FactoryMethod;
 using BehaviourPatterns.Visitor;
 using BehaviourPatterns.Decorator;
 using BehaviourPatterns.Command;
@@ -13,7 +12,7 @@ using StrucutralPatterns.Adapter;
 using Other.BusinessDelegate;
 using Other.DataTransferObject;
 using Ohter.UnitOfWork;
-using CreationalPatterns.AbstractFactory;
+using CreationalPatterns.FactoryMethod;
 
 namespace Patterns
 {
@@ -26,8 +25,8 @@ namespace Patterns
 			AbstractFactoryExample.AbstractFactory();
 
 			//Factory Method;
-			FactoryMethod factoryMethod = new FactoryMethod();
-			factoryMethod.Main();
+			FactoryMethodExample.FactoryMethod();
+			
 			#endregion
 
 			//Adapter

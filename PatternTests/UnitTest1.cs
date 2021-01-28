@@ -8,6 +8,7 @@ using StrucutralPatterns.Adapter;
 using StrucutralPatterns.Composite;
 using BehaviourPatterns.Decorator;
 using CreationalPatterns.AbstractFactory;
+using CreationalPatterns.FactoryMethod;
 
 namespace PatternTests
 {
@@ -68,6 +69,12 @@ namespace PatternTests
         public void AbstractFactory()
         {
             AbstractFactoryExample.AbstractFactory();
+        }
+
+        [TestMethod]
+        public void FactoryMethod()
+        {
+            FactoryMethodExample.FactoryMethod();
         }
     }
 }

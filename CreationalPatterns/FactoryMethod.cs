@@ -1,121 +1,86 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-// Source : https://refactoring.guru/design-patterns/abstract-factory/csharp/example
-
-
 
 namespace CreationalPatterns.FactoryMethod
 {
-	// The Creator class declares the factory method that is supposed to return
-	// an object of a Product class. The Creator's subclasses usually provide
-	// the implementation of this method.
-	abstract class Creator
-	{
-		// Note that the Creator may also provide some default implementation of
-		// the factory method.
-		public abstract IProduct FactoryMethod();
+    // https://www.dofactory.com/net/factory-method-design-pattern
+    // Summary:  Define an interface for creating an object, but let subclasses decide which class to instantiate. 
+    //Factory Method lets a class defer instantiation to subclasses. 
+    
+    /// <summary>
+    /// MainApp startup class for Structural 
+    /// Factory Method Design Pattern.
+    /// </summary>
+    public class FactoryMethodExample
+    {
+        /// <summary>
+        /// The 'Product' abstract class
+        /// </summary>
+        abstract class Product
+        {
+        }
 
-		// Also note that, despite its name, the Creator's primary
-		// responsibility is not creating products. Usually, it contains some
-		// core business logic that relies on Product objects, returned by the
-		// factory method. Subclasses can indirectly change that business logic
-		// by overriding the factory method and returning a different type of
-		// product from it.
-		public string SomeOperation()
-		{
-			// Call the factory method to create a Product object.
-			var product = FactoryMethod();
-			// Now, use the product.
-			var result = "Creator: The same creator's code has just worked with "
-				+ product.Operation();
+        /// <summary>
+        /// A 'ConcreteProduct' class
+        /// </summary>
+        class ConcreteProductA : Product
+        {
+        }
 
-			return result;
-		}
-	}
+        /// <summary>
+        /// A 'ConcreteProduct' class
+        /// </summary>
+        class ConcreteProductB : Product
+        {
+        }
 
-	// Concrete Creators override the factory method in order to change the
-	// resulting product's type.
-	class ConcreteCreator1 : Creator
-	{
-		// Note that the signature of the method still uses the abstract product
-		// type, even though the concrete product is actually returned from the
-		// method. This way the Creator can stay independent of concrete product
-		// classes.
-		public override IProduct FactoryMethod()
-		{
-			return new ConcreteProduct1();
-		}
-	}
+        /// <summary>
+        /// The 'Creator' abstract class
+        /// </summary>
+        abstract class Creator
+        {
+            public abstract Product FactoryMethod();
+        }
 
-	class ConcreteCreator2 : Creator
-	{
-		public override IProduct FactoryMethod()
-		{
-			return new ConcreteProduct2();
-		}
-	}
+        /// <summary>
+        /// A 'ConcreteCreator' class
+        /// </summary>
+        class ConcreteCreatorA : Creator
+        {
+            public override Product FactoryMethod()
+            {
+                return new ConcreteProductA();
+            }
+        }
 
-	// The Product interface declares the operations that all concrete products
-	// must implement.
-	public interface IProduct
-	{
-		string Operation();
-	}
+        /// <summary>
+        /// A 'ConcreteCreator' class
+        /// </summary>
+        class ConcreteCreatorB : Creator
+        {
+            public override Product FactoryMethod()
+            {
+                return new ConcreteProductB();
+            }
+        }
 
-	// Concrete Products provide various implementations of the Product
-	// interface.
-	class ConcreteProduct1 : IProduct
-	{
-		public string Operation()
-		{
-			return "{Result of ConcreteProduct1}";
-		}
-	}
+        /// <summary>
+        /// Entry point into console application.
+        /// </summary>
+        public static void FactoryMethod()
+        {
+            // An array of creators
+            Creator[] creators = new Creator[2];
 
-	class ConcreteProduct2 : IProduct
-	{
-		public string Operation()
-		{
-			return "{Result of ConcreteProduct2}";
-		}
-	}
+            creators[0] = new ConcreteCreatorA();
+            creators[1] = new ConcreteCreatorB();
 
-	class Client
-	{
-		public void Main()
-		{
-			Console.WriteLine("App: Launched with the ConcreteCreator1.");
-			ClientCode(new ConcreteCreator1());
-
-			Console.WriteLine("");
-
-			Console.WriteLine("App: Launched with the ConcreteCreator2.");
-			ClientCode(new ConcreteCreator2());
-		}
-
-		// The client code works with an instance of a concrete creator, albeit
-		// through its base interface. As long as the client keeps working with
-		// the creator via the base interface, you can pass it any creator's
-		// subclass.
-		public void ClientCode(Creator creator)
-		{
-			// ...
-			Console.WriteLine("Client: I'm not aware of the creator's class," +
-				"but it still works.\n" + creator.SomeOperation());
-			// ...
-		}
-	}
-
-	public class FactoryMethod
-	{
-		public void Main()
-		{
-			new Client().Main();
-		}
-	}
+            // Iterate over creators and create products
+            foreach (Creator creator in creators)
+            {
+                Product product = creator.FactoryMethod();
+                Console.WriteLine("Created {0}",
+                  product.GetType().Name);
+            }
+        }
+    }
 }
-
