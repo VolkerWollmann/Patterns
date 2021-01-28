@@ -9,6 +9,7 @@ using StrucutralPatterns.Composite;
 using BehaviourPatterns.Decorator;
 using CreationalPatterns.AbstractFactory;
 using CreationalPatterns.FactoryMethod;
+using Other.DataTransferObject;
 
 namespace PatternTests
 {
@@ -75,6 +76,13 @@ namespace PatternTests
         public void FactoryMethod()
         {
             FactoryMethodExample.FactoryMethod();
+        }
+
+        [TestMethod]
+        public void DataTransferObject()
+        {
+            DataTransferObjectExample dataTransferObjectExample = new DataTransferObjectExample();
+            dataTransferObjectExample.StartDemo();
         }
     }
 }

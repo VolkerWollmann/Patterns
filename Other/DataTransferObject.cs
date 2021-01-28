@@ -173,6 +173,15 @@ namespace Other.DataTransferObject
         {
             DemoDTO dto = this.CreateDemoDto();
 
+            // Write the deserialized dto values.
+            Console.WriteLine("Not Serialized DTO");
+            Console.WriteLine("=======================");
+            Console.WriteLine("\r");
+            Console.WriteLine("DemoId         : " + dto.DemoId);
+            Console.WriteLine("Demo Name      : " + dto.DemoName);
+            Console.WriteLine("Demo Programmer: " + dto.DemoProgrammer);
+            Console.WriteLine("\r");
+
             // Serialize the dto to xml.
             string strXml = DTOSerializerHelper.SerializeDTO(dto);
 
