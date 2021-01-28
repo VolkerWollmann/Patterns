@@ -8,7 +8,7 @@ using BehaviourPatterns.Visitor;
 using BehaviourPatterns.Decorator;
 using BehaviourPatterns.Command;
 using BehaviourPatterns.Observer;
-using StrucutralPatterns.Adapter;
+using StructuralPatterns.Adapter;
 using Other.BusinessDelegate;
 using Other.DataTransferObject;
 using Other.UnitOfWork;

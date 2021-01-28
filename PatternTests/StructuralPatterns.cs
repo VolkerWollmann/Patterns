@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StrucutralPatterns.Adapter;
-using StrucutralPatterns.Composite;
-using StrucutralPatterns.Facade;
-using StrucutralPatterns.Iterator;
+using StructuralPatterns.Adapter;
+using StructuralPatterns.Composite;
+using StructuralPatterns.Facade;
+using StructuralPatterns.Iterator;
 
 namespace PatternTests
 {
     [TestClass]
-    public class StrucutualPatterns
+    public class StructuralPatterns
     {
         [TestMethod]
         public void Adapter()
