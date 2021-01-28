@@ -1,17 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BehaviourPatterns.Visitor;
-using BehaviourPatterns.VisitorExample;
-using BehaviourPatterns.Strategy;
-using BehaviourPatterns.Command;
 using StrucutralPatterns.Adapter;
 using StrucutralPatterns.Composite;
-using BehaviourPatterns.Decorator;
-using CreationalPatterns.AbstractFactory;
-using CreationalPatterns.FactoryMethod;
-using Other.DataTransferObject;
-using Other.UnitOfWork;
-using Other.BusinessDelegate;
+using StrucutralPatterns.Facade;
 
 namespace PatternTests
 {
@@ -28,6 +19,12 @@ namespace PatternTests
         public void Composite()
         {
             CompositeExample.Composite();
+        }
+
+        [TestMethod]
+        public void Facade()
+        {
+            FacadeExample.Facade();
         }
     }
 }

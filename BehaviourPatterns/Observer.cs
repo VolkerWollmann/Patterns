@@ -4,7 +4,9 @@ using System.Collections.Generic;
 namespace BehaviourPatterns.Observer
 {
     /// https://www.dofactory.com/net/observer-design-pattern
- 
+    ///  Define a one-to-many dependency between objects so that when one object changes state, 
+    ///  all its dependents are notified and updated automatically. 
+
     /// <summary>
     /// The 'Subject' abstract class
     /// </summary>
