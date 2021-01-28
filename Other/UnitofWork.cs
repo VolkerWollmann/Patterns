@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 // Source : https://www.codeproject.com/Articles/581487/Unit-of-Work-Design-Pattern
-
-namespace Ohter.UnitOfWork
+// https://en.wikipedia.org/wiki/Business_delegate_pattern
+namespace Other.UnitOfWork
 {
 	public interface IEntity
 	{

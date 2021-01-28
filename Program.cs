@@ -11,7 +11,7 @@ using BehaviourPatterns.Observer;
 using StrucutralPatterns.Adapter;
 using Other.BusinessDelegate;
 using Other.DataTransferObject;
-using Ohter.UnitOfWork;
+using Other.UnitOfWork;
 using CreationalPatterns.FactoryMethod;
 
 namespace Patterns

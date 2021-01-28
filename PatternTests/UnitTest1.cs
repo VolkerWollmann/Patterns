@@ -10,7 +10,7 @@ using BehaviourPatterns.Decorator;
 using CreationalPatterns.AbstractFactory;
 using CreationalPatterns.FactoryMethod;
 using Other.DataTransferObject;
-using Ohter.UnitOfWork;
+using Other.UnitOfWork;
 
 namespace PatternTests
 {
