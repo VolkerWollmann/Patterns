@@ -13,7 +13,7 @@ namespace PatternTests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestVisitor()
+        public void Visitor()
         {
             // Visitor
             Vistor visitor = new Vistor();
@@ -21,13 +21,13 @@ namespace PatternTests
         }
 
         [TestMethod]
-        public void TestSimpleVisitor()
+        public void Visitor_Simple()
         {
             VisitorExample.SimpleVisitor();
         }
 
         [TestMethod]
-        public void TestTransformingVisitor()
+        public void Visitor_Transforming()
         {
             VisitorExample.TransformingVisitor();
         }
