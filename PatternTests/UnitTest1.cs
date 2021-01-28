@@ -10,6 +10,7 @@ using BehaviourPatterns.Decorator;
 using CreationalPatterns.AbstractFactory;
 using CreationalPatterns.FactoryMethod;
 using Other.DataTransferObject;
+using Ohter.UnitOfWork;
 
 namespace PatternTests
 {
@@ -83,6 +84,12 @@ namespace PatternTests
         {
             DataTransferObjectExample dataTransferObjectExample = new DataTransferObjectExample();
             dataTransferObjectExample.StartDemo();
+        }
+
+        [TestMethod]
+        public void UnitOFWork()
+        {
+            UnitOFWorkExample.UnitOfWork();
         }
     }
 }

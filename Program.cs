@@ -58,8 +58,7 @@ namespace Patterns
 			transferObjectExample.StartDemo();
 
 			//UnitOfWork
-			UnitOFWorkExample unitOFWorkExample = new UnitOFWorkExample();
-			unitOFWorkExample.Demo();
+			UnitOFWorkExample.UnitOfWork();
 		}
 	}
 }

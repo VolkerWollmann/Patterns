@@ -69,7 +69,7 @@ namespace Ohter.UnitOfWork
 
     public class UnitOFWorkExample
 	{
-        public void Demo()
+        public static void UnitOfWork()
 		{
             Console.WriteLine();
             Console.WriteLine("Unit of Work");
