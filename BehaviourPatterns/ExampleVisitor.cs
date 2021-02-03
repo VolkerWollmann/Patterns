@@ -177,7 +177,7 @@ namespace BehaviourPatterns.VisitorExample
          
             while( ! (expression is Number) )
             {
-                vistors.ForEach(vistor => { expression = expression.Visit(vistor); });
+                vistors.ForEach(vistor => { expression = expression.Accept(vistor); });
             }
 
             Assert.AreEqual<int>((expression as Number).Value, 43);
