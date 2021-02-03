@@ -19,21 +19,21 @@ namespace BehaviourPatterns.VisitorExample
             Right = right;
         }
 
-        public void Visit(IVisitor visitor)
+        public void Accept(IVisitor visitor)
         {
             if (Left != null)
-                Left.Visit(visitor);
+                Left.Accept(visitor);
             if (Right != null)
-                Right.Visit(visitor);
+                Right.Accept(visitor);
             visitor.DoIt(this);
         }
 
-        public Expression Visit(ITransformingVisitor visitor)
+        public Expression Accept(ITransformingVisitor visitor)
         {
             if (Left != null)
-                Left = Left.Visit(visitor);
+                Left = Left.Accept(visitor);
             if (Right != null)
-                Right = Right.Visit(visitor);
+                Right = Right.Accept(visitor);
             return visitor.DoIt(this);
         }
     }
@@ -158,7 +158,7 @@ namespace BehaviourPatterns.VisitorExample
             Expression expression = new Addition(three, new Multiplication(five, eight));
 
             MaxFinder maxfinder = new MaxFinder();
-            expression.Visit(maxfinder);
+            expression.Accept(maxfinder);
 
             Assert.AreEqual<int>(maxfinder.Max, 8);
         }
