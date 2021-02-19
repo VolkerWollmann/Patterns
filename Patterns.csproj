@@ -58,6 +58,7 @@
     <Compile Include="BehaviourPatterns\ExampleVisitor.cs" />
     <Compile Include="BehaviourPatterns\Strategy.cs" />
     <Compile Include="Other\DataTransferObject.cs" />
+    <Compile Include="Other\DependencyInjection.cs" />
     <Compile Include="Other\UnitOfWork.cs" />
     <Compile Include="BehaviourPatterns\Visitor.cs" />
     <Compile Include="CreationalPatterns\AbstractFactory.cs" />
