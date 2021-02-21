@@ -12,6 +12,7 @@ using CreationalPatterns.FactoryMethod;
 using Other.DataTransferObject;
 using Other.UnitOfWork;
 using Other.BusinessDelegate;
+using Other.DependencyInjection;
 
 namespace PatternTests
 {
@@ -35,6 +36,12 @@ namespace PatternTests
         public void BusinessDelegate()
         {
             BusinessDelegateExample.BusinessDelegate();
+        }
+
+        [TestMethod]
+        public void DependencyInjection()
+        {
+            DependencyInjectionExample.DependencyInjection();
         }
     }
 }
