@@ -73,8 +73,7 @@ namespace BehaviourPatterns.State
             context.Request();
             context.Request();
             context.Request();
-            // Wait for user
-            Console.ReadKey();
+            
         }
     }
 }
