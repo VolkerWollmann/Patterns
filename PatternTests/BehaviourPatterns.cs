@@ -5,8 +5,8 @@ using BehaviourPatterns.VisitorExample;
 using BehaviourPatterns.Strategy;
 using BehaviourPatterns.Command;
 using BehaviourPatterns.Decorator;
-
 using BehaviourPatterns.Observer;
+using BehaviourPatterns.State;
 
 namespace PatternTests
 {
@@ -56,5 +56,12 @@ namespace PatternTests
         {
             ObserverExample.Observer();
         }
+
+        [TestMethod]
+        public void State()
+        {
+            StateExample.State();
+        }
+
     }
 }
