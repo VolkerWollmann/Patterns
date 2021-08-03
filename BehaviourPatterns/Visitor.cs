@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 
 // Source : https://refactoring.guru/design-patterns/visitor/csharp/example
+//          https://www.dofactory.com/net/visitor-design-pattern
+//          The Visitor design pattern represents an operation to be performed on the elements of an object structure.
+//          This pattern lets you define a new operation without changing the classes of the elements on which it operates.
 
 namespace BehaviourPatterns.Visitor
 {

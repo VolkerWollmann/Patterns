@@ -3,6 +3,8 @@
 namespace BehaviourPatterns.State
 {
     /// https://www.dofactory.com/net/state-design-pattern
+    /// The State design pattern allows an object to alter its behavior when its internal state changes. 
+    /// The object will appear to change its class.
 
     /// <summary>
     /// State Design Pattern

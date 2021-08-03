@@ -7,6 +7,7 @@ namespace StructuralPatterns.Iterator
     //  Provide a way to access the elements of an aggregate object sequentially 
     //  without exposing its underlying representation. 
     /// <summary>
+    
     /// The 'Aggregate' abstract class
     /// </summary>
     abstract class Aggregate

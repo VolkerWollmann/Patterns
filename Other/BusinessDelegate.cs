@@ -1,7 +1,7 @@
 ﻿using System;
 
 // Source : https://www.geeksforgeeks.org/business-delegate-pattern/
-// https://en.wikipedia.org/wiki/Business_delegate_pattern
+//          https://en.wikipedia.org/wiki/Business_delegate_pattern
 namespace Other.BusinessDelegate
 {
 

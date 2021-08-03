@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 
 // Source : https://refactoring.guru/design-patterns/strategy
+//          https://www.dofactory.com/net/strategy-design-pattern
+// The Strategy design pattern defines a family of algorithms, encapsulate each one, and make them interchangeable.
+// This pattern lets the algorithm vary independently from clients that use it.
+
 
 namespace BehaviourPatterns.Strategy
 {
