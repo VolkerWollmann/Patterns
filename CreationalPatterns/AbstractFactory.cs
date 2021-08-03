@@ -5,6 +5,10 @@ namespace CreationalPatterns.AbstractFactory
     /// https://www.dofactory.com/net/abstract-factory-design-pattern
     /// Provide an interface for creating families of related or dependent 
     /// objects without specifying their concrete classes. 
+    /// 
+
+    /// https://de.wikipedia.org/wiki/Abstrakte_Fabrik
+    /// Example : Schach, Dame, Mühle, Halma : abstrake Fabrik zum Erzeugen von Brett und Figuren 
 
     /// <summary>
     /// The 'AbstractFactory' abstract class
