@@ -38,14 +38,8 @@ namespace Patterns.BehaviourPatterns
     /// </summary>
     class ConcreteSubject : Subject
     {
-        private string _subjectState;
-
         // Gets or sets subject state
-        public string SubjectState
-        {
-            get => _subjectState;
-            set => _subjectState = value;
-        }
+        public string SubjectState { get; set; }
     }
 
     /// <summary>
