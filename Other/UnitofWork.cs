@@ -14,26 +14,20 @@ namespace Patterns.Other
 	}
     public class Customer : IEntity
     {
-        private int _CustomerCode;
-        public int Id
-        {
-            get => _CustomerCode;
-            set => _CustomerCode = value;
-        }
-        private string _CustomerName = "";
-        public string CustomerName
-        {
-            get => _CustomerName;
-            set => _CustomerName = value;
-        }
+        public int Id { get; set; }
+
+        public string CustomerName { get; set; } = "";
+
         public void Insert()
         {
             Console.WriteLine("Insert " + CustomerName);
         }
         public static Customer Load()
         {
-            Customer c = new Customer();
-            c.CustomerName = "Customer1";
+            Customer c = new Customer
+            {
+                CustomerName = "Customer1"
+            };
             return c;
         }
         public void Update()
@@ -75,13 +69,17 @@ namespace Patterns.Other
             Console.WriteLine("Unit of Work");
             Console.WriteLine("=======================");
 
-            Customer customerObj = new Customer();// record 1 Customer
-            customerObj.Id = 1000;
-            customerObj.CustomerName = "shiv";
+            Customer customerObj = new Customer
+            {
+                Id = 1000,
+                CustomerName = "shiv"
+            };// record 1 Customer
 
-            Customer supplierObj = new Customer(); // Record 2 Customer
-            supplierObj.Id = 2000;
-            supplierObj.CustomerName = "CustomerName";
+            Customer supplierObj = new Customer
+            {
+                Id = 2000,
+                CustomerName = "CustomerName"
+            }; // Record 2 Customer
 
             UnitOfWork unitOfWork  = new UnitOfWork();
             

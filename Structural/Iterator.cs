@@ -104,11 +104,13 @@ namespace Patterns.Structural
         /// </summary>
         public static void Iterator()
         {
-            ConcreteAggregate a = new ConcreteAggregate();
-            a[0] = "Item A";
-            a[1] = "Item B";
-            a[2] = "Item C";
-            a[3] = "Item D";
+            ConcreteAggregate a = new ConcreteAggregate
+            {
+                [0] = "Item A",
+                [1] = "Item B",
+                [2] = "Item C",
+                [3] = "Item D"
+            };
 
             // Create Iterator and provide aggregate
             Iterator i = a.CreateIterator();

@@ -111,11 +111,12 @@ namespace Patterns.Other
 
         private DemoDTO CreateDemoDto()
         {
-            DemoDTO dto = new DemoDTO();
-
-            dto.DemoId = "1";
-            dto.DemoName = "Data Transfer Object Demonstration Program";
-            dto.DemoProgrammer = "Kenny Young";
+            DemoDTO dto = new DemoDTO
+            {
+                DemoId = "1",
+                DemoName = "Data Transfer Object Demonstration Program",
+                DemoProgrammer = "Kenny Young"
+            };
 
             return dto;
         }
