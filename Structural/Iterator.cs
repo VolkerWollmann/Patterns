@@ -20,7 +20,7 @@ namespace Patterns.Structural
     /// </summary>
     class ConcreteAggregate : Aggregate
     {
-        private ArrayList _items = new ArrayList();
+        private readonly ArrayList Items = new ArrayList();
 
         public override Iterator CreateIterator()
         {
@@ -28,13 +28,13 @@ namespace Patterns.Structural
         }
 
         // Gets item count
-        public int Count => _items.Count;
+        public int Count => Items.Count;
 
         // Indexer
         public object this[int index]
         {
-            get => _items[index];
-            set => _items.Insert(index, value);
+            get => Items[index];
+            set => Items.Insert(index, value);
         }
     }
 
@@ -54,28 +54,28 @@ namespace Patterns.Structural
     /// </summary>
     class ConcreteIterator : Iterator
     {
-        private ConcreteAggregate _aggregate;
+        private readonly ConcreteAggregate Aggregate;
         private int Current;
 
         // Constructor
         public ConcreteIterator(ConcreteAggregate aggregate)
         {
-            this._aggregate = aggregate;
+            this.Aggregate = aggregate;
         }
 
         // Gets first iteration item
         public override object First()
         {
-            return _aggregate[0];
+            return Aggregate[0];
         }
 
         // Gets next iteration item
         public override object Next()
         {
             object ret = null;
-            if (Current < _aggregate.Count - 1)
+            if (Current < Aggregate.Count - 1)
             {
-                ret = _aggregate[++Current];
+                ret = Aggregate[++Current];
             }
 
             return ret;
@@ -84,13 +84,13 @@ namespace Patterns.Structural
         // Gets current iteration item
         public override object CurrentItem()
         {
-            return _aggregate[Current];
+            return Aggregate[Current];
         }
 
         // Gets whether iterations are complete
         public override bool IsDone()
         {
-            return Current >= _aggregate.Count;
+            return Current >= Aggregate.Count;
         }
     }
     /// <summary>

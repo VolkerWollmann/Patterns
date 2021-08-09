@@ -19,7 +19,7 @@ namespace Patterns.Structural
         protected string Name;
 
         // Constructor
-        public Component(string name)
+        protected Component(string name)
         {
             this.Name = name;
         }

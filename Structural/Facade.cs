@@ -55,32 +55,32 @@ namespace Patterns.Structural
     /// </summary>
     class Facade
     {
-        private SubSystemOne _one;
-        private SubSystemTwo _two;
-        private SubSystemThree _three;
-        private SubSystemFour _four;
+        private readonly SubSystemOne One;
+        private readonly SubSystemTwo Two;
+        private readonly SubSystemThree Three;
+        private readonly SubSystemFour Four;
 
         public Facade()
         {
-            _one = new SubSystemOne();
-            _two = new SubSystemTwo();
-            _three = new SubSystemThree();
-            _four = new SubSystemFour();
+            One = new SubSystemOne();
+            Two = new SubSystemTwo();
+            Three = new SubSystemThree();
+            Four = new SubSystemFour();
         }
 
         public void MethodA()
         {
             Console.WriteLine("\nMethodA() ---- ");
-            _one.MethodOne();
-            _two.MethodTwo();
-            _four.MethodFour();
+            One.MethodOne();
+            Two.MethodTwo();
+            Four.MethodFour();
         }
 
         public void MethodB()
         {
             Console.WriteLine("\nMethodB() ---- ");
-            _two.MethodTwo();
-            _three.MethodThree();
+            Two.MethodTwo();
+            Three.MethodThree();
         }
     }
 
