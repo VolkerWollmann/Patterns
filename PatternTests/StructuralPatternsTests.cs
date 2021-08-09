@@ -8,7 +8,7 @@ using StructuralPatterns.Iterator;
 namespace PatternTests
 {
     [TestClass]
-    public class StructuralPatterns
+    public class StructuralPatternsTests
     {
         [TestMethod]
         public void Adapter()

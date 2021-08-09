@@ -49,11 +49,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BehaviourPatterns.cs" />
-    <Compile Include="CreationalPatterns.cs" />
+    <Compile Include="BehaviourPatternsTests.cs" />
+    <Compile Include="CreationalPatternsTests.cs" />
     <Compile Include="OtherPatterns.cs" />
+    <Compile Include="PatternExampleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StructuralPatterns.cs" />
+    <Compile Include="StructuralPatternsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

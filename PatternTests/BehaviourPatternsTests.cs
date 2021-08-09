@@ -22,18 +22,6 @@ namespace PatternTests
         }
 
         [TestMethod]
-        public void Visitor_Simple()
-        {
-            VisitorExample.SimpleVisitor();
-        }
-
-        [TestMethod]
-        public void Visitor_Transforming()
-        {
-            VisitorExample.TransformingVisitor();
-        }
-
-        [TestMethod]
         public void Strategy()
         {
             StrategyExample.Strategy();
@@ -61,12 +49,6 @@ namespace PatternTests
         public void State()
         {
             BehaviourPatterns.State.StateExample.Test();
-        }
-
-        [TestMethod]
-        public void StateExample()
-        {
-            Patterns.Examples.StateExample.Test();
         }
     }
 }
