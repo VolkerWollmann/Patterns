@@ -80,37 +80,21 @@ namespace Patterns.Other
     public class DemoDTO : DTO
     {
         // Variables encapsulated by class (private).
-        private string demoId = "";
-        private string demoName = "";
-        private string demoProgrammer = "";
 
         ///Public access to the DemoId field.
         ///String
         [XmlElement(IsNullable = true)]
-        public string DemoId
-        {
-            get => this.demoId;
-            set => this.demoId = value;
-        }
+        public string DemoId { get; set; } = "";
 
         ///Public access to the DemoId field.
         ///String
         [XmlElement(IsNullable = true)]
-        public string DemoName
-        {
-            get => this.demoName;
-            set => this.demoName = value;
-        }
+        public string DemoName { get; set; } = "";
 
         ///Public access to the DemoId field.
         ///String
         [XmlElement(IsNullable = true)]
-        public string DemoProgrammer
-        {
-            get => this.demoProgrammer;
-            set => this.demoProgrammer = value;
-        }
-
+        public string DemoProgrammer { get; set; } = "";
     }
     #endregion
 
