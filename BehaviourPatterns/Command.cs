@@ -14,7 +14,7 @@ namespace Patterns.BehaviourPatterns
         protected Receiver Receiver;
 
         // Constructor
-        public Command(Receiver receiver)
+        protected Command(Receiver receiver)
         {
             this.Receiver = receiver;
         }

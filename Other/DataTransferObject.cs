@@ -13,9 +13,6 @@ namespace Patterns.Other
     /// 
     public abstract class DTO
     {
-        public DTO()
-        {
-        }
     }
 
     #region Data Transfer Object Serializer Helper Class
@@ -24,10 +21,6 @@ namespace Patterns.Other
     /// 
     public class DTOSerializerHelper
     {
-        public DTOSerializerHelper()
-        {
-        }
-
         /// 
         /// Creates xml string from given dto.
         /// 
@@ -91,10 +84,6 @@ namespace Patterns.Other
         private string demoName = "";
         private string demoProgrammer = "";
 
-        public DemoDTO()
-        {
-        }
-
         ///Public access to the DemoId field.
         ///String
         [XmlElement(IsNullable = true)]
@@ -131,10 +120,6 @@ namespace Patterns.Other
     /// 
     public class DataTransferObjectExample
     {
-        public DataTransferObjectExample()
-        {
-        }
-
         public void StartDemo()
         {
             this.ProcessDemo();

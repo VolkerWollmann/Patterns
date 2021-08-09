@@ -157,7 +157,7 @@ namespace Patterns.Examples
             MaxFinder maxFinder = new MaxFinder();
             expression.Accept(maxFinder);
 
-            Assert.AreEqual<int>(maxFinder.Max, 8);
+            Assert.AreEqual(maxFinder.Max, 8);
         }
 
         public static void TransformingVisitor()
@@ -177,7 +177,7 @@ namespace Patterns.Examples
                 visitors.ForEach(visitor => { expression = expression.Accept(visitor); });
             }
 
-            Assert.AreEqual<int>(((Number)expression).Value, 43);
+            Assert.AreEqual(((Number)expression).Value, 43);
         }
 
 

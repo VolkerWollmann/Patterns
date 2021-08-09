@@ -108,19 +108,19 @@ namespace Patterns.CreationalPatterns
     /// </summary>
     class Client
     {
-        private AbstractProductA _abstractProductA;
-        private AbstractProductB _abstractProductB;
+        private readonly AbstractProductA _AbstractProductA;
+        private readonly AbstractProductB _AbstractProductB;
 
         // Constructor
         public Client(AbstractFactory factory)
         {
-            _abstractProductB = factory.CreateProductB();
-            _abstractProductA = factory.CreateProductA();
+            _AbstractProductB = factory.CreateProductB();
+            _AbstractProductA = factory.CreateProductA();
         }
 
         public void Run()
         {
-            _abstractProductB.Interact(_abstractProductA);
+            _AbstractProductB.Interact(_AbstractProductA);
         }
     }
     /// <summary>

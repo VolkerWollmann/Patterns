@@ -12,21 +12,21 @@ namespace Patterns.BehaviourPatterns
     /// </summary>
     abstract class Subject
     {
-        private List<Observer> _observers = new List<Observer>();
+        private readonly List<Observer> _Observers = new List<Observer>();
 
         public void Attach(Observer observer)
         {
-            _observers.Add(observer);
+            _Observers.Add(observer);
         }
 
         public void Detach(Observer observer)
         {
-            _observers.Remove(observer);
+            _Observers.Remove(observer);
         }
 
         public void Notify()
         {
-            foreach (Observer o in _observers)
+            foreach (Observer o in _Observers)
             {
                 o.Update();
             }
@@ -55,30 +55,30 @@ namespace Patterns.BehaviourPatterns
     /// </summary>
     class ConcreteObserver : Observer
     {
-        private string _name;
+        private readonly string _Name;
         private string ObserverState;
-        private ConcreteSubject _subject;
+        private ConcreteSubject _Subject;
 
         // Constructor
         public ConcreteObserver(
           ConcreteSubject subject, string name)
         {
-            this._subject = subject;
-            this._name = name;
+            this._Subject = subject;
+            this._Name = name;
         }
 
         public override void Update()
         {
-            ObserverState = _subject.SubjectState;
+            ObserverState = _Subject.SubjectState;
             Console.WriteLine("Observer {0}'s new state is {1}",
-              _name, ObserverState);
+              _Name, ObserverState);
         }
 
         // Gets or sets subject
         public ConcreteSubject Subject
         {
-            get => _subject;
-            set => _subject = value;
+            get => _Subject;
+            set => _Subject = value;
         }
     }
     /// <summary>

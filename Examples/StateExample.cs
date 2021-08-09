@@ -20,26 +20,15 @@ namespace Patterns.Examples
 
         public abstract class State
         {
-            protected Account account;
-            protected double balance;
-
-            protected double interest;
-            protected double lowerLimit;
-            protected double upperLimit;
+            protected double _Interest;
+            protected double _LowerLimit;
+            protected double _UpperLimit;
 
             // Properties
 
-            public Account Account
-            {
-                get => account;
-                set => account = value;
-            }
+            public Account Account { get; set; }
 
-            public double Balance
-            {
-                get => balance;
-                set => balance = value;
-            }
+            public double Balance { get; set; }
 
             public abstract void Deposit(double amount);
             public abstract void Withdraw(double amount);
@@ -62,8 +51,8 @@ namespace Patterns.Examples
 
             public RedState(State state)
             {
-                this.balance = state.Balance;
-                this.account = state.Account;
+                this.Balance = state.Balance;
+                this.Account = state.Account;
                 Initialize();
             }
 
@@ -71,15 +60,15 @@ namespace Patterns.Examples
             {
                 // Should come from a data source
 
-                interest = 0.0;
-                lowerLimit = -100.0;
-                upperLimit = 0.0;
+                _Interest = 0.0;
+                _LowerLimit = -100.0;
+                _UpperLimit = 0.0;
                 serviceFee = 15.00;
             }
 
             public override void Deposit(double amount)
             {
-                balance += amount;
+                Balance += amount;
                 StateChangeCheck();
             }
 
@@ -96,9 +85,9 @@ namespace Patterns.Examples
 
             private void StateChangeCheck()
             {
-                if (balance > upperLimit)
+                if (Balance > _UpperLimit)
                 {
-                    account.State = new SilverState(this);
+                    Account.State = new SilverState(this);
                 }
             }
         }
@@ -121,46 +110,46 @@ namespace Patterns.Examples
 
             public SilverState(double balance, Account account)
             {
-                this.balance = balance;
-                this.account = account;
+                this.Balance = balance;
+                this.Account = account;
                 Initialize();
             }
 
             private void Initialize()
             {
                 // Should come from a data source
-                interest = 0.0;
-                lowerLimit = 0.0;
-                upperLimit = 1000.0;
+                _Interest = 0.0;
+                _LowerLimit = 0.0;
+                _UpperLimit = 1000.0;
             }
 
             public override void Deposit(double amount)
             {
-                balance += amount;
+                Balance += amount;
                 StateChangeCheck();
             }
 
             public override void Withdraw(double amount)
             {
-                balance -= amount;
+                Balance -= amount;
                 StateChangeCheck();
             }
 
             public override void PayInterest()
             {
-                balance += interest * balance;
+                Balance += _Interest * Balance;
                 StateChangeCheck();
             }
 
             private void StateChangeCheck()
             {
-                if (balance < lowerLimit)
+                if (Balance < _LowerLimit)
                 {
-                    account.State = new RedState(this);
+                    Account.State = new RedState(this);
                 }
-                else if (balance > upperLimit)
+                else if (Balance > _UpperLimit)
                 {
-                    account.State = new GoldState(this);
+                    Account.State = new GoldState(this);
                 }
             }
         }
@@ -182,46 +171,46 @@ namespace Patterns.Examples
 
             public GoldState(double balance, Account account)
             {
-                this.balance = balance;
-                this.account = account;
+                this.Balance = balance;
+                this.Account = account;
                 Initialize();
             }
 
             private void Initialize()
             {
                 // Should come from a database
-                interest = 0.05;
-                lowerLimit = 1000.0;
-                upperLimit = 10000000.0;
+                _Interest = 0.05;
+                _LowerLimit = 1000.0;
+                _UpperLimit = 10000000.0;
             }
 
             public override void Deposit(double amount)
             {
-                balance += amount;
+                Balance += amount;
                 StateChangeCheck();
             }
 
             public override void Withdraw(double amount)
             {
-                balance -= amount;
+                Balance -= amount;
                 StateChangeCheck();
             }
 
             public override void PayInterest()
             {
-                balance += interest * balance;
+                Balance += _Interest * Balance;
                 StateChangeCheck();
             }
 
             private void StateChangeCheck()
             {
-                if (balance < 0.0)
+                if (Balance < 0.0)
                 {
-                    account.State = new RedState(this);
+                    Account.State = new RedState(this);
                 }
-                else if (balance < lowerLimit)
+                else if (Balance < _LowerLimit)
                 {
-                    account.State = new SilverState(this);
+                    Account.State = new SilverState(this);
                 }
             }
         }
