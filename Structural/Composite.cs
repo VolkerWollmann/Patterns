@@ -16,12 +16,12 @@ namespace Patterns.Structural
     /// </summary>
     abstract class Component
     {
-        protected string name;
+        protected string Name;
 
         // Constructor
         public Component(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
 
         public abstract void Add(Component c);
@@ -55,7 +55,7 @@ namespace Patterns.Structural
 
         public override void Display(int depth)
         {
-            Console.WriteLine(new String('-', depth) + name);
+            Console.WriteLine(new String('-', depth) + Name);
 
             // Recursively display child nodes
             foreach (Component component in _children)
@@ -88,7 +88,7 @@ namespace Patterns.Structural
 
         public override void Display(int depth)
         {
-            Console.WriteLine(new String('-', depth) + name);
+            Console.WriteLine(new String('-', depth) + Name);
         }
     }
     public class CompositeExample

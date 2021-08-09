@@ -27,16 +27,16 @@ namespace Patterns.Structural
     // interface.
     class Adapter : ITarget
     {
-        private readonly Adaptee _adaptee;
+        private readonly Adaptee Adaptee;
 
         public Adapter(Adaptee adaptee)
         {
-            _adaptee = adaptee;
+            Adaptee = adaptee;
         }
 
         public string GetRequest()
         {
-            return $"This is '{_adaptee.GetSpecificRequest()}'";
+            return $"This is '{Adaptee.GetSpecificRequest()}'";
         }
     }
 

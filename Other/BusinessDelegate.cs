@@ -43,7 +43,7 @@ namespace Patterns.Other
 
 	class BusinessDelegate
 	{
-		private BusinessLookUp lookupService = new BusinessLookUp();
+		private readonly BusinessLookUp LookupService = new BusinessLookUp();
 		private IBusinessService BusinessService;
 		private string ServiceType;
 
@@ -54,23 +54,23 @@ namespace Patterns.Other
 
 		public void DoTask()
 		{
-			BusinessService = lookupService.GetBusinessService(ServiceType);
+			BusinessService = LookupService.GetBusinessService(ServiceType);
 			BusinessService.DoProcessing();
 		}
 	}
 
 	class Client
 	{
-		BusinessDelegate businessService;
+        readonly BusinessDelegate BusinessService;
 
 		public Client(BusinessDelegate businessService)
 		{
-			this.businessService = businessService;
+			this.BusinessService = businessService;
 		}
 
 		public void DoTask()
 		{
-			businessService.DoTask();
+			BusinessService.DoTask();
 		}
 	}
 

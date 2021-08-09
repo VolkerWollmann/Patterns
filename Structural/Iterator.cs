@@ -55,7 +55,7 @@ namespace Patterns.Structural
     class ConcreteIterator : Iterator
     {
         private ConcreteAggregate _aggregate;
-        private int _current;
+        private int Current;
 
         // Constructor
         public ConcreteIterator(ConcreteAggregate aggregate)
@@ -73,9 +73,9 @@ namespace Patterns.Structural
         public override object Next()
         {
             object ret = null;
-            if (_current < _aggregate.Count - 1)
+            if (Current < _aggregate.Count - 1)
             {
-                ret = _aggregate[++_current];
+                ret = _aggregate[++Current];
             }
 
             return ret;
@@ -84,13 +84,13 @@ namespace Patterns.Structural
         // Gets current iteration item
         public override object CurrentItem()
         {
-            return _aggregate[_current];
+            return _aggregate[Current];
         }
 
         // Gets whether iterations are complete
         public override bool IsDone()
         {
-            return _current >= _aggregate.Count;
+            return Current >= _aggregate.Count;
         }
     }
     /// <summary>
