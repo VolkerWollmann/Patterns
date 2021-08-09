@@ -30,18 +30,18 @@ namespace Patterns.BehaviourPatterns
     /// </summary>
     abstract class Decorator : Component
     {
-        protected Component component;
+        protected Component Component;
 
         public void SetComponent(Component component)
         {
-            this.component = component;
+            this.Component = component;
         }
 
         public override void Operation()
         {
-            if (component != null)
+            if (Component != null)
             {
-                component.Operation();
+                Component.Operation();
             }
         }
     }

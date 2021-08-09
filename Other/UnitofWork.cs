@@ -67,7 +67,7 @@ namespace Patterns.Other
         }
     }
 
-    public class UnitOFWorkExample
+    public class UnitOfWorkExample
 	{
         public static void UnitOfWork()
 		{
@@ -75,18 +75,18 @@ namespace Patterns.Other
             Console.WriteLine("Unit of Work");
             Console.WriteLine("=======================");
 
-            Customer Customerobj = new Customer();// record 1 Customer
-            Customerobj.Id = 1000;
-            Customerobj.CustomerName = "shiv";
+            Customer customerobj = new Customer();// record 1 Customer
+            customerobj.Id = 1000;
+            customerobj.CustomerName = "shiv";
 
-            Customer Supplierobj = new Customer(); // Record 2 Customer
-            Supplierobj.Id = 2000;
-            Supplierobj.CustomerName = "xxxx";
+            Customer supplierobj = new Customer(); // Record 2 Customer
+            supplierobj.Id = 2000;
+            supplierobj.CustomerName = "xxxx";
 
             UnitOfWork unitOfWork  = new UnitOfWork();
             
-            unitOfWork.Add(Customerobj); // record 1 added to inmemory
-            unitOfWork.Add(Supplierobj); // record 1 added to inmemory
+            unitOfWork.Add(customerobj); // record 1 added to inmemory
+            unitOfWork.Add(supplierobj); // record 1 added to inmemory
             
             unitOfWork.Load().First().CustomerName += " changed";
            

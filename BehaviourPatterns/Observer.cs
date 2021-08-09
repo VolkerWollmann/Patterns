@@ -62,7 +62,7 @@ namespace Patterns.BehaviourPatterns
     class ConcreteObserver : Observer
     {
         private string _name;
-        private string _observerState;
+        private string ObserverState;
         private ConcreteSubject _subject;
 
         // Constructor
@@ -75,9 +75,9 @@ namespace Patterns.BehaviourPatterns
 
         public override void Update()
         {
-            _observerState = _subject.SubjectState;
+            ObserverState = _subject.SubjectState;
             Console.WriteLine("Observer {0}'s new state is {1}",
-              _name, _observerState);
+              _name, ObserverState);
         }
 
         // Gets or sets subject

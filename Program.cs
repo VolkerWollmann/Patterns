@@ -50,7 +50,7 @@ namespace Patterns
 			transferObjectExample.StartDemo();
 
 			//UnitOfWork
-			UnitOFWorkExample.UnitOfWork();
+			UnitOfWorkExample.UnitOfWork();
 		}
 	}
 }

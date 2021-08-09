@@ -44,18 +44,18 @@ namespace Patterns.Other
 	class BusinessDelegate
 	{
 		private BusinessLookUp lookupService = new BusinessLookUp();
-		private IBusinessService businessService;
-		private string serviceType;
+		private IBusinessService BusinessService;
+		private string ServiceType;
 
 		public void SetServiceType(string serviceType)
 		{
-			this.serviceType = serviceType;
+			this.ServiceType = serviceType;
 		}
 
 		public void DoTask()
 		{
-			businessService = lookupService.GetBusinessService(serviceType);
-			businessService.DoProcessing();
+			BusinessService = lookupService.GetBusinessService(ServiceType);
+			BusinessService.DoProcessing();
 		}
 	}
 

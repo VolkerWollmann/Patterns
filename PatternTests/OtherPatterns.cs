@@ -18,7 +18,7 @@ namespace PatternTests
         [TestMethod]
         public void UnitOFWork()
         {
-            UnitOFWorkExample.UnitOfWork();
+            UnitOfWorkExample.UnitOfWork();
         }
 
         [TestMethod]
