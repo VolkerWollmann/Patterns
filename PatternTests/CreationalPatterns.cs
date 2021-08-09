@@ -16,7 +16,7 @@ using Other.BusinessDelegate;
 namespace PatternTests
 {
     [TestClass]
-    public class CreationalPatterns
+    public class CreationalPatternsTests
     {
         [TestMethod]
         public void AbstractFactory()

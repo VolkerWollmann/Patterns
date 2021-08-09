@@ -17,7 +17,7 @@ using Other.DependencyInjection;
 namespace PatternTests
 {
     [TestClass]
-    public class OtherPatterns
+    public class OtherPatternsTests
     {
         [TestMethod]
         public void DataTransferObject()

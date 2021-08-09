@@ -66,7 +66,7 @@ namespace BehaviourPatterns.State
 
     public class StateExample
     {
-        public static void State()
+        public static void Test()
         {
             // Setup context in a state
             var context = new Context(new ConcreteStateA());

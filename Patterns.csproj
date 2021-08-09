@@ -56,9 +56,10 @@
     <Compile Include="BehaviourPatterns\Command.cs" />
     <Compile Include="BehaviourPatterns\Decorator.cs" />
     <Compile Include="BehaviourPatterns\Observer.cs" />
-    <Compile Include="BehaviourPatterns\ExampleVisitor.cs" />
+    <Compile Include="Examples\VisitorExample.cs" />
     <Compile Include="BehaviourPatterns\State.cs" />
     <Compile Include="BehaviourPatterns\Strategy.cs" />
+    <Compile Include="Examples\StateExample.cs" />
     <Compile Include="Other\DataTransferObject.cs" />
     <Compile Include="Other\DependencyInjection.cs" />
     <Compile Include="Other\UnitOfWork.cs" />
@@ -80,6 +81,7 @@
   <ItemGroup>
     <Content Include="Notes.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

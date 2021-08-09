@@ -11,7 +11,7 @@ using BehaviourPatterns.State;
 namespace PatternTests
 {
     [TestClass]
-    public class BehaviourPatterns
+    public class BehaviourPatternsTests
     {
         [TestMethod]
         public void Visitor()
@@ -60,8 +60,13 @@ namespace PatternTests
         [TestMethod]
         public void State()
         {
-            StateExample.State();
+            BehaviourPatterns.State.StateExample.Test();
         }
 
+        [TestMethod]
+        public void StateExample()
+        {
+            Patterns.Examples.StateExample.Test();
+        }
     }
 }

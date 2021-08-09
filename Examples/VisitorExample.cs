@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BehaviourPatterns.VisitorExample
 {
 
-    public abstract class Expression
+    internal abstract class Expression
     {
         public Expression Left { get; private set; }
         public Expression Right { get; private set; }
@@ -39,12 +39,12 @@ namespace BehaviourPatterns.VisitorExample
     }
 
     #region IVisitor
-    public interface IVisitor
+    internal interface IVisitor
     {
         void DoIt(Expression expression);
     }
 
-    public class MaxFinder : IVisitor
+    internal class MaxFinder : IVisitor
     {
         public int Max { get; private set; } = int.MinValue;
 
@@ -59,12 +59,12 @@ namespace BehaviourPatterns.VisitorExample
 
     #region ITransformingVisitor
 
-    public interface ITransformingVisitor
+    internal interface ITransformingVisitor
     {
         Expression DoIt(Expression expression);
     }
 
-    public class Adder : ITransformingVisitor
+    internal class Adder : ITransformingVisitor
     {
         public Expression DoIt(Expression expression)
         {
@@ -82,7 +82,7 @@ namespace BehaviourPatterns.VisitorExample
         }
     }
 
-    public class Multiplier : ITransformingVisitor
+    internal class Multiplier : ITransformingVisitor
     {
         public Expression DoIt(Expression expression)
         {
@@ -103,7 +103,7 @@ namespace BehaviourPatterns.VisitorExample
     #endregion
 
     #region Tree elements
-    public class Number : Expression
+    internal class Number : Expression
     {
         public int Value { get; private set; }
 
@@ -113,7 +113,7 @@ namespace BehaviourPatterns.VisitorExample
         }
     }
 
-    public class Addition : Expression
+    internal class Addition : Expression
     {
         public Addition(Expression left, Expression right) : base(left, right)
         {
@@ -121,7 +121,7 @@ namespace BehaviourPatterns.VisitorExample
         }
     }
 
-    public class Subtraction : Expression
+    internal class Subtraction : Expression
     {
         public Subtraction(Expression left, Expression right) : base(left, right)
         {
@@ -129,7 +129,7 @@ namespace BehaviourPatterns.VisitorExample
         }
     }
 
-    public class Multiplication : Expression
+    internal class Multiplication : Expression
     {
         public Multiplication(Expression left, Expression right) : base(left, right)
         {
@@ -137,7 +137,7 @@ namespace BehaviourPatterns.VisitorExample
         }
     }
 
-    public class Division : Expression
+    internal class Division : Expression
     {
         public Division(Expression left, Expression right) : base(left, right)
         {
