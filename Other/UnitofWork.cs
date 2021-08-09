@@ -75,6 +75,9 @@ namespace Patterns.Other
                 CustomerName = "shiv"
             };// record 1 Customer
 
+            IEntity entity = customerObj;
+            entity.Id = 1000;
+
             Customer supplierObj = new Customer
             {
                 Id = 2000,
