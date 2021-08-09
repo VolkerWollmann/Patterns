@@ -1,9 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StructuralPatterns.Adapter;
-using StructuralPatterns.Composite;
-using StructuralPatterns.Facade;
-using StructuralPatterns.Iterator;
+using Patterns.Structural;
 
 namespace PatternTests
 {

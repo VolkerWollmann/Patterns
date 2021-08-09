@@ -7,23 +7,23 @@ using System.Collections.Generic;
 // This pattern lets the algorithm vary independently from clients that use it.
 
 
-namespace BehaviourPatterns.Strategy
+namespace Patterns.BehaviourPatterns
 {
     // The Context defines the interface of interest to clients.
     
-    public class Context
+    public class StrategyContext
     {
         // The Context maintains a reference to one of the Strategy objects. The
         // Context does not know the concrete class of a strategy. It should
         // work with all strategies via the Strategy interface.
         private IStrategy _strategy;
 
-        public Context()
+        public StrategyContext()
         { }
 
         // Usually, the Context accepts a strategy through the constructor, but
         // also provides a setter to change it at runtime.
-        public Context(IStrategy strategy)
+        public StrategyContext(IStrategy strategy)
         {
             this._strategy = strategy;
         }
@@ -94,7 +94,7 @@ namespace BehaviourPatterns.Strategy
             // The client code picks a concrete strategy and passes it to the
             // context. The client should be aware of the differences between
             // strategies in order to make the right choice.
-            var context = new Context();
+            var context = new StrategyContext();
 
             Console.WriteLine("Client: Strategy is set to normal sorting.");
             context.SetStrategy(new ConcreteStrategyA());

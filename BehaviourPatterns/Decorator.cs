@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BehaviourPatterns.Decorator
+namespace Patterns.BehaviourPatterns
 {
     /// https://www.dofactory.com/net/decorator-design-pattern
     /// The Decorator design pattern attaches additional responsibilities to an object dynamically. 

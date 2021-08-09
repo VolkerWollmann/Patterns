@@ -2,7 +2,7 @@
 
 // Source : https://www.geeksforgeeks.org/business-delegate-pattern/
 //          https://en.wikipedia.org/wiki/Business_delegate_pattern
-namespace Other.BusinessDelegate
+namespace Patterns.Other
 {
 
 	interface IBusinessService

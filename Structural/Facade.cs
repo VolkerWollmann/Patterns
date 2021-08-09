@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StructuralPatterns.Facade
+namespace Patterns.Structural
 {
     // https://www.dofactory.com/net/facade-design-pattern
     // Provide a unified interface to a set of interfaces in a subsystem. 

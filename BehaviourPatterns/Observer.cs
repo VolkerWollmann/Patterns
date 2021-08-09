@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BehaviourPatterns.Observer
+namespace Patterns.BehaviourPatterns
 {
     /// https://www.dofactory.com/net/observer-design-pattern
     ///  Define a one-to-many dependency between objects so that when one object changes state, 

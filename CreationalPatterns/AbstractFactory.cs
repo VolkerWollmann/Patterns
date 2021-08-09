@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CreationalPatterns.AbstractFactory
+namespace Patterns.CreationalPatterns
 {
     /// https://www.dofactory.com/net/abstract-factory-design-pattern
     /// Provide an interface for creating families of related or dependent 

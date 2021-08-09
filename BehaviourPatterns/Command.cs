@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BehaviourPatterns.Command
+namespace Patterns.BehaviourPatterns
 {
     /// https://www.dofactory.com/net/command-design-pattern
     /// The Command design pattern encapsulates a request as an object, 
@@ -11,12 +11,12 @@ namespace BehaviourPatterns.Command
     /// </summary>
     abstract class Command
     {
-        protected Receiver receiver;
+        protected Receiver Receiver;
 
         // Constructor
         public Command(Receiver receiver)
         {
-            this.receiver = receiver;
+            this.Receiver = receiver;
         }
         public abstract void Execute();
     }
@@ -34,7 +34,7 @@ namespace BehaviourPatterns.Command
 
         public override void Execute()
         {
-            receiver.Action();
+            Receiver.Action();
         }
     }
 
@@ -54,16 +54,16 @@ namespace BehaviourPatterns.Command
     /// </summary>
     class Invoker
     {
-        private Command _command;
+        private Command Command;
 
         public void SetCommand(Command command)
         {
-            this._command = command;
+            this.Command = command;
         }
 
         public void ExecuteCommand()
         {
-            _command.Execute();
+            Command.Execute();
         }
     }
 

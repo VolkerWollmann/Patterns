@@ -1,12 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BehaviourPatterns.Visitor;
-using BehaviourPatterns.VisitorExample;
-using BehaviourPatterns.Strategy;
-using BehaviourPatterns.Command;
-using BehaviourPatterns.Decorator;
-using BehaviourPatterns.Observer;
-using BehaviourPatterns.State;
+using Patterns.BehaviourPatterns;
 
 namespace PatternTests
 {
@@ -48,7 +42,7 @@ namespace PatternTests
         [TestMethod]
         public void State()
         {
-            BehaviourPatterns.State.StateExample.Test();
+            StateExample.Test();
         }
     }
 }

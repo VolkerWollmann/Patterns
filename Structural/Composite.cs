@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StructuralPatterns.Composite
+namespace Patterns.Structural
 {
     /// <summary>
     /// MainApp startup class for Structural 

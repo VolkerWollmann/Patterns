@@ -1,12 +1,7 @@
-﻿using System;
-using BehaviourPatterns.VisitorExample;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StructuralPatterns.Adapter;
-using StructuralPatterns.Composite;
-using StructuralPatterns.Facade;
-using StructuralPatterns.Iterator;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Patterns.Examples;
 
-namespace PatternExampleTests
+namespace PatternTests
 {
     [TestClass]
     public class PatternExampleTests

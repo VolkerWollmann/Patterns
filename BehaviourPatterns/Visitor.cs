@@ -6,7 +6,7 @@ using System.Collections.Generic;
 //          The Visitor design pattern represents an operation to be performed on the elements of an object structure.
 //          This pattern lets you define a new operation without changing the classes of the elements on which it operates.
 
-namespace BehaviourPatterns.Visitor
+namespace Patterns.BehaviourPatterns
 {
 	// The Component interface declares an `accept` method that should take the
 	// base visitor interface as an argument.

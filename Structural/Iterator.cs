@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace StructuralPatterns.Iterator
+namespace Patterns.Structural
 {
     // https://www.dofactory.com/net/iterator-design-pattern
     //  Provide a way to access the elements of an aggregate object sequentially 

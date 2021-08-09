@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CreationalPatterns.FactoryMethod
+namespace Patterns.CreationalPatterns
 {
     // https://www.dofactory.com/net/factory-method-design-pattern
     // Summary:  Define an interface for creating an object, but let subclasses decide which class to instantiate. 

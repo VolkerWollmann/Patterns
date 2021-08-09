@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CreationalPatterns.AbstractFactory;
-using BehaviourPatterns.Visitor;
-using BehaviourPatterns.Decorator;
-using BehaviourPatterns.Command;
-using BehaviourPatterns.Observer;
-using StructuralPatterns.Adapter;
-using Other.BusinessDelegate;
-using Other.DataTransferObject;
-using Other.UnitOfWork;
-using CreationalPatterns.FactoryMethod;
+using Patterns.BehaviourPatterns;
+using Patterns.CreationalPatterns;
+using Patterns.Other;
+using Patterns.Structural;
 
 namespace Patterns
 {

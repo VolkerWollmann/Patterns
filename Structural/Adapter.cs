@@ -4,7 +4,7 @@
 //          https://www.dofactory.com/net/adapter-design-pattern
 //          The Adapter design pattern converts the interface of a class into another interface clients expect.
 //          This design pattern lets classes work together that couldn‘t otherwise because of incompatible interfaces.
-namespace StructuralPatterns.Adapter
+namespace Patterns.Structural
 {
     // The Target defines the domain-specific interface used by the client code.
     public interface ITarget

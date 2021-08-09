@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BehaviourPatterns.State
+namespace Patterns.BehaviourPatterns
 {
     /// https://www.dofactory.com/net/state-design-pattern
     /// The State design pattern allows an object to alter its behavior when its internal state changes. 
