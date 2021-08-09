@@ -17,14 +17,14 @@ namespace Patterns.Other
         private int _CustomerCode = 0;
         public int Id
         {
-            get { return _CustomerCode; }
-            set { _CustomerCode = value; }
+            get => _CustomerCode;
+            set => _CustomerCode = value;
         }
         private string _CustomerName = "";
         public string CustomerName
         {
-            get { return _CustomerName; }
-            set { _CustomerName = value; }
+            get => _CustomerName;
+            set => _CustomerName = value;
         }
         public void Insert()
         {

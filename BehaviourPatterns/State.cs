@@ -51,7 +51,7 @@ namespace Patterns.BehaviourPatterns
         // Gets or sets the state
         public State State
         {
-            get { return state; }
+            get => state;
             set
             {
                 state = value;

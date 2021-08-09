@@ -28,16 +28,13 @@ namespace Patterns.Structural
         }
 
         // Gets item count
-        public int Count
-        {
-            get { return _items.Count; }
-        }
+        public int Count => _items.Count;
 
         // Indexer
         public object this[int index]
         {
-            get { return _items[index]; }
-            set { _items.Insert(index, value); }
+            get => _items[index];
+            set => _items.Insert(index, value);
         }
     }
 

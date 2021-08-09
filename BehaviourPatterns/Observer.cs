@@ -43,8 +43,8 @@ namespace Patterns.BehaviourPatterns
         // Gets or sets subject state
         public string SubjectState
         {
-            get { return _subjectState; }
-            set { _subjectState = value; }
+            get => _subjectState;
+            set => _subjectState = value;
         }
     }
 
@@ -83,8 +83,8 @@ namespace Patterns.BehaviourPatterns
         // Gets or sets subject
         public ConcreteSubject Subject
         {
-            get { return _subject; }
-            set { _subject = value; }
+            get => _subject;
+            set => _subject = value;
         }
     }
     /// <summary>

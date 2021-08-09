@@ -35,14 +35,14 @@ namespace Patterns.Examples
 
             public Account Account
             {
-                get { return account; }
-                set { account = value; }
+                get => account;
+                set => account = value;
             }
 
             public double Balance
             {
-                get { return balance; }
-                set { balance = value; }
+                get => balance;
+                set => balance = value;
             }
 
             public abstract void Deposit(double amount);
@@ -248,15 +248,12 @@ namespace Patterns.Examples
                 this.state = new SilverState(0.0, this);
             }
 
-            public double Balance
-            {
-                get { return state.Balance; }
-            }
+            public double Balance => state.Balance;
 
             public State State
             {
-                get { return state; }
-                set { state = value; }
+                get => state;
+                set => state = value;
             }
 
             public void Deposit(double amount)

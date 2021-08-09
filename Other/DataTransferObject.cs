@@ -100,14 +100,8 @@ namespace Patterns.Other
         [XmlElement(IsNullable = true)]
         public string DemoId
         {
-            get
-            {
-                return this.demoId;
-            }
-            set
-            {
-                this.demoId = value;
-            }
+            get => this.demoId;
+            set => this.demoId = value;
         }
 
         ///Public access to the DemoId field.
@@ -115,14 +109,8 @@ namespace Patterns.Other
         [XmlElement(IsNullable = true)]
         public string DemoName
         {
-            get
-            {
-                return this.demoName;
-            }
-            set
-            {
-                this.demoName = value;
-            }
+            get => this.demoName;
+            set => this.demoName = value;
         }
 
         ///Public access to the DemoId field.
@@ -130,14 +118,8 @@ namespace Patterns.Other
         [XmlElement(IsNullable = true)]
         public string DemoProgrammer
         {
-            get
-            {
-                return this.demoProgrammer;
-            }
-            set
-            {
-                this.demoProgrammer = value;
-            }
+            get => this.demoProgrammer;
+            set => this.demoProgrammer = value;
         }
 
     }
