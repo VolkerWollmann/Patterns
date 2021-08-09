@@ -10,7 +10,7 @@ namespace Patterns.Examples
         public Expression Left { get; private set; }
         public Expression Right { get; private set; }
 
-        public Expression(Expression left, Expression right)
+        protected Expression(Expression left, Expression right)
         {
             Left = left;
             Right = right;
@@ -47,8 +47,7 @@ namespace Patterns.Examples
 
         public void DoIt(Expression expression)
         {
-            Number n = expression as Number;
-            if (n != null)
+            if (expression is Number n)
                 Max = Math.Max(Max, n.Value);
         }
     }
@@ -65,14 +64,10 @@ namespace Patterns.Examples
     {
         public Expression DoIt(Expression expression)
         {
-            Addition addition = expression as Addition;
-            if (addition == null)
+            if (!(expression is Addition addition))
                 return expression;
 
-            Number left = expression.Left as Number;
-            Number right = expression.Right as Number;
-
-            if ((left != null) && (right != null))
+            if ((expression.Left is Number left) && (expression.Right is Number right))
                    return new Number(left.Value + right.Value);
 
             return expression;
@@ -83,14 +78,10 @@ namespace Patterns.Examples
     {
         public Expression DoIt(Expression expression)
         {
-            Multiplication addition = expression as Multiplication;
-            if (addition == null)
+            if (!(expression is Multiplication addition))
                 return expression;
 
-            Number left = expression.Left as Number;
-            Number right = expression.Right as Number;
-            
-            if ((left != null) && (right != null))
+            if ((expression.Left is Number left) && (expression.Right is Number right))
                 return new Number(left.Value * right.Value);
 
             return expression;
@@ -102,7 +93,7 @@ namespace Patterns.Examples
     #region Tree elements
     internal class Number : Expression
     {
-        public int Value { get; private set; }
+        public int Value { get; }
 
         public Number(int number):base(null,null)
         {

@@ -45,7 +45,7 @@ namespace Patterns.Examples
 
         public class RedState : State
         {
-            private double serviceFee;
+            private double ServiceFee;
 
             // Constructor
 
@@ -63,7 +63,7 @@ namespace Patterns.Examples
                 Interest = 0.0;
                 LowerLimit = -100.0;
                 UpperLimit = 0.0;
-                serviceFee = 15.00;
+                ServiceFee = 15.00;
             }
 
             public override void Deposit(double amount)
@@ -74,7 +74,7 @@ namespace Patterns.Examples
 
             public override void Withdraw(double amount)
             {
-                amount = amount - serviceFee;
+                amount = amount - ServiceFee;
                 Console.WriteLine("No funds available for withdrawal!");
             }
 
@@ -221,29 +221,24 @@ namespace Patterns.Examples
 
         public class Account
         {
-            private State state;
-            private string owner;
+            private string Owner;
 
             // Constructor
 
             public Account(string owner)
             {
                 // New accounts are 'Silver' by default
-                this.owner = owner;
-                this.state = new SilverState(0.0, this);
+                this.Owner = owner;
+                this.State = new SilverState(0.0, this);
             }
 
-            public double Balance => state.Balance;
+            public double Balance => State.Balance;
 
-            public State State
-            {
-                get => state;
-                set => state = value;
-            }
+            public State State { get; set; }
 
             public void Deposit(double amount)
             {
-                state.Deposit(amount);
+                State.Deposit(amount);
                 Console.WriteLine("Deposited {0:C} --- ", amount);
                 Console.WriteLine(" Balance = {0:C}", this.Balance);
                 Console.WriteLine(" Status  = {0}",
@@ -253,7 +248,7 @@ namespace Patterns.Examples
 
             public void Withdraw(double amount)
             {
-                state.Withdraw(amount);
+                State.Withdraw(amount);
                 Console.WriteLine("Withdrew {0:C} --- ", amount);
                 Console.WriteLine(" Balance = {0:C}", this.Balance);
                 Console.WriteLine(" Status  = {0}\n",
@@ -262,7 +257,7 @@ namespace Patterns.Examples
 
             public void PayInterest()
             {
-                state.PayInterest();
+                State.PayInterest();
                 Console.WriteLine("Interest Paid --- ");
                 Console.WriteLine(" Balance = {0:C}", this.Balance);
                 Console.WriteLine(" Status  = {0}\n",
