@@ -4,7 +4,7 @@ namespace Patterns.BehaviourPatterns
 {
     /// https://www.dofactory.com/net/command-design-pattern
     /// The Command design pattern encapsulates a request as an object, 
-    /// thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
+    /// thereby letting you parametrize clients with different requests, queue or log requests, and support undoable operations.
 
     /// <summary>
     /// The 'Command' abstract class

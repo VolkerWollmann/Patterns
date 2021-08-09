@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Patterns.BehaviourPatterns;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Patterns.CreationalPatterns;
 
 namespace PatternTests

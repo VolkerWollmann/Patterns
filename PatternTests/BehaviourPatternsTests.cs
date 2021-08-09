@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Patterns.BehaviourPatterns;
 
 namespace PatternTests
@@ -11,7 +10,7 @@ namespace PatternTests
         public void Visitor()
         {
             // Visitor
-            Vistor visitor = new Vistor();
+            Visitor visitor = new Visitor();
             visitor.Main();
         }
 

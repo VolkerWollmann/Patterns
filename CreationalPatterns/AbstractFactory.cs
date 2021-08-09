@@ -8,7 +8,7 @@ namespace Patterns.CreationalPatterns
     /// 
 
     /// https://de.wikipedia.org/wiki/Abstrakte_Fabrik
-    /// Example : Schach, Dame, Mühle, Halma : abstrake Fabrik zum Erzeugen von Brett und Figuren 
+    /// Example : Chess, Dame, mill : abstract factory to create board an figures
 
     /// <summary>
     /// The 'AbstractFactory' abstract class

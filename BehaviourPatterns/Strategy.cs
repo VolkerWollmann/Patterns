@@ -42,10 +42,12 @@ namespace Patterns.BehaviourPatterns
             var result = this.Strategy.DoAlgorithm(new List<string> { "a", "b", "c", "d", "e" });
 
             string resultStr = string.Empty;
-            foreach (var element in result as List<string>)
+
+            foreach (var element in (List<string>)result)
             {
                 resultStr += element + ",";
             }
+
 
             Console.WriteLine(resultStr);
         }
@@ -69,7 +71,7 @@ namespace Patterns.BehaviourPatterns
         public object DoAlgorithm(object data)
         {
             var list = data as List<string>;
-            list.Sort();
+            list?.Sort();
 
             return list;
         }
@@ -80,8 +82,11 @@ namespace Patterns.BehaviourPatterns
         public object DoAlgorithm(object data)
         {
             var list = data as List<string>;
-            list.Sort();
-            list.Reverse();
+            if (list != null)
+            {
+                list.Sort();
+                list.Reverse();
+            }
 
             return list;
         }

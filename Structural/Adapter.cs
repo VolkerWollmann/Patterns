@@ -12,8 +12,8 @@ namespace Patterns.Structural
         string GetRequest();
     }
 
-    // The Adaptee contains some useful behavior, but its interface is
-    // incompatible with the existing client code. The Adaptee needs some
+    // The adaptee contains some useful behavior, but its interface is
+    // incompatible with the existing client code. The adaptee needs some
     // adaptation before the client code can use it.
     class Adaptee
     {
@@ -23,7 +23,7 @@ namespace Patterns.Structural
         }
     }
 
-    // The Adapter makes the Adaptee's interface compatible with the Target's
+    // The Adapter makes the adaptee's interface compatible with the Target's
     // interface.
     class Adapter : ITarget
     {

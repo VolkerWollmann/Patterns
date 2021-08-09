@@ -75,22 +75,22 @@ namespace Patterns.Other
             Console.WriteLine("Unit of Work");
             Console.WriteLine("=======================");
 
-            Customer customerobj = new Customer();// record 1 Customer
-            customerobj.Id = 1000;
-            customerobj.CustomerName = "shiv";
+            Customer customerObj = new Customer();// record 1 Customer
+            customerObj.Id = 1000;
+            customerObj.CustomerName = "shiv";
 
-            Customer supplierobj = new Customer(); // Record 2 Customer
-            supplierobj.Id = 2000;
-            supplierobj.CustomerName = "xxxx";
+            Customer supplierObj = new Customer(); // Record 2 Customer
+            supplierObj.Id = 2000;
+            supplierObj.CustomerName = "CustomerName";
 
             UnitOfWork unitOfWork  = new UnitOfWork();
             
-            unitOfWork.Add(customerobj); // record 1 added to inmemory
-            unitOfWork.Add(supplierobj); // record 1 added to inmemory
+            unitOfWork.Add(customerObj); // record 1 added to in memory
+            unitOfWork.Add(supplierObj); // record 1 added to in memory
             
             unitOfWork.Load().First().CustomerName += " changed";
            
-            unitOfWork.Commit(); // The full inmemory collection is sent for final committ 
+            unitOfWork.Commit(); // The full in memory collection is sent for final commit 
         }
 	}
 }

@@ -6,8 +6,8 @@ namespace Patterns.CreationalPatterns
     // Summary:  Define an interface for creating an object, but let subclasses decide which class to instantiate. 
     // Factory Method lets a class defer instantiation to subclasses.
     // 
-    // User of Factory mehtod knows about base class/Interface . Factory methode may create a derieved class instantion or class instation, which fullfills interface
-    
+    // User of Factory method knows about base class/Interface . Factory method may create a derived class instantiation or class instantiation, which fulfills interface
+
     /// <summary>
     /// MainApp startup class for Structural 
     /// Factory Method Design Pattern.

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Patterns.Examples
 {
@@ -73,7 +69,7 @@ namespace Patterns.Examples
 
             private void Initialize()
             {
-                // Should come from a datasource
+                // Should come from a data source
 
                 interest = 0.0;
                 lowerLimit = -100.0;
@@ -132,7 +128,7 @@ namespace Patterns.Examples
 
             private void Initialize()
             {
-                // Should come from a datasource
+                // Should come from a data source
                 interest = 0.0;
                 lowerLimit = 0.0;
                 upperLimit = 1000.0;

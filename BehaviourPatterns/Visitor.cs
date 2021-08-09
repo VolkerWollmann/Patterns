@@ -110,7 +110,7 @@ namespace Patterns.BehaviourPatterns
 		}
 	}
 
-	public class Vistor
+	public class Visitor
 	{
 		public void Main()
 		{

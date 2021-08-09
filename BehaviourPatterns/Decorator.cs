@@ -4,7 +4,7 @@ namespace Patterns.BehaviourPatterns
 {
     /// https://www.dofactory.com/net/decorator-design-pattern
     /// The Decorator design pattern attaches additional responsibilities to an object dynamically. 
-    /// This pattern provide a flexible alternative to subclassing for extending functionality.
+    /// This pattern provide a flexible alternative to sub classing for extending functionality.
 
     /// <summary>
     /// The 'Component' abstract class

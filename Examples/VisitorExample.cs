@@ -65,8 +65,8 @@ namespace Patterns.Examples
     {
         public Expression DoIt(Expression expression)
         {
-            Addition addtion = expression as Addition;
-            if (addtion == null)
+            Addition addition = expression as Addition;
+            if (addition == null)
                 return expression;
 
             Number left = expression.Left as Number;
@@ -83,8 +83,8 @@ namespace Patterns.Examples
     {
         public Expression DoIt(Expression expression)
         {
-            Multiplication addtion = expression as Multiplication;
-            if (addtion == null)
+            Multiplication addition = expression as Multiplication;
+            if (addition == null)
                 return expression;
 
             Number left = expression.Left as Number;
@@ -154,10 +154,10 @@ namespace Patterns.Examples
 
             Expression expression = new Addition(three, new Multiplication(five, eight));
 
-            MaxFinder maxfinder = new MaxFinder();
-            expression.Accept(maxfinder);
+            MaxFinder maxFinder = new MaxFinder();
+            expression.Accept(maxFinder);
 
-            Assert.AreEqual<int>(maxfinder.Max, 8);
+            Assert.AreEqual<int>(maxFinder.Max, 8);
         }
 
         public static void TransformingVisitor()
@@ -170,11 +170,11 @@ namespace Patterns.Examples
 
             Expression expression = new Addition(new Multiplication(one, three), new Multiplication(five, eight));
 
-            List<ITransformingVisitor> vistors = new List<ITransformingVisitor>() { new Adder(), new Multiplier() };
+            List<ITransformingVisitor> visitors = new List<ITransformingVisitor>() { new Adder(), new Multiplier() };
          
             while( ! (expression is Number) )
             {
-                vistors.ForEach(vistor => { expression = expression.Accept(vistor); });
+                visitors.ForEach(visitor => { expression = expression.Accept(visitor); });
             }
 
             Assert.AreEqual<int>(((Number)expression).Value, 43);

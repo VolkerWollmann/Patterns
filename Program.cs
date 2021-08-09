@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Patterns.BehaviourPatterns;
+﻿using Patterns.BehaviourPatterns;
 using Patterns.CreationalPatterns;
 using Patterns.Other;
 using Patterns.Structural;
@@ -15,7 +10,7 @@ namespace Patterns
 		static void Main(string[] args)
 		{
 			#region Creational Patterns
-			//Abstract Facotry;
+			//Abstract Factory;
 			AbstractFactoryExample.AbstractFactory();
 
 			#endregion
@@ -25,7 +20,7 @@ namespace Patterns
 
             #region beavioural Patterns
             // Visitor
-            Vistor visitor = new Vistor();
+            Visitor visitor = new Visitor();
 			visitor.Main();
 
 			//Decorator
