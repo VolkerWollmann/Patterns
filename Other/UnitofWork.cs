@@ -43,8 +43,8 @@ namespace Patterns.Other
     }
     internal class UnitOfWork
     {
-        private List<Customer> Changed = new List<Customer>();
-        private List<IEntity> New = new List<IEntity>();
+        private readonly List<Customer> Changed = new List<Customer>();
+        private readonly List<IEntity> New = new List<IEntity>();
         public void Add(IEntity obj)
         {
             New.Add(obj);

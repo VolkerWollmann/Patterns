@@ -34,7 +34,7 @@ namespace Patterns.Structural
     /// </summary>
     class Composite : Component
     {
-        private List<Component> _children = new List<Component>();
+        private readonly List<Component> Children = new List<Component>();
 
         // Constructor
         public Composite(string name)
@@ -45,12 +45,12 @@ namespace Patterns.Structural
 
         public override void Add(Component component)
         {
-            _children.Add(component);
+            Children.Add(component);
         }
 
         public override void Remove(Component component)
         {
-            _children.Remove(component);
+            Children.Remove(component);
         }
 
         public override void Display(int depth)
@@ -58,7 +58,7 @@ namespace Patterns.Structural
             Console.WriteLine(new String('-', depth) + Name);
 
             // Recursively display child nodes
-            foreach (Component component in _children)
+            foreach (Component component in Children)
             {
                 component.Display(depth + 2);
             }

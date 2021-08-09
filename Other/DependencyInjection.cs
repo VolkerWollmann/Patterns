@@ -24,14 +24,14 @@ namespace Patterns.Other
 
         private class Dependent
         {
-            IDependency dependency;
+            readonly IDependency Dependency;
             internal void UseDependency()
             {
-                dependency.DoSomeThing();
+                Dependency.DoSomeThing();
             }
             public Dependent(IDependency actualDependency)
             {
-                dependency = actualDependency;
+                Dependency = actualDependency;
             }
         }
 
