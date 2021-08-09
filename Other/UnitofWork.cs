@@ -14,7 +14,7 @@ namespace Patterns.Other
 	}
     public class Customer : IEntity
     {
-        private int _CustomerCode = 0;
+        private int _CustomerCode;
         public int Id
         {
             get => _CustomerCode;

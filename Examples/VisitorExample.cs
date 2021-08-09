@@ -64,7 +64,7 @@ namespace Patterns.Examples
     {
         public Expression DoIt(Expression expression)
         {
-            if (!(expression is Addition addition))
+            if (!(expression is Addition))
                 return expression;
 
             if ((expression.Left is Number left) && (expression.Right is Number right))
@@ -78,7 +78,7 @@ namespace Patterns.Examples
     {
         public Expression DoIt(Expression expression)
         {
-            if (!(expression is Multiplication addition))
+            if (!(expression is Multiplication))
                 return expression;
 
             if ((expression.Left is Number left) && (expression.Right is Number right))

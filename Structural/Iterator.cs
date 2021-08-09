@@ -55,7 +55,7 @@ namespace Patterns.Structural
     class ConcreteIterator : Iterator
     {
         private ConcreteAggregate _aggregate;
-        private int _current = 0;
+        private int _current;
 
         // Constructor
         public ConcreteIterator(ConcreteAggregate aggregate)
