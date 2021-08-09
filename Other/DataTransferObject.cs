@@ -47,7 +47,7 @@ namespace Patterns.Other
             catch (Exception ex)
             {
                 // Propogate the exception.
-                throw ex;
+                throw;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Patterns.Other
             catch (Exception ex)
             {
                 // Propogate the exception.
-                throw ex;
+                throw;
             }
         }
 

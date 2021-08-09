@@ -68,7 +68,7 @@ namespace Patterns.CreationalPatterns
         /// <summary>
         /// Entry point into console application.
         /// </summary>
-        public static void FactoryMethod()
+        public static void Test()
         {
             // An array of creators
             Creator[] creators = new Creator[2];

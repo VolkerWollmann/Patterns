@@ -17,7 +17,7 @@ namespace PatternTests
         [TestMethod]
         public void FactoryMethod()
         {
-            FactoryMethodExample.FactoryMethod();
+            FactoryMethodExample.Test();
         }
     }
 }

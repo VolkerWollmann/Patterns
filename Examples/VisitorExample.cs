@@ -177,7 +177,7 @@ namespace Patterns.Examples
                 vistors.ForEach(vistor => { expression = expression.Accept(vistor); });
             }
 
-            Assert.AreEqual<int>((expression as Number).Value, 43);
+            Assert.AreEqual<int>(((Number)expression).Value, 43);
         }
 
 

@@ -18,9 +18,6 @@ namespace Patterns
 			//Abstract Facotry;
 			AbstractFactoryExample.AbstractFactory();
 
-			//Factory Method;
-			FactoryMethodExample.FactoryMethod();
-			
 			#endregion
 
 			//Adapter
