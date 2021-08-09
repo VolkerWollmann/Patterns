@@ -74,7 +74,7 @@ namespace Patterns.Examples
 
             public override void Withdraw(double amount)
             {
-                amount = amount - ServiceFee;
+                Balance -= amount - ServiceFee;
                 Console.WriteLine("No funds available for withdrawal!");
             }
 
@@ -221,7 +221,7 @@ namespace Patterns.Examples
 
         public class Account
         {
-            private string Owner;
+            private readonly string Owner;
 
             // Constructor
 
@@ -239,6 +239,7 @@ namespace Patterns.Examples
             public void Deposit(double amount)
             {
                 State.Deposit(amount);
+                Console.WriteLine("Account:" + Owner);
                 Console.WriteLine("Deposited {0:C} --- ", amount);
                 Console.WriteLine(" Balance = {0:C}", this.Balance);
                 Console.WriteLine(" Status  = {0}",

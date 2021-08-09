@@ -28,20 +28,12 @@ namespace Patterns.Other
         /// XML
         public static string SerializeDTO(DTO dto)
         {
-            try
-            {
-                XmlSerializer xmlSer = new XmlSerializer(dto.GetType());
-                StringWriter sWriter = new StringWriter();
-                // Serialize the dto to xml.
-                xmlSer.Serialize(sWriter, dto);
-                // Return the string of xml.
-                return sWriter.ToString();
-            }
-            catch (Exception ex)
-            {
-                // Propagate the exception.
-                throw;
-            }
+            XmlSerializer xmlSer = new XmlSerializer(dto.GetType());
+            StringWriter sWriter = new StringWriter();
+            // Serialize the dto to xml.
+            xmlSer.Serialize(sWriter, dto);
+            // Return the string of xml.
+            return sWriter.ToString();
         }
 
         /// 
@@ -52,21 +44,13 @@ namespace Patterns.Other
         /// DTO
         public static DTO DeserializeXml(string xml, DTO dto)
         {
-            try
-            {
-                XmlSerializer xmlSer = new XmlSerializer(dto.GetType());
-                // Read the XML.
-                StringReader sReader = new StringReader(xml);
-                // Cast the deserialized xml to the type of dto.
-                DTO retDTO = (DTO)xmlSer.Deserialize(sReader);
-                // Return the data transfer object.
-                return retDTO;
-            }
-            catch (Exception ex)
-            {
-                // Propagate the exception.
-                throw;
-            }
+            XmlSerializer xmlSer = new XmlSerializer(dto.GetType());
+            // Read the XML.
+            StringReader sReader = new StringReader(xml);
+            // Cast the deserialized xml to the type of dto.
+            DTO retDTO = (DTO)xmlSer.Deserialize(sReader);
+            // Return the data transfer object.
+            return retDTO;
         }
 
     }
