@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.BehaviourPatterns
 {
@@ -95,13 +96,17 @@ namespace Patterns.BehaviourPatterns
             // Configure Observer pattern
             ConcreteSubject s = new ConcreteSubject();
 
-            s.Attach(new ConcreteObserver(s, "X"));
+            ConcreteObserver concreteObserverX = new ConcreteObserver(s, "X");
+            Assert.AreNotEqual(concreteObserverX.Subject, null);
+            s.Attach(concreteObserverX);
             s.Attach(new ConcreteObserver(s, "Y"));
             s.Attach(new ConcreteObserver(s, "Z"));
 
             // Change subject and notify observers
             s.SubjectState = "ABC";
             s.Notify();
+
+            s.Detach(concreteObserverX);
         }
     }
 }

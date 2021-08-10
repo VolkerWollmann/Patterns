@@ -11,7 +11,7 @@ namespace Patterns.Other
     /// 
     /// This is the base class for all DataTransferObjects.
     /// 
-    public abstract class DTO
+    public abstract class DataTransferObjects
     {
     }
 
@@ -19,14 +19,14 @@ namespace Patterns.Other
     /// 
     /// Summary description for DTOSerializerHelper.
     /// 
-    public class DTOSerializerHelper
+    public class DtoSerializerHelper
     {
         /// 
         /// Creates xml string from given dto.
         /// 
         /// DTO
         /// XML
-        public static string SerializeDTO(DTO dto)
+        public static string SerializeDto(DataTransferObjects dto)
         {
             XmlSerializer xmlSer = new XmlSerializer(dto.GetType());
             StringWriter sWriter = new StringWriter();
@@ -42,15 +42,15 @@ namespace Patterns.Other
         /// string of xml
         /// type of dto
         /// DTO
-        public static DTO DeserializeXml(string xml, DTO dto)
+        public static DataTransferObjects DeserializeXml(string xml, DataTransferObjects dto)
         {
             XmlSerializer xmlSer = new XmlSerializer(dto.GetType());
             // Read the XML.
             StringReader sReader = new StringReader(xml);
             // Cast the deserialized xml to the type of dto.
-            DTO retDTO = (DTO)xmlSer.Deserialize(sReader);
+            DataTransferObjects retDto = (DataTransferObjects)xmlSer.Deserialize(sReader);
             // Return the data transfer object.
-            return retDTO;
+            return retDto;
         }
 
     }
@@ -61,7 +61,7 @@ namespace Patterns.Other
     /// 
     /// Summary description for the DemoDTO.
     /// 
-    public class DemoDTO : DTO
+    public class DemoDto : DataTransferObjects
     {
         // Variables encapsulated by class (private).
 
@@ -93,9 +93,9 @@ namespace Patterns.Other
             this.ProcessDemo();
         }
 
-        private DemoDTO CreateDemoDto()
+        private DemoDto CreateDemoDto()
         {
-            DemoDTO dto = new DemoDTO
+            DemoDto dto = new DemoDto
             {
                 DemoId = "1",
                 DemoName = "Data Transfer Object Demonstration Program",
@@ -107,7 +107,7 @@ namespace Patterns.Other
 
         private void ProcessDemo()
         {
-            DemoDTO dto = this.CreateDemoDto();
+            DemoDto dto = this.CreateDemoDto();
 
             // Write the deserialized dto values.
             Console.WriteLine("Not Serialized DTO");
@@ -119,7 +119,7 @@ namespace Patterns.Other
             Console.WriteLine("\r");
 
             // Serialize the dto to xml.
-            string strXml = DTOSerializerHelper.SerializeDTO(dto);
+            string strXml = DtoSerializerHelper.SerializeDto(dto);
 
             // Write the serialized dto as xml.
             Console.WriteLine();
@@ -130,9 +130,9 @@ namespace Patterns.Other
             Console.WriteLine("\r");
 
             // Deserialize the xml to the data transfer object.
-            DemoDTO desDto =
-              (DemoDTO)DTOSerializerHelper.DeserializeXml(strXml,
-              new DemoDTO());
+            DemoDto desDto =
+              (DemoDto)DtoSerializerHelper.DeserializeXml(strXml,
+              new DemoDto());
 
             Assert.AreEqual(dto.DemoId, desDto.DemoId);
             Assert.AreEqual(dto.DemoName, desDto.DemoName);

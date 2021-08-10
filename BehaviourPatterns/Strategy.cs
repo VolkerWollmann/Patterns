@@ -18,15 +18,12 @@ namespace Patterns.BehaviourPatterns
         // work with all strategies via the Strategy interface.
         private IStrategy Strategy;
 
-        public StrategyContext()
-        { }
-
         // Usually, the Context accepts a strategy through the constructor, but
         // also provides a setter to change it at runtime.
-        public StrategyContext(IStrategy strategy)
-        {
-            this.Strategy = strategy;
-        }
+        //public StrategyContext(IStrategy strategy)
+        //{
+        //    this.Strategy = strategy;
+        //}
 
         // Usually, the Context allows replacing a Strategy object at runtime.
         public void SetStrategy(IStrategy strategy)

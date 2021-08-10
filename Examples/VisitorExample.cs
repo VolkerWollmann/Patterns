@@ -109,25 +109,9 @@ namespace Patterns.Examples
         }
     }
 
-    internal class Subtraction : Expression
-    {
-        public Subtraction(Expression left, Expression right) : base(left, right)
-        {
-
-        }
-    }
-
     internal class Multiplication : Expression
     {
         public Multiplication(Expression left, Expression right) : base(left, right)
-        {
-
-        }
-    }
-
-    internal class Division : Expression
-    {
-        public Division(Expression left, Expression right) : base(left, right)
         {
 
         }

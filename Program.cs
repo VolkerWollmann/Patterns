@@ -1,4 +1,5 @@
-﻿using Patterns.BehaviourPatterns;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Patterns.BehaviourPatterns;
 using Patterns.CreationalPatterns;
 using Patterns.Other;
 using Patterns.Structural;
@@ -9,6 +10,8 @@ namespace Patterns
 	{
 		static void Main(string[] args)
 		{
+			Assert.AreEqual(args, null);
+
 			#region Creational Patterns
 			//Abstract Factory;
 			AbstractFactoryExample.AbstractFactory();
