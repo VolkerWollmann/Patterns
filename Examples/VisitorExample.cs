@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.Examples
@@ -7,8 +6,8 @@ namespace Patterns.Examples
 
     internal abstract class Expression
     {
-        public Expression Left { get; private set; }
-        public Expression Right { get; private set; }
+        internal Expression Left { get; set; }
+        internal Expression Right { get; set; }
 
         protected Expression(Expression left, Expression right)
         {
@@ -16,79 +15,10 @@ namespace Patterns.Examples
             Right = right;
         }
 
-        public void Accept(IVisitor visitor)
-        {
-            if (Left != null)
-                Left.Accept(visitor);
-            if (Right != null)
-                Right.Accept(visitor);
-            visitor.DoIt(this);
-        }
+        internal abstract void Accept(Visitor visitor);
 
-        public Expression Accept(ITransformingVisitor visitor)
-        {
-            if (Left != null)
-                Left = Left.Accept(visitor);
-            if (Right != null)
-                Right = Right.Accept(visitor);
-            return visitor.DoIt(this);
-        }
+        internal abstract Expression Accept(TransformingVisitor visitor);
     }
-
-    #region IVisitor
-    internal interface IVisitor
-    {
-        void DoIt(Expression expression);
-    }
-
-    internal class MaxFinder : IVisitor
-    {
-        public int Max { get; private set; } = int.MinValue;
-
-        public void DoIt(Expression expression)
-        {
-            if (expression is Number n)
-                Max = Math.Max(Max, n.Value);
-        }
-    }
-    #endregion
-
-    #region ITransformingVisitor
-
-    internal interface ITransformingVisitor
-    {
-        Expression DoIt(Expression expression);
-    }
-
-    internal class Adder : ITransformingVisitor
-    {
-        public Expression DoIt(Expression expression)
-        {
-            if (!(expression is Addition))
-                return expression;
-
-            if ((expression.Left is Number left) && (expression.Right is Number right))
-                   return new Number(left.Value + right.Value);
-
-            return expression;
-        }
-    }
-
-    internal class Multiplier : ITransformingVisitor
-    {
-        public Expression DoIt(Expression expression)
-        {
-            if (!(expression is Multiplication))
-                return expression;
-
-            if ((expression.Left is Number left) && (expression.Right is Number right))
-                return new Number(left.Value * right.Value);
-
-            return expression;
-        }
-    }
-
-    #endregion
 
     #region Tree elements
     internal class Number : Expression
@@ -99,6 +29,17 @@ namespace Patterns.Examples
         {
             Value = number;
         }
+
+
+        internal override void Accept(Visitor visitor)
+        {
+            visitor.DoIt(this);
+        }
+
+        internal override Expression Accept(TransformingVisitor visitor)
+        {
+            return visitor.DoIt(this);
+        }
     }
 
     internal class Addition : Expression
@@ -106,6 +47,16 @@ namespace Patterns.Examples
         public Addition(Expression left, Expression right) : base(left, right)
         {
 
+        }
+
+        internal override void Accept(Visitor visitor)
+        {
+            visitor.DoIt(this);
+        }
+
+        internal override Expression Accept(TransformingVisitor visitor)
+        {
+            return visitor.DoIt(this);
         }
     }
 
@@ -115,7 +66,138 @@ namespace Patterns.Examples
         {
 
         }
+
+        internal override void Accept(Visitor visitor)
+        {
+            visitor.DoIt(this);
+        }
+
+        internal override Expression Accept(TransformingVisitor visitor)
+        {
+            return visitor.DoIt(this);
+        }
     }
+    #endregion
+
+    #region Visitor
+    internal abstract class Visitor
+    {
+        internal abstract void DoIt(Number expression);
+
+        internal abstract void DoIt(Addition expression);
+
+        internal abstract void DoIt(Multiplication expression);
+
+        internal abstract void DoIt(Expression expression);
+
+    }
+
+    internal class MaxFinder : Visitor
+    {
+        public int Max { get; private set; } = int.MinValue;
+
+        internal override void DoIt(Number expression)
+        {
+            if (expression.Value > Max)
+                Max = expression.Value;
+        }
+
+        internal override void DoIt(Addition expression)
+        {
+            this.DoIt((Expression)expression);
+        }
+
+        internal override void DoIt(Multiplication expression)
+        {
+            this.DoIt((Expression)expression);
+        }
+
+        internal override void DoIt(Expression expression)
+        {
+            if (expression.Left != null)
+                expression.Left.Accept(this);
+            if (expression.Right != null)
+                expression.Right.Accept(this);
+        }
+    }
+    #endregion
+
+    #region TransformingVisitor
+
+    internal abstract class TransformingVisitor
+    {
+        internal abstract Expression DoIt(Number expression);
+
+        internal abstract Expression DoIt(Addition expression);
+
+        internal abstract Expression DoIt(Multiplication expression);
+
+        internal abstract Expression DoIt(Expression expression);
+    }
+
+    internal class Adder : TransformingVisitor
+    {
+        internal override Expression DoIt(Number expression)
+        {
+            return expression;
+        }
+
+        internal override Expression DoIt(Addition expression)
+        {
+            
+            if ((expression.Left is Number left) && (expression.Right is Number right))
+                return new Number(left.Value + right.Value);
+
+            return expression;
+        }
+
+        internal override Expression DoIt(Multiplication expression)
+        {
+            return this.DoIt((Expression)expression);
+        }
+
+        internal override Expression DoIt(Expression expression)
+        {
+            if (expression.Left != null)
+                expression.Left = expression.Left.Accept(this);
+            if (expression.Right != null)
+                expression.Right.Accept(this);
+
+            return expression;
+        }
+    }
+
+    internal class Multiplier : TransformingVisitor
+    {
+        internal override Expression DoIt(Number expression)
+        {
+            return expression;
+        }
+
+        internal override Expression DoIt(Addition expression)
+        {
+            return this.DoIt((Expression)expression);
+        }
+
+        internal override Expression DoIt(Multiplication expression)
+        {
+            if ((expression.Left is Number left) && (expression.Right is Number right))
+                return new Number(left.Value * right.Value);
+
+            return expression;
+        }
+
+        internal override Expression DoIt(Expression expression)
+        {
+            if (expression.Left != null)
+                expression.Left = expression.Left.Accept(this);
+            if (expression.Right != null)
+                expression.Right = expression.Right.Accept(this);
+
+            return expression;
+        }
+    }
+
     #endregion
 
     public class VisitorExample
@@ -145,7 +227,7 @@ namespace Patterns.Examples
 
             Expression expression = new Addition(new Multiplication(one, three), new Multiplication(five, eight));
 
-            List<ITransformingVisitor> visitors = new List<ITransformingVisitor>() { new Adder(), new Multiplier() };
+            List<TransformingVisitor> visitors = new List<TransformingVisitor>() { new Adder(), new Multiplier() };
          
             while( ! (expression is Number) )
             {

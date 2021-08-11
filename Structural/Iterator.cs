@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.Structural
 {
@@ -90,7 +91,7 @@ namespace Patterns.Structural
         // Gets whether iterations are complete
         public override bool IsDone()
         {
-            return Current >= Aggregate.Count;
+            return (Current+1) >= Aggregate.Count;
         }
     }
     /// <summary>
@@ -117,12 +118,14 @@ namespace Patterns.Structural
 
             Console.WriteLine("Iterating over collection:");
 
-            object item = i.First();
-            while (item != null)
+            Console.WriteLine(i.First());
+            while (!i.IsDone())
             {
-                Console.WriteLine(item);
-                item = i.Next();
+                Console.WriteLine(i.CurrentItem());
+                i.Next();
             }
+
+            Assert.AreEqual(true, i.IsDone() );
         }
     }
 }
