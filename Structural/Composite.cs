@@ -7,11 +7,12 @@ namespace Patterns.Structural
     /// MainApp startup class for Structural 
     /// Composite Design Pattern.
     /// https://www.dofactory.com/net/composite-design-pattern
+    /// https://en.wikipedia.org/wiki/Composite_pattern
     /// </summary>
     /// The Composite design pattern composes objects into tree structures to represent part-whole hierarchies. 
     /// This pattern lets clients treat individual objects and compositions of objects uniformly.
     /// <summary>
-    
+
     /// The 'Component' abstract class
     /// </summary>
     abstract class Component
