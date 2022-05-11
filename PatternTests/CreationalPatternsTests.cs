@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Patterns.CreationalPatterns;
+using PCE = Patterns.CreationalPatterns.ExtensionMethodVsConstructor;
 
 namespace PatternTests
 {
@@ -16,6 +17,12 @@ namespace PatternTests
         public void FactoryMethod()
         {
             FactoryMethodExample.Test();
+        }
+
+        [TestMethod]
+        public void ExtensionMethodVsConstructor()
+        {
+            PCE.ExtensionMethodVsConstructorExample.Example();
         }
     }
 }
