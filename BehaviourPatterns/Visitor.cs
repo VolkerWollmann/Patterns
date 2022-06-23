@@ -8,17 +8,17 @@ using System.Collections.Generic;
 
 namespace Patterns.BehaviourPatterns
 {
-	// The Component interface declares an `accept` method that should take the
+	// The AcceptVisitor interface declares an `accept` method that should take the
 	// base visitor interface as an argument.
-	public interface IComponent
+	public interface IAcceptVisitor
 	{
 		void Accept(IVisitor visitor);
 	}
 
-	// Each Concrete Component must implement the `Accept` method in such a way
+	// Each Concrete Component must implement the `IAcceptVisitor.Accept` method in such a way
 	// that it calls the visitor's method corresponding to the component's
 	// class.
-	public class ConcreteComponentA : IComponent
+	public class ConcreteComponentA : IAcceptVisitor
 	{
 		// Note that we're calling `VisitConcreteComponentA`, which matches the
 		// current class name. This way we let the visitor know the class of the
@@ -37,7 +37,7 @@ namespace Patterns.BehaviourPatterns
 		}
 	}
 
-	public class ConcreteComponentB : IComponent
+	public class ConcreteComponentB : IAcceptVisitor
 	{
 		// Same here: VisitConcreteComponentB => ConcreteComponentB
 		public void Accept(IVisitor visitor)
@@ -101,7 +101,7 @@ namespace Patterns.BehaviourPatterns
 		// The client code can run visitor operations over any set of elements
 		// without figuring out their concrete classes. The accept operation
 		// directs a call to the appropriate operation in the visitor object.
-		public static void ClientCode(List<IComponent> components, IVisitor visitor)
+		public static void ClientCode(List<IAcceptVisitor> components, IVisitor visitor)
 		{
 			foreach (var component in components)
 			{
@@ -114,7 +114,7 @@ namespace Patterns.BehaviourPatterns
 	{
 		public void Main()
 		{
-			List<IComponent> components = new List<IComponent>
+			List<IAcceptVisitor> components = new List<IAcceptVisitor>
 				{
 					 new ConcreteComponentA(),
 					 new ConcreteComponentB()
