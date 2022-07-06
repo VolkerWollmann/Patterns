@@ -30,5 +30,11 @@ namespace PatternTests
         {
             DependencyInjectionExample.DependencyInjection();
         }
+
+        [TestMethod]
+        public void FluentInterface()
+        {
+            FluentInterfaceTest.Client.Test();
+        }
     }
 }
