@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.Other
 {
+    // #fluent interface #interface
     // Source: https://www.codeproject.com/Articles/5326456/Fluent-Interface-Pattern-in-Csharp-With-Inheritanc
     //         https://en.wikipedia.org/wiki/Fluent_interface : method chaining
     public class FluentInterfaceTest
     {
         class Employee
         {
-            private string FirstName = null;
-            private string LastName = null;
+            public string FirstName = null;
+            public string LastName = null;
             private int Age = 0;
 
             public Employee SetFirstName(string fName)
@@ -49,6 +51,8 @@ namespace Patterns.Other
                 Employee empl = new Employee();
                 empl.SetFirstName("John").SetLastName("Smith").SetAge(30).Print();
 
+                Assert.IsTrue(empl.FirstName == "John");
+                Assert.IsTrue(empl.LastName == "Smith");
             }
         }
     }
