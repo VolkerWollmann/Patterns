@@ -36,5 +36,11 @@ namespace PatternTests
         {
             FluentInterfaceTest.Client.Test();
         }
+
+        [TestMethod]
+        public void ServiceLocator()
+        {
+            ServiceLocatorExample.ServiceLocatorTest();
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace Patterns.Other
 {
     public class DependencyInjectionExample
     {
+        // #Dependency Injection
         // https://en.wikipedia.org/wiki/Dependency_injection
         // In software engineering, dependency injection is a technique 
         // in which an object receives other objects that it depends on.
@@ -37,7 +38,7 @@ namespace Patterns.Other
 
         public static void DependencyInjection()
         {
-            // actual injection
+            // actual injection : Constructor injection ( see also Setter injection, ... )
             IDependency actualDependency = new FirstDependency();
             Dependent dependent = new Dependent(actualDependency);
             dependent.UseDependency();
