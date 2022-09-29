@@ -9,6 +9,8 @@ namespace Patterns.CreationalPatterns
     public class SingletonExample
     {
         // #Singleton
+        // https://en.wikipedia.org/wiki/Singleton_pattern
+        // The singleton pattern is a software design pattern that restricts the instantiation of a class to one "single" instance.
         // 
         //example : https://refactoring.guru/design-patterns/singleton/csharp/example#lang-features
         public sealed class Singleton
