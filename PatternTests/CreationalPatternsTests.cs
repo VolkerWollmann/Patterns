@@ -24,11 +24,5 @@ namespace PatternTests
         {
             PCE.ExtensionMethodVsConstructorExample.Example();
         }
-
-        [TestMethod]
-        public void Singleton()
-        {
-            SingletonExample.Example();
-        }
     }
 }
