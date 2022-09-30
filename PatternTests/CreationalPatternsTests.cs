@@ -30,5 +30,11 @@ namespace PatternTests
         {
             SingletonExample.Example();
         }
+
+        [TestMethod]
+        public void Builder()
+        {
+            BuilderExample.Example();
+        }
     }
 }

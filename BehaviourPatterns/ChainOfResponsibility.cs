@@ -14,7 +14,7 @@ namespace Patterns.BehaviourPatterns
         // the rest are passed to the next processing object in the chain.
         // A mechanism also exists for adding new processing objects to the end of this chain.
         // 
-        //example : https://refactoring.guru/design-patterns/chain-of-responsibility/csharp/example#lang-features
+        // Example : https://refactoring.guru/design-patterns/chain-of-responsibility/csharp/example#lang-features
 
         // The Handler interface declares a method for building the chain of
         // handlers. It also declares a method for executing a request.
