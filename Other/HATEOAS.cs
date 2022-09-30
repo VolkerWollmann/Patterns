@@ -11,7 +11,7 @@ namespace Patterns.Other
     /// https://en.wikipedia.org/wiki/HATEOAS
     /// references in REST response must be valid REST requests of it's own.
     /// </summary>
-    public class HATEOAS
+    public class Hateoas
     {
     }
 }

@@ -65,6 +65,7 @@
     <Compile Include="Other\DataTransferObject.cs" />
     <Compile Include="Other\DependencyInjection.cs" />
     <Compile Include="Other\FluentInterface.cs" />
+    <Compile Include="Other\HATEOAS.cs" />
     <Compile Include="Other\ServiceLocator.cs" />
     <Compile Include="Other\UnitOfWork.cs" />
     <Compile Include="BehaviourPatterns\Visitor.cs" />
