@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BehaviourPatterns\ChainOfResponsibility.cs" />
     <Compile Include="BehaviourPatterns\Command.cs" />
     <Compile Include="BehaviourPatterns\Decorator.cs" />
     <Compile Include="BehaviourPatterns\Observer.cs" />

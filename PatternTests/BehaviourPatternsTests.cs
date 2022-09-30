@@ -43,5 +43,11 @@ namespace PatternTests
         {
             StateExample.Test();
         }
+
+        [TestMethod]
+        public void ChainOfResponsibility()
+        {
+            ChainOfResponsibilityExample.Example();
+        }
     }
 }
