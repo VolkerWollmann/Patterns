@@ -10,7 +10,9 @@ namespace Patterns.BehaviourPatterns
     {
         // #ChainOfResponsibility
         // https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern
-        // The singleton pattern is a software design pattern that restricts the instantiation of a class to one "single" instance.
+        // Each processing object contains logic that defines the types of command objects that it can handle;
+        // the rest are passed to the next processing object in the chain.
+        // A mechanism also exists for adding new processing objects to the end of this chain.
         // 
         //example : https://refactoring.guru/design-patterns/chain-of-responsibility/csharp/example#lang-features
 
