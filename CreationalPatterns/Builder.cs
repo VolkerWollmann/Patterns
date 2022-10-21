@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Patterns.CreationalPatterns
 {
-    //#Builder
+    // #Builder
+    // #gof #book design patterns
     //https://en.wikipedia.org/wiki/Builder_pattern
     //The intent of the Builder design pattern is to separate the construction of a complex object from its representation.
     //
