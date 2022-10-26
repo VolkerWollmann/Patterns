@@ -2,6 +2,8 @@
 
 namespace Patterns.CreationalPatterns
 {
+    // #Abstract Factory
+    // #gof #book design patterns
     /// https://www.dofactory.com/net/abstract-factory-design-pattern
     /// Provide an interface for creating families of related or dependent 
     /// objects without specifying their concrete classes. 
