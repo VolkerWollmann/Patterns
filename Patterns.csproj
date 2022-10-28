@@ -59,6 +59,7 @@
     <Compile Include="BehaviourPatterns\Observer.cs" />
     <Compile Include="CreationalPatterns\Builder.cs" />
     <Compile Include="CreationalPatterns\ExensionMethodVsConstructor.cs" />
+    <Compile Include="CreationalPatterns\Prototype.cs" />
     <Compile Include="CreationalPatterns\Singleton.cs" />
     <Compile Include="Examples\VisitorExample.cs" />
     <Compile Include="BehaviourPatterns\State.cs" />
