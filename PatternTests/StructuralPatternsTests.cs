@@ -31,6 +31,12 @@ namespace PatternTests
         }
 
         [TestMethod]
+        public void Flyweight()
+        {
+            FlyweightExample.Test();
+        }
+
+        [TestMethod]
         public void Iterator()
         {
             IteratorExample.Iterator();
