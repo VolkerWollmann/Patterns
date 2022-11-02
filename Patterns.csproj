@@ -82,6 +82,7 @@
     <Compile Include="Structural\Composite.cs" />
     <Compile Include="Structural\Facade.cs" />
     <Compile Include="Structural\Iterator.cs" />
+    <Compile Include="Structural\Proxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

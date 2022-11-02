@@ -35,5 +35,11 @@ namespace PatternTests
         {
             IteratorExample.Iterator();
         }
+
+        [TestMethod]
+        public void Proxy()
+        {
+            Patterns.Structural.Proxy.ProxyExample.Test();
+        }
     }
 }
