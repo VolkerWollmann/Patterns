@@ -13,6 +13,12 @@ namespace PatternTests
         }
 
         [TestMethod]
+        public void Bridge()
+        {
+            BrigdeExample.Test();
+        }
+
+        [TestMethod]
         public void Composite()
         {
             CompositeExample.Composite();
