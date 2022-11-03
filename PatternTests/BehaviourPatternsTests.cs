@@ -56,5 +56,11 @@ namespace PatternTests
         {
             InterpreterExample.Example();
         }
+
+        [TestMethod]
+        public void Mediator()
+        {
+            MediatorExample.Example();
+        }
     }
 }
