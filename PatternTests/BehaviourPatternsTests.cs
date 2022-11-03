@@ -62,5 +62,11 @@ namespace PatternTests
         {
             MediatorExample.Example();
         }
+
+        [TestMethod]
+        public void Memento()
+        {
+            MementoExample.Example();
+        }
     }
 }
