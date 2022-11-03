@@ -50,5 +50,11 @@ namespace PatternTests
         {
             IteratorExample.Iterator();
         }
+
+        [TestMethod]
+        public void Interpreter()
+        {
+            InterpreterExample.Example();
+        }
     }
 }

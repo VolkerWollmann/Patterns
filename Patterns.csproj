@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="BehaviourPatterns\ChainOfResponsibility.cs" />
     <Compile Include="BehaviourPatterns\Command.cs" />
+    <Compile Include="BehaviourPatterns\Interpreter.cs" />
     <Compile Include="Structural\Decorator.cs" />
     <Compile Include="BehaviourPatterns\Observer.cs" />
     <Compile Include="CreationalPatterns\Builder.cs" />
