@@ -68,5 +68,11 @@ namespace PatternTests
         {
             MementoExample.Example();
         }
+
+        [TestMethod]
+        public void TemplateMethod()
+        {
+            TemplateMethodExample.Example();
+        }
     }
 }
