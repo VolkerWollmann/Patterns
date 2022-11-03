@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="BehaviourPatterns\ChainOfResponsibility.cs" />
     <Compile Include="BehaviourPatterns\Command.cs" />
-    <Compile Include="BehaviourPatterns\Decorator.cs" />
+    <Compile Include="Structural\Decorator.cs" />
     <Compile Include="BehaviourPatterns\Observer.cs" />
     <Compile Include="CreationalPatterns\Builder.cs" />
     <Compile Include="CreationalPatterns\ExensionMethodVsConstructor.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="Structural\Composite.cs" />
     <Compile Include="Structural\Facade.cs" />
     <Compile Include="Structural\Flyweight.cs" />
-    <Compile Include="Structural\Iterator.cs" />
+    <Compile Include="BehaviourPatterns\Iterator.cs" />
     <Compile Include="Structural\Proxy.cs" />
   </ItemGroup>
   <ItemGroup>

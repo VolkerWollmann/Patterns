@@ -2,7 +2,7 @@
 using System.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Patterns.Structural
+namespace Patterns.BehaviourPatterns
 {
     // https://www.dofactory.com/net/iterator-design-pattern
     //  Provide a way to access the elements of an aggregate object sequentially 

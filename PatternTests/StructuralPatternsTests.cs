@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Patterns.Structural;
+using Patterns.Structural.Decorator;
 
 namespace PatternTests
 {
@@ -25,6 +26,12 @@ namespace PatternTests
         }
 
         [TestMethod]
+        public void Decorator()
+        {
+            DecoratorExample.Decorator();
+        }
+
+        [TestMethod]
         public void Facade()
         {
             FacadeExample.Facade();
@@ -34,12 +41,6 @@ namespace PatternTests
         public void Flyweight()
         {
             FlyweightExample.Test();
-        }
-
-        [TestMethod]
-        public void Iterator()
-        {
-            IteratorExample.Iterator();
         }
 
         [TestMethod]
