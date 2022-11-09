@@ -43,6 +43,9 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\MSTest.TestFramework.2.2.5\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,10 +58,15 @@
   <ItemGroup>
     <Compile Include="BehaviourPatterns\ChainOfResponsibility.cs" />
     <Compile Include="BehaviourPatterns\Command.cs" />
-    <Compile Include="BehaviourPatterns\Decorator.cs" />
+    <Compile Include="BehaviourPatterns\Interpreter.cs" />
+    <Compile Include="BehaviourPatterns\Mediator.cs" />
+    <Compile Include="BehaviourPatterns\Memento.cs" />
+    <Compile Include="BehaviourPatterns\TemplateMethod.cs" />
+    <Compile Include="Structural\Decorator.cs" />
     <Compile Include="BehaviourPatterns\Observer.cs" />
     <Compile Include="CreationalPatterns\Builder.cs" />
     <Compile Include="CreationalPatterns\ExensionMethodVsConstructor.cs" />
+    <Compile Include="CreationalPatterns\Prototype.cs" />
     <Compile Include="CreationalPatterns\Singleton.cs" />
     <Compile Include="Examples\VisitorExample.cs" />
     <Compile Include="BehaviourPatterns\State.cs" />
@@ -77,9 +85,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structural\Adapter.cs" />
+    <Compile Include="Structural\Bridge.cs" />
     <Compile Include="Structural\Composite.cs" />
     <Compile Include="Structural\Facade.cs" />
-    <Compile Include="Structural\Iterator.cs" />
+    <Compile Include="Structural\Flyweight.cs" />
+    <Compile Include="BehaviourPatterns\Iterator.cs" />
+    <Compile Include="Structural\Proxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

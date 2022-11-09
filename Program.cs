@@ -3,6 +3,7 @@ using Patterns.BehaviourPatterns;
 using Patterns.CreationalPatterns;
 using Patterns.Other;
 using Patterns.Structural;
+using Patterns.Structural.Decorator;
 
 namespace Patterns
 {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Patterns.Structural;
+using Patterns.Structural.Decorator;
 
 namespace PatternTests
 {
@@ -13,9 +14,21 @@ namespace PatternTests
         }
 
         [TestMethod]
+        public void Bridge()
+        {
+            BrigdeExample.Test();
+        }
+
+        [TestMethod]
         public void Composite()
         {
             CompositeExample.Composite();
+        }
+
+        [TestMethod]
+        public void Decorator()
+        {
+            DecoratorExample.Decorator();
         }
 
         [TestMethod]
@@ -25,9 +38,15 @@ namespace PatternTests
         }
 
         [TestMethod]
-        public void Iterator()
+        public void Flyweight()
         {
-            IteratorExample.Iterator();
+            FlyweightExample.Test();
+        }
+
+        [TestMethod]
+        public void Proxy()
+        {
+            Patterns.Structural.Proxy.ProxyExample.Test();
         }
     }
 }

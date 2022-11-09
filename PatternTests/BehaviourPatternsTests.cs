@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Patterns.BehaviourPatterns;
+using Patterns.Structural;
 
 namespace PatternTests
 {
@@ -27,12 +28,6 @@ namespace PatternTests
         }
 
         [TestMethod]
-        public void Decorator()
-        {
-            DecoratorExample.Decorator();
-        }
-
-        [TestMethod]
         public void Observer()
         {
             ObserverExample.Observer();
@@ -48,6 +43,36 @@ namespace PatternTests
         public void ChainOfResponsibility()
         {
             ChainOfResponsibilityExample.Example();
+        }
+
+        [TestMethod]
+        public void Iterator()
+        {
+            IteratorExample.Iterator();
+        }
+
+        [TestMethod]
+        public void Interpreter()
+        {
+            InterpreterExample.Example();
+        }
+
+        [TestMethod]
+        public void Mediator()
+        {
+            MediatorExample.Example();
+        }
+
+        [TestMethod]
+        public void Memento()
+        {
+            MementoExample.Example();
+        }
+
+        [TestMethod]
+        public void TemplateMethod()
+        {
+            TemplateMethodExample.Example();
         }
     }
 }

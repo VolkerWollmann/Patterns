@@ -36,5 +36,11 @@ namespace PatternTests
         {
             BuilderExample.Example();
         }
+
+        [TestMethod]
+        public void Prototype()
+        {
+            PrototypeExample.Test();
+        }
     }
 }
