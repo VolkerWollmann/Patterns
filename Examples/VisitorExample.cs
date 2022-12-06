@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.Examples
@@ -21,6 +22,7 @@ namespace Patterns.Examples
     }
 
     #region Tree elements
+    [DebuggerDisplay("Number={Value}")]
     internal class Number : Expression
     {
         public int Value { get; }
@@ -219,7 +221,7 @@ namespace Patterns.Examples
 
         public static void TransformingVisitor()
         {
-            // (1 * 3) + ( 5 * 8 )
+            // Arrange : (1 * 3) + ( 5 * 8 )
             Expression one = new Number(1);
             Expression three = new Number(3);
             Expression five = new Number(5);
@@ -229,11 +231,13 @@ namespace Patterns.Examples
 
             List<TransformingVisitor> visitors = new List<TransformingVisitor>() { new Adder(), new Multiplier() };
          
+            // Act : Calculate the expression with the visitors
             while( ! (expression is Number) )
             {
                 visitors.ForEach(visitor => { expression = expression.Accept(visitor); });
             }
 
+            // Assert : Visitors did the right job
             Assert.AreEqual(((Number)expression).Value, 43);
         }
 

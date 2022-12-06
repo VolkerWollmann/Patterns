@@ -105,7 +105,7 @@ namespace Patterns.BehaviourPatterns
         /// </summary>
         public static void Iterator()
         {
-            ConcreteAggregate a = new ConcreteAggregate
+            ConcreteAggregate aggregate = new ConcreteAggregate
             {
                 [0] = "Item A",
                 [1] = "Item B",
@@ -114,18 +114,18 @@ namespace Patterns.BehaviourPatterns
             };
 
             // Create Iterator and provide aggregate
-            Iterator i = a.CreateIterator();
+            Iterator iterator = aggregate.CreateIterator();
 
             Console.WriteLine("Iterating over collection:");
 
-            Console.WriteLine(i.First());
-            while (!i.IsDone())
+            Console.WriteLine(iterator.First());
+            while (!iterator.IsDone())
             {
-                Console.WriteLine(i.CurrentItem());
-                i.Next();
+                Console.WriteLine(iterator.CurrentItem());
+                iterator.Next();
             }
 
-            Assert.AreEqual(true, i.IsDone() );
+            Assert.AreEqual(true, iterator.IsDone() );
         }
     }
 }
