@@ -85,13 +85,22 @@ namespace Patterns.Examples
     #region Visitor
     internal abstract class Visitor
     {
-        internal abstract void DoIt(Number expression);
+        internal virtual void DoIt(Number expression)
+        {
+            DoIt((Expression)expression);
+        }
 
-        internal abstract void DoIt(Addition expression);
+        internal virtual void DoIt(Addition expression)
+        {
+            DoIt((Expression)expression);
+        }
 
-        internal abstract void DoIt(Multiplication expression);
+        internal virtual void DoIt(Multiplication expression)
+        {
+            DoIt((Expression)expression);
+        }
 
-        internal void DoIt(Expression expression)
+        internal virtual void DoIt(Expression expression)
         {
             if (expression.Left != null)
                 expression.Left.Accept(this);
@@ -109,16 +118,6 @@ namespace Patterns.Examples
             if (expression.Value > Max)
                 Max = expression.Value;
         }
-
-        internal override void DoIt(Addition expression)
-        {
-            this.DoIt((Expression)expression);
-        }
-
-        internal override void DoIt(Multiplication expression)
-        {
-            this.DoIt((Expression)expression);
-        }
     }
     #endregion
 
@@ -126,11 +125,20 @@ namespace Patterns.Examples
 
     internal abstract class TransformingVisitor
     {
-        internal abstract Expression DoIt(Number expression);
+        internal virtual Expression DoIt(Number expression)
+        {
+            return DoIt((Expression) expression);
+        }
 
-        internal abstract Expression DoIt(Addition expression);
-        
-        internal abstract Expression DoIt(Multiplication expression);
+        internal virtual Expression DoIt(Addition expression)
+        {
+            return DoIt((Expression)expression);
+        }
+
+        internal virtual Expression DoIt(Multiplication expression)
+        {
+            return DoIt((Expression)expression);
+        }
 
         internal Expression DoIt(Expression expression)
         {
@@ -145,11 +153,6 @@ namespace Patterns.Examples
 
     internal class Adder : TransformingVisitor
     {
-        internal override Expression DoIt(Number expression)
-        {
-            return expression;
-        }
-
         internal override Expression DoIt(Addition expression)
         {
             
@@ -159,28 +162,10 @@ namespace Patterns.Examples
             base.DoIt((Expression)expression);
             return expression;
         }
-
-        internal override Expression DoIt(Multiplication expression)
-        {
-            base.DoIt((Expression)expression);
-            return expression;
-        }
     }
 
     internal class Multiplier : TransformingVisitor
     {
-        internal override Expression DoIt(Number expression)
-        {
-            return expression;
-        }
-
-        internal override Expression DoIt(Addition expression)
-        {
-            base.DoIt((Expression)expression);
-            return expression;
-
-        }
-
         internal override Expression DoIt(Multiplication expression)
         {
             if ((expression.Left is Number left) && (expression.Right is Number right))
