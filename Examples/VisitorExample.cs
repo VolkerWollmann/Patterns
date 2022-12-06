@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -90,8 +91,13 @@ namespace Patterns.Examples
 
         internal abstract void DoIt(Multiplication expression);
 
-        internal abstract void DoIt(Expression expression);
-
+        internal void DoIt(Expression expression)
+        {
+            if (expression.Left != null)
+                expression.Left.Accept(this);
+            if (expression.Right != null)
+                expression.Right.Accept(this);
+        }
     }
 
     internal class MaxFinder : Visitor
@@ -113,14 +119,6 @@ namespace Patterns.Examples
         {
             this.DoIt((Expression)expression);
         }
-
-        internal override void DoIt(Expression expression)
-        {
-            if (expression.Left != null)
-                expression.Left.Accept(this);
-            if (expression.Right != null)
-                expression.Right.Accept(this);
-        }
     }
     #endregion
 
@@ -131,10 +129,18 @@ namespace Patterns.Examples
         internal abstract Expression DoIt(Number expression);
 
         internal abstract Expression DoIt(Addition expression);
-
+        
         internal abstract Expression DoIt(Multiplication expression);
 
-        internal abstract Expression DoIt(Expression expression);
+        internal Expression DoIt(Expression expression)
+        {
+            if (expression.Left != null)
+                expression.Left = expression.Left.Accept(this);
+            if (expression.Right != null)
+                expression.Right = expression.Right.Accept(this);
+
+            return expression;
+        }
     }
 
     internal class Adder : TransformingVisitor
@@ -150,21 +156,13 @@ namespace Patterns.Examples
             if ((expression.Left is Number left) && (expression.Right is Number right))
                 return new Number(left.Value + right.Value);
 
+            base.DoIt((Expression)expression);
             return expression;
         }
 
         internal override Expression DoIt(Multiplication expression)
         {
-            return this.DoIt((Expression)expression);
-        }
-
-        internal override Expression DoIt(Expression expression)
-        {
-            if (expression.Left != null)
-                expression.Left = expression.Left.Accept(this);
-            if (expression.Right != null)
-                expression.Right.Accept(this);
-
+            base.DoIt((Expression)expression);
             return expression;
         }
     }
@@ -178,7 +176,9 @@ namespace Patterns.Examples
 
         internal override Expression DoIt(Addition expression)
         {
-            return this.DoIt((Expression)expression);
+            base.DoIt((Expression)expression);
+            return expression;
+
         }
 
         internal override Expression DoIt(Multiplication expression)
@@ -186,16 +186,7 @@ namespace Patterns.Examples
             if ((expression.Left is Number left) && (expression.Right is Number right))
                 return new Number(left.Value * right.Value);
 
-            return expression;
-        }
-
-        internal override Expression DoIt(Expression expression)
-        {
-            if (expression.Left != null)
-                expression.Left = expression.Left.Accept(this);
-            if (expression.Right != null)
-                expression.Right = expression.Right.Accept(this);
-
+            base.DoIt((Expression)expression);
             return expression;
         }
     }
@@ -221,24 +212,30 @@ namespace Patterns.Examples
 
         public static void TransformingVisitor()
         {
-            // Arrange : (1 * 3) + ( 5 * 8 )
-            Expression one = new Number(1);
+            // Arrange : (3 + ( 4 * 5 ) ) + ( 5 * ( 8 * 2 ) )
+            Expression four= new Number(4);
             Expression three = new Number(3);
             Expression five = new Number(5);
             Expression eight = new Number(8);
+            Expression two = new Number(2);
 
-            Expression expression = new Addition(new Multiplication(one, three), new Multiplication(five, eight));
+            Expression expression = new Addition(
+                new Addition(three, new Multiplication(four, five)),
+                new Multiplication(
+                    five, 
+                    new Multiplication( eight, two)));
 
             List<TransformingVisitor> visitors = new List<TransformingVisitor>() { new Adder(), new Multiplier() };
          
             // Act : Calculate the expression with the visitors
+            // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
             while( ! (expression is Number) )
             {
                 visitors.ForEach(visitor => { expression = expression.Accept(visitor); });
             }
 
             // Assert : Visitors did the right job
-            Assert.AreEqual(((Number)expression).Value, 43);
+            Assert.AreEqual(((Number)expression).Value, 103);
         }
 
 
