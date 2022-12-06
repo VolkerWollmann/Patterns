@@ -222,9 +222,5 @@ namespace Patterns.Examples
             // Assert : Visitors did the right job
             Assert.AreEqual(((Number)expression).Value, 103);
         }
-
-
     }
-
-    
 }
