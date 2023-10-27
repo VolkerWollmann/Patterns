@@ -53,8 +53,8 @@ namespace Patterns.Structural.Decorator
     {
         public override void Operation()
         {
-            base.Operation();
             Console.WriteLine("ConcreteDecoratorA.Operation()");
+            base.Operation();
         }
     }
 
@@ -65,13 +65,15 @@ namespace Patterns.Structural.Decorator
     {
         public override void Operation()
         {
+            Console.WriteLine("ConcreteDecoratorB.Operation()");
             base.Operation();
             AddedBehavior();
-            Console.WriteLine("ConcreteDecoratorB.Operation()");
+             
         }
 
         void AddedBehavior()
         {
+            Console.WriteLine("ConcreteDecoratorB.AddedBehavior()");
         }
     }
 
