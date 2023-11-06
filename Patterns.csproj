@@ -62,6 +62,7 @@
     <Compile Include="BehaviourPatterns\Mediator.cs" />
     <Compile Include="BehaviourPatterns\Memento.cs" />
     <Compile Include="BehaviourPatterns\TemplateMethod.cs" />
+    <Compile Include="ConcurrencyPatterns\ProducersConsumers.cs" />
     <Compile Include="Structural\Decorator.cs" />
     <Compile Include="BehaviourPatterns\Observer.cs" />
     <Compile Include="CreationalPatterns\Builder.cs" />

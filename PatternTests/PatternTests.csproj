@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BehaviourPatternsTests.cs" />
+    <Compile Include="ConcurrencyPatternsTests.cs" />
     <Compile Include="CreationalPatternsTests.cs" />
     <Compile Include="OtherPatterns.cs" />
     <Compile Include="PatternExampleTests.cs" />
