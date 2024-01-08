@@ -45,6 +45,7 @@ namespace Patterns.Examples
         }
     }
 
+    [DebuggerDisplay("Addition")]
     internal class Addition : Expression
     {
         public Addition(Expression left, Expression right) : base(left, right)
@@ -63,6 +64,7 @@ namespace Patterns.Examples
         }
     }
 
+    [DebuggerDisplay("Multiplication")]
     internal class Multiplication : Expression
     {
         public Multiplication(Expression left, Expression right) : base(left, right)
