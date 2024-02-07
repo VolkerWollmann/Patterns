@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Patterns.CreationalPatterns
 {
@@ -17,53 +18,52 @@ namespace Patterns.CreationalPatterns
     public class FactoryMethodExample
     {
         /// <summary>
-        /// The 'Product' abstract class
+        /// The 'vehicle' abstract class
         /// </summary>
-        abstract class Product
+        abstract class Vehicle
         {
+            public abstract void Ride();
         }
 
         /// <summary>
-        /// A 'ConcreteProduct' class
+        /// A 'Concrete vehicle Bike' class
         /// </summary>
-        class ConcreteProductA : Product
+        class Bike : Vehicle
         {
-        }
-
-        /// <summary>
-        /// A 'ConcreteProduct' class
-        /// </summary>
-        class ConcreteProductB : Product
-        {
-        }
-
-        /// <summary>
-        /// The 'Creator' abstract class 
-        /// </summary>
-        abstract class Creator
-        {
-            public abstract Product FactoryMethod();
-        }
-
-        /// <summary>
-        /// A 'ConcreteCreator' class
-        /// </summary>
-        class ConcreteCreatorA : Creator
-        {
-            public override Product FactoryMethod()
+            public override void Ride()
             {
-                return new ConcreteProductA();
+                Console.WriteLine("Ride the bicyle in free time");
             }
         }
 
         /// <summary>
-        /// A 'ConcreteCreator' class
+        /// A 'ConcreteProduct' class
         /// </summary>
-        class ConcreteCreatorB : Creator
+        class Car : Vehicle
         {
-            public override Product FactoryMethod()
+            public override void Ride()
             {
-                return new ConcreteProductB();
+                Console.WriteLine("The right vehicle for work days.");
+            }
+        }
+
+        /// <summary>
+        /// The 'Creator' abstract class
+        /// </summary>
+        abstract class Creator
+        {
+            public abstract Vehicle FactoryMethod(string weekday);
+        }
+
+
+        class VehicleSelector : Creator
+        {
+            public override Vehicle FactoryMethod(string weekday)
+            {
+                if ((new List<string> { "Saturday", "Sunday" }).Contains(weekday))
+                    return new Bike();
+
+                return new Car();
             }
         }
 
@@ -72,19 +72,11 @@ namespace Patterns.CreationalPatterns
         /// </summary>
         public static void Test()
         {
-            // An array of creators
-            Creator[] creators = new Creator[2];
+            // The vehicle does the best choice 
+            VehicleSelector vehicleSelector = new VehicleSelector();
+            vehicleSelector.FactoryMethod("Monday").Ride();
+            vehicleSelector.FactoryMethod("Sunday").Ride();
 
-            creators[0] = new ConcreteCreatorA();
-            creators[1] = new ConcreteCreatorB();
-
-            // Iterate over creators and create products
-            foreach (Creator creator in creators)
-            {
-                Product product = creator.FactoryMethod();
-                Console.WriteLine("Created {0}",
-                  product.GetType().Name);
-            }
         }
     }
 }
