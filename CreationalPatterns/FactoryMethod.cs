@@ -38,7 +38,7 @@ namespace Patterns.CreationalPatterns
         }
 
         /// <summary>
-        /// The 'Creator' abstract class
+        /// The 'Creator' abstract class 
         /// </summary>
         abstract class Creator
         {
