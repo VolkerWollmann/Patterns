@@ -32,7 +32,7 @@ namespace Patterns.CreationalPatterns
         {
             public override void Ride()
             {
-                Console.WriteLine("Ride the bicyle in free time");
+                Console.WriteLine("Ride the bicyle on weekends");
             }
         }
 
@@ -43,7 +43,7 @@ namespace Patterns.CreationalPatterns
         {
             public override void Ride()
             {
-                Console.WriteLine("The right vehicle for work days.");
+                Console.WriteLine("The car is the right vehicle for work days.");
             }
         }
 
