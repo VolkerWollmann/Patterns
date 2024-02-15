@@ -58,9 +58,9 @@ namespace Patterns.BehaviourPatterns
         // mediator's instance inside component objects.
         class BaseComponent
         {
-            protected IMediator _mediator;
+            protected IMediator? _mediator;
 
-            public BaseComponent(IMediator mediator = null)
+            public BaseComponent(IMediator? mediator = null)
             {
                 this._mediator = mediator;
             }
