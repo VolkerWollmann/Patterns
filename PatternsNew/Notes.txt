@@ -1,0 +1,2 @@
+﻿https://en.wikipedia.org/wiki/Software_design_pattern#Creational_patterns
+https://www.dofactory.com/net/command-design-pattern
