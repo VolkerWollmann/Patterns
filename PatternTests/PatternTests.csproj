@@ -14,6 +14,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PatternsNew\PatternsNew.csproj" />
+    <ProjectReference Include="..\PatternsNew\Patterns.csproj" />
   </ItemGroup>
 </Project>
