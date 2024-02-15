@@ -58,16 +58,16 @@ namespace Patterns.BehaviourPatterns
         // mediator's instance inside component objects.
         class BaseComponent
         {
-            protected IMediator? _mediator;
+            protected IMediator? Mediator;
 
             public BaseComponent(IMediator? mediator = null)
             {
-                this._mediator = mediator;
+                this.Mediator = mediator;
             }
 
             public void SetMediator(IMediator mediator)
             {
-                this._mediator = mediator;
+                this.Mediator = mediator;
             }
         }
 
@@ -80,14 +80,14 @@ namespace Patterns.BehaviourPatterns
             {
                 Console.WriteLine("Component 1 does A.");
 
-                this._mediator.Notify(this, "A");
+                this.Mediator.Notify(this, "A");
             }
 
             public void DoB()
             {
                 Console.WriteLine("Component 1 does B.");
 
-                this._mediator.Notify(this, "B");
+                this.Mediator.Notify(this, "B");
             }
         }
 
@@ -97,14 +97,14 @@ namespace Patterns.BehaviourPatterns
             {
                 Console.WriteLine("Component 2 does C.");
 
-                this._mediator.Notify(this, "C");
+                this.Mediator.Notify(this, "C");
             }
 
             public void DoD()
             {
                 Console.WriteLine("Component 2 does D.");
 
-                this._mediator.Notify(this, "D");
+                this.Mediator.Notify(this, "D");
             }
         }
 

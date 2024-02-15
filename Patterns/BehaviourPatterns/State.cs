@@ -42,7 +42,7 @@ namespace Patterns.BehaviourPatterns
     /// </summary>
     public class Context
     {
-        private State _State;
+        private State? _state;
         // Constructor
         public Context(State state)
         {
@@ -51,16 +51,16 @@ namespace Patterns.BehaviourPatterns
         // Gets or sets the state
         public State State
         {
-            get => _State;
+            get => _state;
             set
             {
-                _State = value;
-                Console.WriteLine("State: " + _State.GetType().Name);
+                _state = value;
+                Console.WriteLine("State: " + _state.GetType().Name);
             }
         }
         public void Request()
         {
-            _State.Handle(this);
+            _state.Handle(this);
         }
     }
 

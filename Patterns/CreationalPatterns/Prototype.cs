@@ -32,7 +32,9 @@ namespace Patterns.CreationalPatterns
             {
                 Person other = (Person)this.MemberwiseClone();
                 other.IdInfo = new IdInfo(IdInfo.IdNumber);
-                other.Name = String.Copy(Name);
+#pragma warning disable CS0618 // Type or member is obsolete
+                other.Name = string.Copy(Name);
+#pragma warning restore CS0618 // Type or member is obsolete
                 return other;
             }
         }
