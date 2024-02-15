@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 // Source : https://www.codeproject.com/Articles/581487/Unit-of-Work-Design-Pattern
-// https://en.wikipedia.org/wiki/Business_delegate_pattern
+// https://en.wikipedia.org/wiki/Business_delegate_pattern   
 namespace Patterns.Other
 {
 	public interface IEntity
