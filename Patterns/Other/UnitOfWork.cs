@@ -35,7 +35,7 @@ namespace Patterns.Other
             Console.WriteLine("Update " + CustomerName);
         }
     }
-    internal class UnitOffWork
+    internal class UnitOfWork
     {
         private readonly List<Customer> Changed = new List<Customer>();
         private readonly List<IEntity> New = new List<IEntity>();
@@ -84,7 +84,7 @@ namespace Patterns.Other
                 CustomerName = "CustomerName"
             }; // Record 2 Customer
 
-            UnitOffWork unitOfWork  = new UnitOffWork();
+            UnitOfWork unitOfWork  = new UnitOfWork();
             
             unitOfWork.Add(customerObj); // record 1 added to in memory
             unitOfWork.Add(supplierObj); // record 1 added to in memory
