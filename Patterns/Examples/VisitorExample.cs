@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.Examples
 {
 
-    internal abstract class Expression
+    internal abstract class Expression(Expression left, Expression right)
     {
-        internal Expression Left { get; set; }
-        internal Expression Right { get; set; }
-
-        protected Expression(Expression left, Expression right)
-        {
-            Left = left;
-            Right = right;
-        }
+        internal Expression Left { get; set; } = left;
+        internal Expression Right { get; set; } = right;
 
         internal abstract void Accept(Visitor visitor);
 
@@ -24,14 +16,9 @@ namespace Patterns.Examples
 
     #region Tree elements
     [DebuggerDisplay("Number={Value}")]
-    internal class Number : Expression
+    internal class Number(int number) : Expression(null, null)
     {
-        public int Value { get; }
-
-        public Number(int number):base(null,null)
-        {
-            Value = number;
-        }
+        public int Value { get; } = number;
 
 
         internal override void Accept(Visitor visitor)
@@ -46,13 +33,8 @@ namespace Patterns.Examples
     }
 
     [DebuggerDisplay("Addition")]
-    internal class Addition : Expression
+    internal class Addition(Expression left, Expression right) : Expression(left, right)
     {
-        public Addition(Expression left, Expression right) : base(left, right)
-        {
-
-        }
-
         internal override void Accept(Visitor visitor)
         {
             visitor.DoIt(this);
@@ -65,13 +47,8 @@ namespace Patterns.Examples
     }
 
     [DebuggerDisplay("Multiplication")]
-    internal class Multiplication : Expression
+    internal class Multiplication(Expression left, Expression right) : Expression(left, right)
     {
-        public Multiplication(Expression left, Expression right) : base(left, right)
-        {
-
-        }
-
         internal override void Accept(Visitor visitor)
         {
             visitor.DoIt(this);
@@ -158,7 +135,7 @@ namespace Patterns.Examples
         internal override Expression DoIt(Addition expression)
         {
             
-            if ((expression.Left is Number left) && (expression.Right is Number right))
+            if ((expression is {Left: Number left, Right: Number right}))
                 return new Number(left.Value + right.Value);
 
             base.DoIt((Expression)expression);
@@ -170,7 +147,7 @@ namespace Patterns.Examples
     {
         internal override Expression DoIt(Multiplication expression)
         {
-            if ((expression.Left is Number left) && (expression.Right is Number right))
+            if ((expression is {Left: Number left, Right: Number right}))
                 return new Number(left.Value * right.Value);
 
             base.DoIt((Expression)expression);
@@ -212,7 +189,7 @@ namespace Patterns.Examples
                     five, 
                     new Multiplication( eight, two)));
 
-            List<TransformingVisitor> visitors = new List<TransformingVisitor>() { new Adder(), new Multiplier() };
+            List<TransformingVisitor> visitors = [new Adder(), new Multiplier()];
          
             // Act : Calculate the expression with the visitors
             // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
