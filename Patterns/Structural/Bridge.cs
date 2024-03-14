@@ -84,7 +84,7 @@ namespace Patterns.Structural
         }
     }
 
-    public class BrigdeExample
+    public class BridgeExample
     {
         public static void Test()
         {
