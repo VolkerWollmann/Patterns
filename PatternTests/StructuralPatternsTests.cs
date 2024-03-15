@@ -16,7 +16,7 @@ namespace PatternTests
         [TestMethod]
         public void Bridge()
         {
-            BridgeExample.Test();
+            BrigdeExample.Test();
         }
 
         [TestMethod]
