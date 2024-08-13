@@ -30,7 +30,7 @@ namespace Patterns.Structural.Decorator
     /// </summary>
     abstract class Decorator : Component
     {
-        protected Component Component;
+        protected Component Component = null!;
 
         public void SetComponent(Component component)
         {
@@ -39,10 +39,7 @@ namespace Patterns.Structural.Decorator
 
         public override void Operation()
         {
-            if (Component != null)
-            {
-                Component.Operation();
-            }
+	        Component.Operation();
         }
     }
 

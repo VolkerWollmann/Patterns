@@ -16,7 +16,7 @@ namespace Patterns.BehaviourPatterns
         // The Context maintains a reference to one of the Strategy objects. The
         // Context does not know the concrete class of a strategy. It should
         // work with all strategies via the Strategy interface.
-        private IStrategy Strategy;
+        private IStrategy Strategy = null!;
 
         // Usually, the Context accepts a strategy through the constructor, but
         // also provides a setter to change it at runtime.
@@ -57,7 +57,7 @@ namespace Patterns.BehaviourPatterns
     // Strategies.
     public interface IStrategy
     {
-        object DoAlgorithm(object data);
+	    List<string> DoAlgorithm(List<string> data);
     }
 
     // Concrete Strategies implement the algorithm while following the base
@@ -65,10 +65,10 @@ namespace Patterns.BehaviourPatterns
     // Context.
     internal class ConcreteStrategyA : IStrategy
     {
-        public object DoAlgorithm(object data)
+        public List<string> DoAlgorithm(List<string> data)
         {
-            var list = data as List<string>;
-            list?.Sort();
+            var list = data;
+            list.Sort();
 
             return list;
         }
@@ -76,15 +76,13 @@ namespace Patterns.BehaviourPatterns
 
     internal class ConcreteStrategyB : IStrategy
     {
-        public object DoAlgorithm(object data)
+        public List<string> DoAlgorithm(List<string> data)
         {
-            var list = data as List<string>;
-            if (list != null)
-            {
-                list.Sort();
-                list.Reverse();
-            }
-
+	        var list = data;
+	        
+	        list.Sort();
+	        list.Reverse();
+	        
             return list;
         }
     }

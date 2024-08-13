@@ -48,5 +48,11 @@ namespace PatternTests
         {
             Patterns.Structural.Proxy.ProxyExample.Test();
         }
-    }
+
+		[TestMethod]
+		public void Serialisation()
+		{
+			Patterns.Structural.SerialisationExample.DoSerialisation();
+		}
+	}
 }
