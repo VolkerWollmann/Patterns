@@ -31,15 +31,15 @@ namespace Patterns.BehaviourPatterns
 
         abstract class OperatorExpression : Expression
         {
-            public Expression Left { private get; set; }
-            public Expression Right { private get; set; }
+            public Expression? Left { private get; set; }
+            public Expression? Right { private get; set; }
 
             public void Interpret(Context context)
             {
-                Left.Interpret(context);
+                Left?.Interpret(context);
                 string leftValue = context.Result.Pop();
 
-                Right.Interpret(context);
+                Right?.Interpret(context);
                 string rightValue = context.Result.Pop();
 
                 DoInterpret(context, leftValue, rightValue);
@@ -66,7 +66,7 @@ namespace Patterns.BehaviourPatterns
 
         class MyExpression : Expression
         {
-            public string Value { private get; set; }
+            public string Value { private get; set; } = "";
 
             public void Interpret(Context context)
             {

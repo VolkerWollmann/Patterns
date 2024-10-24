@@ -32,7 +32,7 @@ namespace Patterns.BehaviourPatterns
         public int Count => Items.Count;
 
         // Indexer
-        public object this[int index]
+        public object? this[int index]
         {
             get => Items[index];
             set => Items.Insert(index, value);
@@ -44,10 +44,10 @@ namespace Patterns.BehaviourPatterns
     /// </summary>
     abstract class Iterator
     {
-        public abstract object First();
-        public abstract object Next();
+        public abstract object? First();
+        public abstract object? Next();
         public abstract bool IsDone();
-        public abstract object CurrentItem();
+        public abstract object? CurrentItem();
     }
 
     /// <summary>
@@ -67,13 +67,13 @@ namespace Patterns.BehaviourPatterns
         // Gets first iteration item
         public override object First()
         {
-            return Aggregate[0];
+            return Aggregate[0]!;
         }
 
         // Gets next iteration item
-        public override object Next()
+        public override object? Next()
         {
-            object ret = null;
+            object? ret = null;
             if (Current < Aggregate.Count - 1)
             {
                 ret = Aggregate[++Current];
@@ -83,7 +83,7 @@ namespace Patterns.BehaviourPatterns
         }
 
         // Gets current iteration item
-        public override object CurrentItem()
+        public override object? CurrentItem()
         {
             return Aggregate[Current];
         }

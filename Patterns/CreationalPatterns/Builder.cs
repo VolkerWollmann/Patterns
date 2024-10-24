@@ -120,7 +120,7 @@ namespace Patterns.CreationalPatterns
         // optional, since the client can control builders directly.
         class Director
         {
-            private IBuilder _builder;
+            private IBuilder? _builder;
 
             public IBuilder Builder
             {
@@ -131,14 +131,14 @@ namespace Patterns.CreationalPatterns
             // building steps.
             public void BuildMinimalViableProduct()
             {
-                this._builder.BuildPartA();
+                this._builder?.BuildPartA();
             }
 
             public void BuildFullFeaturedProduct()
             {
-                this._builder.BuildPartA();
-                this._builder.BuildPartB();
-                this._builder.BuildPartC();
+                this._builder?.BuildPartA();
+                this._builder?.BuildPartB();
+                this._builder?.BuildPartC();
             }
         }
 

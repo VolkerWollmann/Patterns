@@ -68,7 +68,7 @@ namespace Patterns.Structural
 
         // Returns an existing Flyweight with a given state or creates a new
         // one.
-        public Flyweight GetFlyweight(Car sharedState)
+        public Flyweight? GetFlyweight(Car sharedState)
         {
             string key = this.getKey(sharedState);
 
@@ -81,7 +81,7 @@ namespace Patterns.Structural
             {
                 Console.WriteLine("FlyweightFactory: Reusing existing flyweight.");
             }
-            return this.flyweights.Where(t => t.Item2 == key).FirstOrDefault().Item1;
+            return this.flyweights.Where(t => t.Item2 == key).FirstOrDefault()?.Item1;
         }
 
         public void listFlyweights()
@@ -97,15 +97,15 @@ namespace Patterns.Structural
 
     public class Car
     {
-        public string Owner { get; set; }
+        public string Owner { get; set; } = string.Empty;
 
-        public string Number { get; set; }
+        public string Number { get; set; } = string.Empty;
 
-        public string Company { get; set; }
+        public string Company { get; set; } = string.Empty;
 
-        public string Model { get; set; }
+        public string Model { get; set; } = string.Empty;
 
-        public string Color { get; set; }
+        public string Color { get; set; } = string.Empty;
     }
 
     public class FlyweightExample
@@ -157,7 +157,7 @@ namespace Patterns.Structural
 
             // The client code either stores or calculates extrinsic state and
             // passes it to the flyweight's methods.
-            flyweight.Operation(car);
+            flyweight?.Operation(car);
         }
     }
 }

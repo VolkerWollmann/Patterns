@@ -44,8 +44,8 @@ namespace Patterns.Other
 	class BusinessDelegate
 	{
 		private readonly BusinessLookUp LookupService = new BusinessLookUp();
-		private IBusinessService BusinessService;
-		private string ServiceType;
+		private IBusinessService BusinessService; 
+		private string ServiceType ="";
 
 		public void SetServiceType(string serviceType)
 		{
@@ -57,7 +57,12 @@ namespace Patterns.Other
 			BusinessService = LookupService.GetBusinessService(ServiceType);
 			BusinessService.DoProcessing();
 		}
-	}
+
+		public BusinessDelegate()
+		{
+            BusinessService = LookupService.GetBusinessService(ServiceType);
+        }
+    }
 
 	class Client
 	{

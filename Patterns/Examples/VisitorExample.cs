@@ -8,10 +8,10 @@ namespace Patterns.Examples
 
     internal abstract class Expression
     {
-        internal Expression Left { get; set; }
-        internal Expression Right { get; set; }
+        internal Expression? Left { get; set; }
+        internal Expression? Right { get; set; }
 
-        protected Expression(Expression left, Expression right)
+        protected Expression(Expression? left, Expression? right)
         {
             Left = left;
             Right = right;

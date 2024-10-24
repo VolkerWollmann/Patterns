@@ -20,8 +20,8 @@ namespace Patterns.CreationalPatterns
         internal class Person
         {
             public int Age;
-            public string Name;
-            internal IdInfo IdInfo;
+            public string Name = "";
+            internal IdInfo IdInfo = new IdInfo(0);
 
             public Person ShallowCopy()
             {
@@ -32,9 +32,9 @@ namespace Patterns.CreationalPatterns
             {
                 Person other = (Person)this.MemberwiseClone();
                 other.IdInfo = new IdInfo(IdInfo.IdNumber);
-#pragma warning disable CS0618 // Type or member is obsolete
-                other.Name = string.Copy(Name);
-#pragma warning restore CS0618 // Type or member is obsolete
+
+                other.Name = new string(Name);
+
                 return other;
             }
         }

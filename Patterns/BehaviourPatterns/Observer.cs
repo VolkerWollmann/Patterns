@@ -40,7 +40,7 @@ namespace Patterns.BehaviourPatterns
     class ConcreteSubject : Subject
     {
         // Gets or sets subject state
-        public string SubjectState { get; set; }
+        public string SubjectState { get; set; } = "";
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ namespace Patterns.BehaviourPatterns
     class ConcreteObserver : Observer
     {
         private readonly string _Name;
-        private string ObserverState;
+        private string ObserverState    = string.Empty;
         private ConcreteSubject _Subject;
 
         // Constructor

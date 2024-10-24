@@ -24,7 +24,7 @@ namespace Patterns.CreationalPatterns
             // multiple ways to initialize this field, all of them have various pros
             // and cons. In this example we'll show the simplest of these ways,
             // which, however, doesn't work really well in multithreaded program.
-            private static Singleton _instance;
+            private static Singleton? _instance;
 
             private static readonly object _lock = new object();
 

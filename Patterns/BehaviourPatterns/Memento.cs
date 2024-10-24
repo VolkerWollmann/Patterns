@@ -127,7 +127,7 @@ namespace Patterns.BehaviourPatterns
         {
             private List<IMemento> _mementos = new List<IMemento>();
 
-            private Originator _originator = null;
+            private Originator? _originator = null;
 
             public Caretaker(Originator originator)
             {
@@ -137,7 +137,8 @@ namespace Patterns.BehaviourPatterns
             public void Backup()
             {
                 Console.WriteLine("\nCaretaker: Saving Originator's state...");
-                this._mementos.Add(this._originator.Save());
+                if ( this._originator != null)
+                    this._mementos.Add(this._originator.Save());
             }
 
             public void Undo()
@@ -154,7 +155,7 @@ namespace Patterns.BehaviourPatterns
 
                 try
                 {
-                    this._originator.Restore(memento);
+                    this._originator?.Restore(memento);
                 }
                 catch (Exception)
                 {

@@ -22,14 +22,14 @@ namespace Patterns.BehaviourPatterns
         {
             IHandler SetNext(IHandler handler);
 
-            object Handle(object request);
+            object? Handle(object? request);
         }
 
         // The default chaining behavior can be implemented inside a base handler
         // class.
         abstract class AbstractHandler : IHandler
         {
-            private IHandler _nextHandler;
+            private IHandler? _nextHandler;
 
             public IHandler SetNext(IHandler handler)
             {
@@ -41,7 +41,7 @@ namespace Patterns.BehaviourPatterns
                 return handler;
             }
 
-            public virtual object Handle(object request)
+            public virtual object? Handle(object? request)
             {
                 if (this._nextHandler != null)
                 {
@@ -56,7 +56,7 @@ namespace Patterns.BehaviourPatterns
 
         class MonkeyHandler : AbstractHandler
         {
-            public override object Handle(object request)
+            public override object? Handle(object? request)
             {
                 if ((request as string) == "Banana")
                 {
@@ -71,9 +71,9 @@ namespace Patterns.BehaviourPatterns
 
         class SquirrelHandler : AbstractHandler
         {
-            public override object Handle(object request)
+            public override object? Handle(object? request)
             {
-                if (request.ToString() == "Nut")
+                if (request?.ToString() == "Nut")
                 {
                     return $"Squirrel: I'll eat the {request.ToString()}.\n";
                 }
@@ -86,9 +86,9 @@ namespace Patterns.BehaviourPatterns
 
         class DogHandler : AbstractHandler
         {
-            public override object Handle(object request)
+            public override object? Handle(object? request)
             {
-                if (request.ToString() == "MeatBall")
+                if (request?.ToString() == "MeatBall")
                 {
                     return $"Dog: I'll eat the {request.ToString()}.\n";
                 }

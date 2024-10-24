@@ -16,7 +16,7 @@ namespace Patterns.BehaviourPatterns
         // The Context maintains a reference to one of the Strategy objects. The
         // Context does not know the concrete class of a strategy. It should
         // work with all strategies via the Strategy interface.
-        private IStrategy Strategy;
+        private IStrategy? Strategy;
 
         // Usually, the Context accepts a strategy through the constructor, but
         // also provides a setter to change it at runtime.
@@ -36,15 +36,17 @@ namespace Patterns.BehaviourPatterns
         public void DoSomeBusinessLogic()
         {
             Console.WriteLine("Context: Sorting data using the strategy (not sure how it'll do it)");
-            var result = this.Strategy.DoAlgorithm(new List<string> { "a", "b", "c", "d", "e" });
+            var result = this.Strategy?.DoAlgorithm(new List<string> { "a", "b", "c", "d", "e" });
 
             string resultStr = string.Empty;
 
-            foreach (var element in (List<string>)result)
+            if ((result as List<string>) != null)
             {
-                resultStr += element + ",";
+                foreach (var element in (List<string>)result)
+                {
+                    resultStr += element + ",";
+                }
             }
-
 
             Console.WriteLine(resultStr);
         }
@@ -57,7 +59,7 @@ namespace Patterns.BehaviourPatterns
     // Strategies.
     public interface IStrategy
     {
-        object DoAlgorithm(object data);
+        object? DoAlgorithm(object data);
     }
 
     // Concrete Strategies implement the algorithm while following the base
@@ -65,7 +67,7 @@ namespace Patterns.BehaviourPatterns
     // Context.
     internal class ConcreteStrategyA : IStrategy
     {
-        public object DoAlgorithm(object data)
+        public object? DoAlgorithm(object data)
         {
             var list = data as List<string>;
             list?.Sort();
@@ -76,7 +78,7 @@ namespace Patterns.BehaviourPatterns
 
     internal class ConcreteStrategyB : IStrategy
     {
-        public object DoAlgorithm(object data)
+        public object? DoAlgorithm(object data)
         {
             var list = data as List<string>;
             if (list != null)

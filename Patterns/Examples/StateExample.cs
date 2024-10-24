@@ -26,13 +26,14 @@ namespace Patterns.Examples
 
             // Properties
 
-            public Account Account { get; set; }
+            public Account? Account { get; set; }
 
             public double Balance { get; set; }
 
             public abstract void Deposit(double amount);
             public abstract void Withdraw(double amount);
             public abstract void PayInterest();
+
         }
 
 
@@ -87,7 +88,8 @@ namespace Patterns.Examples
             {
                 if (Balance > UpperLimit)
                 {
-                    Account.State = new SilverState(this);
+                    if (Account != null)
+                        Account.State = new SilverState(this);
                 }
             }
         }
@@ -108,7 +110,7 @@ namespace Patterns.Examples
             {
             }
 
-            public SilverState(double balance, Account account)
+            public SilverState(double balance, Account? account)
             {
                 this.Balance = balance;
                 this.Account = account;
@@ -143,13 +145,16 @@ namespace Patterns.Examples
 
             private void StateChangeCheck()
             {
-                if (Balance < LowerLimit)
+                if (Account != null)
                 {
-                    Account.State = new RedState(this);
-                }
-                else if (Balance > UpperLimit)
-                {
-                    Account.State = new GoldState(this);
+                    if (Balance < LowerLimit)
+                    {
+                        Account.State = new RedState(this);
+                    }
+                    else if (Balance > UpperLimit)
+                    {
+                        Account.State = new GoldState(this);
+                    }
                 }
             }
         }
@@ -169,7 +174,7 @@ namespace Patterns.Examples
             {
             }
 
-            public GoldState(double balance, Account account)
+            public GoldState(double balance, Account? account)
             {
                 this.Balance = balance;
                 this.Account = account;
@@ -204,13 +209,16 @@ namespace Patterns.Examples
 
             private void StateChangeCheck()
             {
-                if (Balance < 0.0)
+                if (Account != null)
                 {
-                    Account.State = new RedState(this);
-                }
-                else if (Balance < LowerLimit)
-                {
-                    Account.State = new SilverState(this);
+                    if (Balance < 0.0)
+                    {
+                        Account.State = new RedState(this);
+                    }
+                    else if (Balance < LowerLimit)
+                    {
+                        Account.State = new SilverState(this);
+                    }
                 }
             }
         }
@@ -232,7 +240,7 @@ namespace Patterns.Examples
                 this.State = new SilverState(0.0, this);
             }
 
-            public double Balance => State.Balance;
+            public double Balance => (State != null ) ? State.Balance : 0.0;
 
             public State State { get; set; }
 

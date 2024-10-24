@@ -80,14 +80,14 @@ namespace Patterns.BehaviourPatterns
             {
                 Console.WriteLine("Component 1 does A.");
 
-                this.Mediator.Notify(this, "A");
+                this.Mediator?.Notify(this, "A");
             }
 
             public void DoB()
             {
                 Console.WriteLine("Component 1 does B.");
 
-                this.Mediator.Notify(this, "B");
+                this.Mediator?.Notify(this, "B");
             }
         }
 
@@ -97,14 +97,14 @@ namespace Patterns.BehaviourPatterns
             {
                 Console.WriteLine("Component 2 does C.");
 
-                this.Mediator.Notify(this, "C");
+                this.Mediator?.Notify(this, "C");
             }
 
             public void DoD()
             {
                 Console.WriteLine("Component 2 does D.");
 
-                this.Mediator.Notify(this, "D");
+                this.Mediator?.Notify(this, "D");
             }
         }
 

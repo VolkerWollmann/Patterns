@@ -14,8 +14,8 @@ namespace Patterns.Other
     {
         class Employee
         {
-            public string FirstName = null;
-            public string LastName = null;
+            public string FirstName = "";
+            public string LastName = "";
             private int Age = 0;
 
             public Employee SetFirstName(string fName)

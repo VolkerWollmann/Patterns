@@ -47,8 +47,10 @@ namespace Patterns.Other
             XmlSerializer xmlSer = new XmlSerializer(dto.GetType());
             // Read the XML.
             StringReader sReader = new StringReader(xml);
+            
             // Cast the deserialized xml to the type of dto.
-            DataTransferObjects retDto = (DataTransferObjects)xmlSer.Deserialize(sReader);
+            DataTransferObjects retDto = (DataTransferObjects)xmlSer.Deserialize(sReader)!;
+            
             // Return the data transfer object.
             return retDto;
         }

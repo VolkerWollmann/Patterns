@@ -54,7 +54,7 @@ namespace Patterns.BehaviourPatterns
     /// </summary>
     class Invoker
     {
-        private Command Command;
+        private Command? Command;
 
         public void SetCommand(Command command)
         {
@@ -63,7 +63,7 @@ namespace Patterns.BehaviourPatterns
 
         public void ExecuteCommand()
         {
-            Command.Execute();
+            Command?.Execute();
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Patterns.BehaviourPatterns
 {
@@ -42,11 +43,12 @@ namespace Patterns.BehaviourPatterns
     /// </summary>
     public class Context
     {
-        private State? _state;
+        private State _state;
         // Constructor
         public Context(State state)
         {
             this.State = state;
+            Assert.IsNotNull(this._state);
         }
         // Gets or sets the state
         public State State
