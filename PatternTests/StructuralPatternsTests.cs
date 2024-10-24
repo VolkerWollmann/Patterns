@@ -48,5 +48,6 @@ namespace PatternTests
         {
             Patterns.Structural.Proxy.ProxyExample.Test();
         }
-    }
+
+	}
 }

@@ -2,14 +2,19 @@
 
 namespace Patterns.BehaviourPatterns
 {
-    /// https://www.dofactory.com/net/command-design-pattern
-    /// The Command design pattern encapsulates a request as an object, 
-    /// thereby letting you parametrize clients with different requests, queue or log requests, and support undoable operations.
+	/// https://www.dofactory.com/net/command-design-pattern
+	/// The Command design pattern encapsulates a request as an object, 
+	/// thereby letting you parametrize clients with different requests, queue or log requests, and support undoable operations.
+	///
+	/// https://en.wikipedia.org/wiki/Command_pattern
+	/// In object-oriented programming, the command pattern is a behavioral design pattern in which an object is used
+	/// to encapsulate all information needed to perform an action or trigger an event at a later time.
+	/// This information includes the method name, the object that owns the method and values for the method parameters.
 
-    /// <summary>
-    /// The 'Command' abstract class
-    /// </summary>
-    abstract class Command
+	/// <summary>
+	/// The 'Command' abstract class
+	/// </summary>
+	abstract class Command
     {
         protected Receiver Receiver;
 

@@ -67,7 +67,7 @@ namespace Patterns.Other
 		{
             Console.WriteLine();
             Console.WriteLine("Unit of Work");
-            Console.WriteLine("=======================");
+            Console.WriteLine("======================");
 
             Customer customerObj = new Customer
             {
