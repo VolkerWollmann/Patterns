@@ -220,6 +220,10 @@ namespace Patterns.Examples
                         Account.State = new SilverState(this);
                     }
                 }
+                else
+                {
+	                Account.State = new GoldState(this);
+                }
             }
         }
 

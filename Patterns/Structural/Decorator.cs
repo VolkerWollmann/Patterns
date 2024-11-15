@@ -44,6 +44,16 @@ namespace Patterns.Structural.Decorator
                 Component.Operation();
             }
         }
+
+        protected Decorator(Component component)
+        {
+            Component = component;
+        }
+
+        protected Decorator()
+        {
+
+        }
     }
 
     /// <summary>
@@ -56,7 +66,17 @@ namespace Patterns.Structural.Decorator
             Console.WriteLine("ConcreteDecoratorA.Operation()");
             base.Operation();
         }
-    }
+
+        internal ConcreteDecoratorA(Component component) : base(component)
+        {
+
+        }
+
+        internal ConcreteDecoratorA ()
+        {
+	        
+        }
+	}
 
     /// <summary>
     /// The 'ConcreteDecoratorB' class
@@ -75,7 +95,17 @@ namespace Patterns.Structural.Decorator
         {
             Console.WriteLine("ConcreteDecoratorB.AddedBehavior()");
         }
-    }
+
+        internal ConcreteDecoratorB(Component component) : base(component)
+        {
+
+        }
+
+        internal ConcreteDecoratorB()
+        {
+
+        }
+	}
 
     /// <summary>
     /// MainApp startup class for Structural 
@@ -99,6 +129,11 @@ namespace Patterns.Structural.Decorator
 
             d2.Operation();
 
+            // shorter with constructors
+            ConcreteDecoratorA d3 = new ConcreteDecoratorA(c);
+            ConcreteDecoratorB d4 = new ConcreteDecoratorB(d3);
+
+            d4.Operation();
         }
     }
 
