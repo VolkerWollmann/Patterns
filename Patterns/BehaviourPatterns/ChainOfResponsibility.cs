@@ -18,6 +18,9 @@ namespace Patterns.BehaviourPatterns
 
         // The Handler interface declares a method for building the chain of
         // handlers. It also declares a method for executing a request.
+
+        // Pass an object through a chain of handlers. Each one can do something or(/and) pass it further to 
+        // the next handler.
         public interface IHandler
         {
             IHandler SetNext(IHandler handler);
