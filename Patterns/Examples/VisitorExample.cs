@@ -207,10 +207,16 @@ namespace Patterns.Examples
             Expression two = new Number(2);
 
             Expression expression = new Addition(
-                new Addition(three, new Multiplication(four, five)),
+                new Addition(   
+	                three, 
+	                new Multiplication(
+							four, 
+							five)),
                 new Multiplication(
                     five, 
-                    new Multiplication( eight, two)));
+                    new Multiplication( 
+								eight, 
+								two)));
 
             List<TransformingVisitor> visitors = new List<TransformingVisitor>() { new Adder(), new Multiplier() };
          
