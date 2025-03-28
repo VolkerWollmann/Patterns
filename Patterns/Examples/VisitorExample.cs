@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.Examples
 {
-
+    #region Tree elements
     internal abstract class Expression
     {
         internal Expression? Left { get; set; }
@@ -22,7 +22,6 @@ namespace Patterns.Examples
         internal abstract Expression Accept(TransformingVisitor visitor);
     }
 
-    #region Tree elements
     [DebuggerDisplay("Number={Value}")]
     internal class Number : Expression
     {
@@ -84,7 +83,7 @@ namespace Patterns.Examples
     }
     #endregion
 
-    #region Visitor
+    #region Visitors
     internal abstract class Visitor
     {
         internal virtual void DoIt(Number expression)
@@ -111,6 +110,7 @@ namespace Patterns.Examples
         }
     }
 
+    #region MaxFinder Visitor
     internal class MaxFinder : Visitor
     {
         public int Max { get; private set; } = int.MinValue;
@@ -121,6 +121,7 @@ namespace Patterns.Examples
                 Max = expression.Value;
         }
     }
+    #endregion
     #endregion
 
     #region TransformingVisitor
