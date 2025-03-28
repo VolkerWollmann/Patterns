@@ -29,7 +29,7 @@ namespace Patterns.Examples
         public abstract Expression Accept(TransformingVisitor visitor);
     }
 
-    [DebuggerDisplay("Number={Value}")]
+    [DebuggerDisplay("{Value}")]
     internal class Number(int number) : Expression(null, null)
     {
         public int Value { get; } = number;
@@ -46,7 +46,7 @@ namespace Patterns.Examples
         }
     }
 
-    [DebuggerDisplay("Addition")]
+    [DebuggerDisplay("( {Left} + {Right} )")]
     internal class Addition(Expression left, Expression right) : Expression(left, right)
     {
         public override void Accept(Visitor visitor)
@@ -60,7 +60,7 @@ namespace Patterns.Examples
         }
     }
 
-    [DebuggerDisplay("Multiplication")]
+    [DebuggerDisplay("( {Left} * {Right} )")]
     internal class Multiplication(Expression left, Expression right) : Expression(left, right)
     {
         public override void Accept(Visitor visitor)
