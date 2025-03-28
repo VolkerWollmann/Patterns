@@ -6,102 +6,102 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Patterns.Examples
 {
     #region Tree elements
-    internal abstract class Expression
+
+    #region Accept interfaces
+    internal interface IAcceptVisitor
     {
-        internal Expression? Left { get; set; }
-        internal Expression? Right { get; set; }
+        internal void Accept(Visitor visitor);
+    }
 
-        protected Expression(Expression? left, Expression? right)
-        {
-            Left = left;
-            Right = right;
-        }
+    internal interface IAcceptTransformingVisitor
+    {
+        internal Expression Accept(TransformingVisitor visitor);
+    }
+    #endregion
 
-        internal abstract void Accept(Visitor visitor);
+    internal abstract class Expression(Expression? left, Expression? right) : IAcceptVisitor, IAcceptTransformingVisitor
+    {
+        internal Expression? Left { get; set; } = left;
+        internal Expression? Right { get; set; } = right;
 
-        internal abstract Expression Accept(TransformingVisitor visitor);
+        public abstract void Accept(Visitor visitor);
+
+        public abstract Expression Accept(TransformingVisitor visitor);
     }
 
     [DebuggerDisplay("Number={Value}")]
-    internal class Number : Expression
+    internal class Number(int number) : Expression(null, null)
     {
-        public int Value { get; }
+        public int Value { get; } = number;
 
-        public Number(int number):base(null,null)
+
+        public override void Accept(Visitor visitor)
         {
-            Value = number;
+            visitor.Visit(this);
         }
 
-
-        internal override void Accept(Visitor visitor)
+        public override Expression Accept(TransformingVisitor visitor)
         {
-            visitor.DoIt(this);
-        }
-
-        internal override Expression Accept(TransformingVisitor visitor)
-        {
-            return visitor.DoIt(this);
+            return visitor.Visit(this);
         }
     }
 
     [DebuggerDisplay("Addition")]
-    internal class Addition : Expression
+    internal class Addition(Expression left, Expression right) : Expression(left, right)
     {
-        public Addition(Expression left, Expression right) : base(left, right)
+        public override void Accept(Visitor visitor)
         {
-
+            visitor.Visit((Expression) this);
         }
 
-        internal override void Accept(Visitor visitor)
+        public override Expression Accept(TransformingVisitor visitor)
         {
-            visitor.DoIt(this);
-        }
-
-        internal override Expression Accept(TransformingVisitor visitor)
-        {
-            return visitor.DoIt(this);
+            return visitor.Visit(this);
         }
     }
 
     [DebuggerDisplay("Multiplication")]
-    internal class Multiplication : Expression
+    internal class Multiplication(Expression left, Expression right) : Expression(left, right)
     {
-        public Multiplication(Expression left, Expression right) : base(left, right)
+        public override void Accept(Visitor visitor)
         {
-
+            visitor.Visit(this);
         }
 
-        internal override void Accept(Visitor visitor)
+        public override Expression Accept(TransformingVisitor visitor)
         {
-            visitor.DoIt(this);
-        }
-
-        internal override Expression Accept(TransformingVisitor visitor)
-        {
-            return visitor.DoIt(this);
+            return visitor.Visit(this);
         }
     }
     #endregion
 
     #region Visitors
-    internal abstract class Visitor
+
+    internal interface IVisitor
     {
-        internal virtual void DoIt(Number expression)
+        internal void Visit(Number number);
+        internal void Visit(Addition addition);
+        internal void Visit(Multiplication multiplication);
+        internal void Visit(Expression expression);
+    }
+    internal abstract class Visitor : IVisitor
+    {
+        public virtual void Visit(Number expression)
         {
-            DoIt((Expression)expression);
+            Visit((Expression)expression);
         }
 
-        internal virtual void DoIt(Addition expression)
+        public virtual void Visit(Addition expression)
         {
-            DoIt((Expression)expression);
+            Visit((Expression)expression);
         }
 
-        internal virtual void DoIt(Multiplication expression)
+        public virtual void Visit(Multiplication expression)
         {
-            DoIt((Expression)expression);
+            Visit((Expression)expression);
         }
 
-        internal virtual void DoIt(Expression expression)
+        public virtual void Visit(Expression expression)
         {
             if (expression.Left != null)
                 expression.Left.Accept(this);
@@ -115,7 +115,7 @@ namespace Patterns.Examples
     {
         public int Max { get; private set; } = int.MinValue;
 
-        internal override void DoIt(Number expression)
+        public override void Visit(Number expression)
         {
             if (expression.Value > Max)
                 Max = expression.Value;
@@ -126,24 +126,31 @@ namespace Patterns.Examples
 
     #region TransformingVisitor
 
-    internal abstract class TransformingVisitor
+    internal interface ITransformingVisitor
     {
-        internal virtual Expression DoIt(Number expression)
+        internal Expression Visit(Number number);
+        internal Expression Visit(Addition addition);
+        internal Expression Visit(Multiplication multiplication);
+        internal Expression Visit(Expression expression);
+    }
+    internal abstract class TransformingVisitor : ITransformingVisitor
+    {
+        public virtual Expression Visit(Number expression)
         {
-            return DoIt((Expression) expression);
+            return Visit((Expression) expression);
         }
 
-        internal virtual Expression DoIt(Addition expression)
+        public virtual Expression Visit(Addition expression)
         {
-            return DoIt((Expression)expression);
+            return Visit((Expression)expression);
         }
 
-        internal virtual Expression DoIt(Multiplication expression)
+        public virtual Expression Visit(Multiplication expression)
         {
-            return DoIt((Expression)expression);
+            return Visit((Expression)expression);
         }
 
-        internal Expression DoIt(Expression expression)
+        public Expression Visit(Expression expression)
         {
             if (expression.Left != null)
                 expression.Left = expression.Left.Accept(this);
@@ -156,25 +163,25 @@ namespace Patterns.Examples
 
     internal class Adder : TransformingVisitor
     {
-        internal override Expression DoIt(Addition expression)
+        public override Expression Visit(Addition expression)
         {
             
             if ((expression.Left is Number left) && (expression.Right is Number right))
                 return new Number(left.Value + right.Value);
 
-            base.DoIt((Expression)expression);
+            base.Visit((Expression)expression);
             return expression;
         }
     }
 
     internal class Multiplier : TransformingVisitor
     {
-        internal override Expression DoIt(Multiplication expression)
+        public override Expression Visit(Multiplication expression)
         {
             if ((expression.Left is Number left) && (expression.Right is Number right))
                 return new Number(left.Value * right.Value);
 
-            base.DoIt((Expression)expression);
+            base.Visit((Expression)expression);
             return expression;
         }
     }
