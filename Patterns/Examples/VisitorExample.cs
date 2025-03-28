@@ -226,7 +226,7 @@ namespace Patterns.Examples
 								eight, 
 								two)));
 
-            List<TransformingVisitor> visitors = new List<TransformingVisitor>() { new Adder(), new Multiplier() };
+            List<TransformingVisitor> visitors = [new Adder(), new Multiplier()];
          
             // Act : Calculate the expression with the visitors
             // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
