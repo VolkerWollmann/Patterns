@@ -37,12 +37,12 @@ namespace Patterns.Examples
 
         public override void Accept(Visitor visitor)
         {
-            visitor.Visit(this);
+            visitor.VisitNumber(this);
         }
 
         public override Expression Accept(TransformingVisitor visitor)
         {
-            return visitor.Visit(this);
+            return visitor.VisitNumber(this);
         }
     }
 
@@ -51,26 +51,26 @@ namespace Patterns.Examples
     {
         public override void Accept(Visitor visitor)
         {
-            visitor.Visit((Expression) this);
+            visitor.VisitAddition(this);
         }
 
         public override Expression Accept(TransformingVisitor visitor)
         {
-            return visitor.Visit(this);
+            return visitor.VisitAddition(this);
         }
     }
 
-    [DebuggerDisplay("( {Left} * {Right} )")]
+	[DebuggerDisplay("( {Left} * {Right} )")]
     internal class Multiplication(Expression left, Expression right) : Expression(left, right)
     {
         public override void Accept(Visitor visitor)
         {
-            visitor.Visit(this);
+            visitor.VisitMultiplication(this);
         }
 
         public override Expression Accept(TransformingVisitor visitor)
         {
-            return visitor.Visit(this);
+            return visitor.VisitMultiplication(this);
         }
     }
     #endregion
@@ -79,29 +79,29 @@ namespace Patterns.Examples
 
     internal interface IVisitor
     {
-        internal void Visit(Number number);
-        internal void Visit(Addition addition);
-        internal void Visit(Multiplication multiplication);
-        internal void Visit(Expression expression);
+        internal void VisitNumber(Number number);
+        internal void VisitAddition(Addition addition);
+        internal void VisitMultiplication(Multiplication multiplication);
+        internal void VisitExpression(Expression expression);
     }
     internal abstract class Visitor : IVisitor
     {
-        public virtual void Visit(Number expression)
+        public virtual void VisitNumber(Number expression)
         {
-            Visit((Expression)expression);
+            VisitExpression((Expression)expression);
         }
 
-        public virtual void Visit(Addition expression)
+        public virtual void VisitAddition(Addition expression)
         {
-            Visit((Expression)expression);
+	        VisitExpression((Expression)expression);
         }
 
-        public virtual void Visit(Multiplication expression)
+        public virtual void VisitMultiplication(Multiplication expression)
         {
-            Visit((Expression)expression);
+	        VisitExpression((Expression)expression);
         }
 
-        public virtual void Visit(Expression expression)
+        public virtual void VisitExpression(Expression expression)
         {
             if (expression.Left != null)
                 expression.Left.Accept(this);
@@ -115,7 +115,7 @@ namespace Patterns.Examples
     {
         public int Max { get; private set; } = int.MinValue;
 
-        public override void Visit(Number expression)
+        public override void VisitNumber(Number expression)
         {
             if (expression.Value > Max)
                 Max = expression.Value;
@@ -128,29 +128,29 @@ namespace Patterns.Examples
 
     internal interface ITransformingVisitor
     {
-        internal Expression Visit(Number number);
-        internal Expression Visit(Addition addition);
-        internal Expression Visit(Multiplication multiplication);
-        internal Expression Visit(Expression expression);
-    }
+		internal Expression VisitNumber(Number number);
+		internal Expression VisitAddition(Addition addition);
+		internal Expression VisitMultiplication(Multiplication multiplication);
+		internal Expression VisitExpression(Expression expression);
+	}
     internal abstract class TransformingVisitor : ITransformingVisitor
     {
-        public virtual Expression Visit(Number expression)
+        public virtual Expression VisitNumber(Number expression)
         {
-            return Visit((Expression) expression);
+            return VisitExpression((Expression) expression);
         }
 
-        public virtual Expression Visit(Addition expression)
+        public virtual Expression VisitAddition(Addition expression)
         {
-            return Visit((Expression)expression);
+            return VisitExpression((Expression)expression);
         }
 
-        public virtual Expression Visit(Multiplication expression)
+        public virtual Expression VisitMultiplication(Multiplication expression)
         {
-            return Visit((Expression)expression);
+            return VisitExpression((Expression)expression);
         }
 
-        public Expression Visit(Expression expression)
+        public Expression VisitExpression(Expression expression)
         {
             if (expression.Left != null)
                 expression.Left = expression.Left.Accept(this);
@@ -163,25 +163,25 @@ namespace Patterns.Examples
 
     internal class Adder : TransformingVisitor
     {
-        public override Expression Visit(Addition expression)
+        public override Expression VisitAddition(Addition expression)
         {
             
             if ((expression.Left is Number left) && (expression.Right is Number right))
                 return new Number(left.Value + right.Value);
 
-            base.Visit((Expression)expression);
+            base.VisitExpression((Expression)expression);
             return expression;
         }
     }
 
     internal class Multiplier : TransformingVisitor
     {
-        public override Expression Visit(Multiplication expression)
+        public override Expression VisitMultiplication(Multiplication expression)
         {
             if ((expression.Left is Number left) && (expression.Right is Number right))
                 return new Number(left.Value * right.Value);
 
-            base.Visit((Expression)expression);
+            base.VisitExpression((Expression)expression);
             return expression;
         }
     }
