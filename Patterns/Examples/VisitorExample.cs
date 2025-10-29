@@ -245,28 +245,95 @@ namespace Patterns.Examples
             Assert.AreEqual(maxFinder.Max, 8);
         }
 
+        #region parser
+        // Parser class
+        internal class ExpressionParser
+		{
+			private readonly Queue<string> _tokens;
+			public ExpressionParser(string input)
+			{
+				_tokens = new Queue<string>(Tokenize(input));
+			}
+			private IEnumerable<string> Tokenize(string input)
+			{
+				var tokens = new List<string>();
+				var current = string.Empty;
+				foreach (var c in input)
+				{
+					if (char.IsWhiteSpace(c)) continue;
+					if (char.IsDigit(c))
+					{
+						current += c;
+					}
+					else
+					{
+						if (!string.IsNullOrEmpty(current))
+						{
+							tokens.Add(current);
+							current = string.Empty;
+						}
+						tokens.Add(c.ToString());
+					}
+				}
+				if (!string.IsNullOrEmpty(current))
+				{
+					tokens.Add(current);
+				}
+				return tokens;
+			}
+			public Expression Parse()
+			{
+				return ParseExpression();
+			}
+			private Expression ParseExpression()
+			{
+				var left = ParseTerm();
+				while (_tokens.Count > 0 && (_tokens.Peek() == "+" || _tokens.Peek() == "-"))
+				{
+					var op = _tokens.Dequeue();
+					var right = ParseTerm();
+					if (op == "+")
+					{
+						left = new Addition(left, right);
+					}
+				}
+				return left;
+			}
+			private Expression ParseTerm()
+			{
+				var left = ParseFactor();
+				while (_tokens.Count > 0 && (_tokens.Peek() == "*" || _tokens.Peek() == "/"))
+				{
+					var op = _tokens.Dequeue();
+					var right = ParseFactor();
+					if (op == "*")
+					{
+						left = new Multiplication(left, right);
+					}
+				}
+				return left;
+			}
+			private Expression ParseFactor()
+			{
+				var token = _tokens.Dequeue();
+				if (token == "(")
+				{
+					var expression = ParseExpression();
+					_tokens.Dequeue(); // Consume ")"
+					return expression;
+				}
+				return new Number(int.Parse(token));
+			}
+		}
+        #endregion
+
         public static void TransformingVisitor()
         {
-            // Arrange : (3 + ( 4 * 5 ) ) + ( 5 * ( 8 * 2 ) )
-            Expression four= new Number(4);
-            Expression three = new Number(3);
-            Expression five = new Number(5);
-            Expression eight = new Number(8);
-            Expression two = new Number(2);
+			var input = "(3 + (4 * 5)) + (5 * (8 * 2))";
+			var parser = new ExpressionParser(input);
+			var expression = parser.Parse();
 
-            Expression expression = new Addition(
-                new Addition(   
-	                three, 
-	                new Multiplication(
-							four, 
-							five)),
-                new Multiplication(
-                    five, 
-                    new Multiplication( 
-								eight, 
-								two)));
-
-            List<TransformingVisitor> visitors = [new Adder(), new Multiplier()];
+			List<TransformingVisitor> visitors = [new Adder(), new Multiplier()];
          
             // Act : Calculate the expression with the visitors
             // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
@@ -278,135 +345,5 @@ namespace Patterns.Examples
             // Assert : Visitors did the right job
             Assert.AreEqual(((Number)expression).Value, 103);
         }
-        
-        using System;
-using System.Collections.Generic;
-namespace ExpressionParserExample
-    {
-        // Define the Expression classes
-        internal abstract class Expression
-        {
-        }
-        internal class Number : Expression
-        {
-            public int Value { get; }
-            public Number(int value)
-            {
-                Value = value;
-            }
-        }
-        internal class Addition : Expression
-        {
-            public Expression Left { get; }
-            public Expression Right { get; }
-            public Addition(Expression left, Expression right)
-            {
-                Left = left;
-                Right = right;
-            }
-        }
-        internal class Multiplication : Expression
-        {
-            public Expression Left { get; }
-            public Expression Right { get; }
-            public Multiplication(Expression left, Expression right)
-            {
-                Left = left;
-                Right = right;
-            }
-        }
-        // Parser class
-        internal class ExpressionParser
-        {
-            private readonly Queue<string> _tokens;
-            public ExpressionParser(string input)
-            {
-                _tokens = new Queue<string>(Tokenize(input));
-            }
-            private IEnumerable<string> Tokenize(string input)
-            {
-                var tokens = new List<string>();
-                var current = string.Empty;
-                foreach (var c in input)
-                {
-                    if (char.IsWhiteSpace(c)) continue;
-                    if (char.IsDigit(c))
-                    {
-                        current += c;
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(current))
-                        {
-                            tokens.Add(current);
-                            current = string.Empty;
-                        }
-                        tokens.Add(c.ToString());
-                    }
-                }
-                if (!string.IsNullOrEmpty(current))
-                {
-                    tokens.Add(current);
-                }
-                return tokens;
-            }
-            public Expression Parse()
-            {
-                return ParseExpression();
-            }
-            private Expression ParseExpression()
-            {
-                var left = ParseTerm();
-                while (_tokens.Count > 0 && (_tokens.Peek() == "+" || _tokens.Peek() == "-"))
-                {
-                    var op = _tokens.Dequeue();
-                    var right = ParseTerm();
-                    if (op == "+")
-                    {
-                        left = new Addition(left, right);
-                    }
-                }
-                return left;
-            }
-            private Expression ParseTerm()
-            {
-                var left = ParseFactor();
-                while (_tokens.Count > 0 && (_tokens.Peek() == "*" || _tokens.Peek() == "/"))
-                {
-                    var op = _tokens.Dequeue();
-                    var right = ParseFactor();
-                    if (op == "*")
-                    {
-                        left = new Multiplication(left, right);
-                    }
-                }
-                return left;
-            }
-            private Expression ParseFactor()
-            {
-                var token = _tokens.Dequeue();
-                if (token == "(")
-                {
-                    var expression = ParseExpression();
-                    _tokens.Dequeue(); // Consume ")"
-                    return expression;
-                }
-                return new Number(int.Parse(token));
-            }
-        }
-        // Example usage
-        internal class Program
-        {
-            public static void Main()
-            {
-                var input = "(3 + (4 * 5)) + (5 * (8 * 2))";
-                var parser = new ExpressionParser(input);
-                var expression = parser.Parse();
-                Console.WriteLine("Expression parsed successfully!");
-                // You can now use the `expression` object as needed
-            }
-        }
     }
-
-}
 }
