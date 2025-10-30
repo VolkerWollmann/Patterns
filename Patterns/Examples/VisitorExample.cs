@@ -327,10 +327,9 @@ namespace Patterns.Examples
 		}
         #endregion
 
-        public static void TransformingVisitor()
+        public static void TransformingVisitor(string expressionString, int expectedResult)
         {
-			var input = "(3 + (4 * 5)) + (5 * (8 * 2))";
-			var parser = new ExpressionParser(input);
+			var parser = new ExpressionParser(expressionString);
 			var expression = parser.Parse();
 
 			List<TransformingVisitor> visitors = [new Adder(), new Multiplier()];
@@ -343,7 +342,7 @@ namespace Patterns.Examples
             }
 
             // Assert : Visitors did the right job
-            Assert.AreEqual(((Number)expression).Value, 103);
+            Assert.AreEqual(((Number)expression).Value, expectedResult);
         }
     }
 }

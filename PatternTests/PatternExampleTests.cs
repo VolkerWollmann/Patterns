@@ -18,10 +18,14 @@ namespace PatternTests
             VisitorExample.SimpleVisitor();
         }
 
-        [TestMethod]
-        public void Visitor_Transforming()
+		[DataTestMethod]
+		[DataRow("42", 42)]
+		[DataRow("1 + 2", 3)]
+		[DataRow("1 + 2 + 3", 6)]
+		[DataRow("(3 + (4 * 5)) + (5 * (8 * 2))", 103)]
+		public void Visitor_Transforming(string expression, int expectedResult)
         {
-            VisitorExample.TransformingVisitor();
+            VisitorExample.TransformingVisitor(expression,expectedResult);
         }
     }
 }
