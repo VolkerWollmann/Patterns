@@ -1,49 +1,48 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Patterns.Structural;
+﻿using Patterns.Structural;
 using Patterns.Structural.Decorator;
+using Xunit;
 
 namespace PatternTests
 {
-    [TestClass]
     public class StructuralPatternsTests
     {
-        [TestMethod]
+        [Fact]
         public void Adapter()
         {
             AdapterExample.Adapter();
         }
 
-        [TestMethod]
+        [Fact]
         public void Bridge()
         {
             BrigdeExample.Test();
         }
 
-        [TestMethod]
+        [Fact]
         public void Composite()
         {
             CompositeExample.Composite();
         }
 
-        [TestMethod]
+        [Fact]
         public void Decorator()
         {
             DecoratorExample.Decorator();
         }
 
-        [TestMethod]
+        [Fact]
         public void Facade()
         {
             FacadeExample.Facade();
         }
 
-        [TestMethod]
+        [Fact]
         public void Flyweight()
         {
             FlyweightExample.Test();
         }
 
-        [TestMethod]
+        [Fact]
         public void Proxy()
         {
             Patterns.Structural.Proxy.ProxyExample.Test();

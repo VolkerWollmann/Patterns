@@ -1,43 +1,43 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿
 using Patterns.Other;
+using Xunit;
 
 namespace PatternTests
 {
-    [TestClass]
     public class OtherPatternsTests
     {
-        [TestMethod]
+        [Fact]
         public void DataTransferObject()
         {
             DataTransferObjectExample dataTransferObjectExample = new DataTransferObjectExample();
             dataTransferObjectExample.StartDemo();
         }
 
-        [TestMethod]
+        [Fact]
         public void UnitOfWork()
         {
             UnitOfWorkExample.UnitOfWork();
         }
 
-        [TestMethod]
+        [Fact]
         public void BusinessDelegate()
         {
             BusinessDelegateExample.BusinessDelegate();
         }
 
-        [TestMethod]
+        [Fact]
         public void DependencyInjection()
         {
             DependencyInjectionExample.DependencyInjection();
         }
 
-        [TestMethod]
+        [Fact]
         public void FluentInterface()
         {
             FluentInterfaceTest.Client.Test();
         }
 
-        [TestMethod]
+        [Fact]
         public void ServiceLocator()
         {
             ServiceLocatorExample.ServiceLocatorTest();

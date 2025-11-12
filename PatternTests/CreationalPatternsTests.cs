@@ -1,43 +1,42 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Patterns.CreationalPatterns;
+﻿using Patterns.CreationalPatterns;
 using PCE = Patterns.CreationalPatterns.ExtensionMethodVsConstructor;
+using Xunit;
 
 namespace PatternTests
 {
-    [TestClass]
     public class CreationalPatternsTests
     {
-        [TestMethod]
+        [Fact]
         public void AbstractFactory()
         {
             AbstractFactoryExample.AbstractFactory();
         }
 
-        [TestMethod]
+        [Fact]
         public void FactoryMethod()
         {
             FactoryMethodExample.Test();
         }
 
-        [TestMethod]
+        [Fact]
         public void ExtensionMethodVsConstructor()
         {
             PCE.ExtensionMethodVsConstructorExample.Example();
         }
 
-        [TestMethod]
+        [Fact]
         public void Singleton()
         {
             SingletonExample.Example();
         }
 
-        [TestMethod]
+        [Fact]
         public void Builder()
         {
             BuilderExample.Example();
         }
 
-        [TestMethod]
+        [Fact]
         public void Prototype()
         {
             PrototypeExample.Test();

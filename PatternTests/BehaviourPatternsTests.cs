@@ -1,13 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Patterns.BehaviourPatterns;
-using Patterns.Structural;
+using Xunit;
 
 namespace PatternTests
 {
     [TestClass]
     public class BehaviourPatternsTests
     {
-        [TestMethod]
+        [Fact]
         public void Visitor()
         {
             // Visitor
@@ -15,61 +16,61 @@ namespace PatternTests
             visitor.Main();
         }
 
-        [TestMethod]
+        [Fact]
         public void Strategy()
         {
             StrategyExample.Strategy();
         }
 
-        [TestMethod]
+        [Fact]
         public void Command()
         {
             CommandExample.Command();
         }
 
-        [TestMethod]
+        [Fact]
         public void Observer()
         {
             ObserverExample.Observer();
         }
 
-        [TestMethod]
+        [Fact]
         public void State()
         {
             StateExample.Test();
         }
 
-        [TestMethod]
+        [Fact]
         public void ChainOfResponsibility()
         {
             ChainOfResponsibilityExample.Example();
         }
 
-        [TestMethod]
+        [Fact]
         public void Iterator()
         {
             IteratorExample.Iterator();
         }
 
-        [TestMethod]
+        [Fact]
         public void Interpreter()
         {
             InterpreterExample.Example();
         }
 
-        [TestMethod]
+        [Fact]
         public void Mediator()
         {
             MediatorExample.Example();
         }
 
-        [TestMethod]
+        [Fact]
         public void Memento()
         {
             MementoExample.Example();
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateMethod()
         {
             TemplateMethodExample.Example();
