@@ -97,7 +97,7 @@ namespace Patterns.BehaviourPatterns
             ConcreteSubject s = new ConcreteSubject();
 
             ConcreteObserver concreteObserverX = new ConcreteObserver(s, "X");
-            Assert.AreNotEqual(null, concreteObserverX.Subject);
+            Assert.IsNotNull(concreteObserverX.Subject);
             s.Attach(concreteObserverX);
             s.Attach(new ConcreteObserver(s, "Y"));
             s.Attach(new ConcreteObserver(s, "Z"));

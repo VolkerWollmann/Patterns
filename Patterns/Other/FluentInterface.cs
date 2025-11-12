@@ -51,8 +51,8 @@ namespace Patterns.Other
                 Employee empl = new Employee();
                 empl.SetFirstName("John").SetLastName("Smith").SetAge(30).Print();
 
-                Assert.IsTrue(empl.FirstName == "John");
-                Assert.IsTrue(empl.LastName == "Smith");
+                Assert.AreEqual("John",empl.FirstName);
+                Assert.AreEqual("Smith",empl.LastName);
             }
         }
     }

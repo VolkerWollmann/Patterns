@@ -282,7 +282,7 @@ namespace Patterns.Examples
             MaxFinder maxFinder = new MaxFinder();
             expression.Accept(maxFinder);
 
-            Assert.AreEqual(maxFinder.Max, 8);
+            Assert.AreEqual(8,maxFinder.Max);
         }
 
         #region parser
@@ -387,7 +387,7 @@ namespace Patterns.Examples
             }
 
             // Assert : Visitors did the right job
-            Assert.AreEqual(((Number)expression).Value, expectedResult);
+            Assert.AreEqual(expectedResult,((Number)expression).Value);
         }
     }
 }

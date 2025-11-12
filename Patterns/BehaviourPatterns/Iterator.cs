@@ -125,7 +125,7 @@ namespace Patterns.BehaviourPatterns
                 iterator.Next();
             }
 
-            Assert.AreEqual(true, iterator.IsDone() );
+            Assert.IsTrue( iterator.IsDone() );
         }
     }
 }
