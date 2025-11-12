@@ -302,7 +302,8 @@ namespace Patterns.Examples
 			private Expression ParseTerm()
 			{
 				var left = ParseFactor();
-				while (_tokens.Count > 0 && (_tokens.Peek() == "*" || _tokens.Peek() == "/"))
+                // Handle multiplication and division with stronger binding
+                while (_tokens.Count > 0 && (_tokens.Peek() == "*" || _tokens.Peek() == "/"))
 				{
 					var op = _tokens.Dequeue();
 					var right = ParseFactor();
