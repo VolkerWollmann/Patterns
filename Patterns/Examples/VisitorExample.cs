@@ -60,7 +60,21 @@ namespace Patterns.Examples
         }
     }
 
-	[DebuggerDisplay("( {Left} * {Right} )")]
+    [DebuggerDisplay("( {Left} - {Right} )")]
+    internal class Subtraction : Expression
+    {
+        public Subtraction(Expression left, Expression right) : base(left, right) { }
+        public override void Accept(Visitor visitor)
+        {
+            visitor.VisitSubtraction(this);
+        }
+        public override Expression Accept(TransformingVisitor visitor)
+        {
+            return visitor.VisitSubtraction(this);
+        }
+    }
+
+    [DebuggerDisplay("( {Left} * {Right} )")]
     internal class Multiplication(Expression left, Expression right) : Expression(left, right)
     {
         public override void Accept(Visitor visitor)
@@ -95,6 +109,7 @@ namespace Patterns.Examples
     {
         internal void VisitNumber(Number number);
         internal void VisitAddition(Addition addition);
+        internal void VisitSubtraction(Subtraction subtraction);
         internal void VisitMultiplication(Multiplication multiplication);
         internal void VisitDivision(Division division);
         internal void VisitExpression(Expression expression);
@@ -110,6 +125,12 @@ namespace Patterns.Examples
         {
 	        VisitExpression((Expression)expression);
         }
+
+        public virtual void VisitSubtraction(Subtraction expression)
+        {
+            VisitExpression((Expression)expression);
+        }
+
 
         public virtual void VisitMultiplication(Multiplication expression)
         {
@@ -150,8 +171,9 @@ namespace Patterns.Examples
     {
 		internal Expression VisitNumber(Number number);
 		internal Expression VisitAddition(Addition addition);
-		internal Expression VisitMultiplication(Multiplication multiplication);
 
+        internal Expression VisitSubtraction(Subtraction subtraction);
+        internal Expression VisitMultiplication(Multiplication multiplication);
         internal Expression VisitDivision(Division division);
         internal Expression VisitExpression(Expression expression);
 	}
@@ -163,6 +185,11 @@ namespace Patterns.Examples
         }
 
         public virtual Expression VisitAddition(Addition expression)
+        {
+            return VisitExpression((Expression)expression);
+        }
+
+        public virtual Expression VisitSubtraction(Subtraction expression)
         {
             return VisitExpression((Expression)expression);
         }
@@ -193,6 +220,19 @@ namespace Patterns.Examples
             
             if ((expression.Left is Number left) && (expression.Right is Number right))
                 return new Number(left.Value + right.Value);
+
+            base.VisitExpression((Expression)expression);
+            return expression;
+        }
+    }
+
+    internal class Subtractor : TransformingVisitor
+    {
+        public override Expression VisitSubtraction(Subtraction expression)
+        {
+
+            if ((expression.Left is Number left) && (expression.Right is Number right))
+                return new Number(left.Value - right.Value);
 
             base.VisitExpression((Expression)expression);
             return expression;
@@ -296,7 +336,11 @@ namespace Patterns.Examples
 					{
 						left = new Addition(left, right);
 					}
-				}
+                    else if (op == "-")
+                    {
+                        left = new Subtraction(left, right);
+                    }
+                }
 				return left;
 			}
 			private Expression ParseTerm()
@@ -333,7 +377,7 @@ namespace Patterns.Examples
 			var parser = new ExpressionParser(expressionString);
 			var expression = parser.Parse();
 
-			List<TransformingVisitor> visitors = [new Adder(), new Multiplier()];
+			List<TransformingVisitor> visitors = [new Adder(), new Multiplier(), new Subtractor()];
          
             // Act : Calculate the expression with the visitors
             // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
