@@ -31,5 +31,11 @@ namespace PatternTests
         {
             VisitorExample.TransformingVisitor(expression,expectedResult);
         }
+
+        [Fact]
+        public void DependencyInjectionExample2()
+        {
+            DependencyInjectionExample2Test.Example();
+        }
     }
 }
