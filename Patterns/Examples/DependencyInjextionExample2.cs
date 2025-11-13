@@ -69,6 +69,7 @@ namespace Patterns.Examples
             NotificationManager notificationManager = new NotificationManager();
             notificationManager.SendNotification("Hello world");
 
+            // dependency is injected via constructor
             LooselyCoupledNotificationManager looselyNotificationManager = new LooselyCoupledNotificationManager(new EmailService2());
             notificationManager.SendNotification("Hello world");
         }
