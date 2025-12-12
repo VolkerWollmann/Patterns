@@ -28,14 +28,20 @@ namespace Patterns.AlgorithmicPatterns
         internal static EvaluatedMove WorstMove(SideToMove sideToMove)
         {
             if (sideToMove == SideToMove.Maximize)
-                return new EvaluatedMove("Worst for Maximize", 0, -100);
+            {
+                // worst move for maximizing side is very low value
+                return new EvaluatedMove(SideToMove.Maximize, 0, -100);
+            }
             else
-                return new EvaluatedMove("Worst for Minimize", 0, 100);
+            {
+                // worst move for minimizing side is very high value
+                return new EvaluatedMove(SideToMove.Minimize, 0, 100);
+            }
         }
 
         public override string ToString()
         {
-            return $"{MoveName} (Move: {Move}, Value: {Value})";
+            return $"{SideToMove} (Move: {Move}, Value: {Value})";
         }
     }
 
@@ -70,8 +76,8 @@ namespace Patterns.AlgorithmicPatterns
             var moves = new List<EvaluatedMove>();
             for (int i = 0; i < 3; i++)
             {
-                // generate inclusive range -10 .. 10
-                moves.Add( new EvaluatedMove("Move " + i,  random.Next(-10, 11), 0));
+                // generate unevaluated move inclusive range -10 .. 10
+                moves.Add( new EvaluatedMove(SideToMove,  random.Next(-10, 11), 0));
             }
             return moves;
         }
@@ -125,7 +131,7 @@ namespace Patterns.AlgorithmicPatterns
         {
             if (depth == 0)
             {
-                return [new EvaluatedMove("End", 0, game.Value)];
+                return [new EvaluatedMove(game.SideToMove, 0, game.Value)];
             }
 
             var moves = game.GetAvailableMoves();
@@ -172,9 +178,9 @@ namespace Patterns.AlgorithmicPatterns
             var game = new Game();
             var search = new MinMaxSearch();
             
-            MoveList bestMoveList = search.FindBestMove(game, 2);
+            MoveList bestMoveList = search.FindBestMove(game, 3);
             string result = bestMoveList.ToString();
-            Console.WriteLine("Best move (maximizing):");
+            Console.WriteLine($"Best move {game.SideToMove}:");
             Console.WriteLine($"{result}");
 
         }
