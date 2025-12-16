@@ -30,12 +30,12 @@ namespace Patterns.AlgorithmicPatterns
             if (sideToMove == SideToMove.Maximize)
             {
                 // worst move for maximizing side is very low value
-                return new EvaluatedMove(SideToMove.Maximize, 0, -100);
+                return new EvaluatedMove(SideToMove.Maximize, 1, -100);
             }
             else
             {
                 // worst move for minimizing side is very high value
-                return new EvaluatedMove(SideToMove.Minimize, 0, 100);
+                return new EvaluatedMove(SideToMove.Minimize, 1, 100);
             }
         }
 
@@ -64,21 +64,32 @@ namespace Patterns.AlgorithmicPatterns
         }
     }
 
+    /// <summary>
+    /// Take one to three.
+    /// The one who (must) take the last looses
+    /// </summary>
     internal class Game
     {
         public SideToMove SideToMove { get; set; } = SideToMove.Maximize;
-        Random random = new Random();
+        readonly Random _random;
 
         public int Value;
+
+        public Game()
+        {
+            _random = new Random();
+            Value = _random.Next(20, 30);
+        }
 
         internal List<EvaluatedMove> GetAvailableMoves()
         {
             var moves = new List<EvaluatedMove>();
-            for (int i = 0; i < 3; i++)
+
+            for (int i = 0; i < (Value > 3 ? 3 : Value); i++)
             {
-                // generate unevaluated move inclusive range -10 .. 10
-                moves.Add( new EvaluatedMove(SideToMove,  random.Next(-10, 11), 0));
+                moves.Add(new EvaluatedMove(SideToMove, i, 0));
             }
+
             return moves;
         }
 
