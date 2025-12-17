@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Testing.Platform.Extensions.Messages;
 using Patterns.Examples;
 
 namespace Patterns.AlgorithmicPatterns
@@ -139,6 +140,12 @@ namespace Patterns.AlgorithmicPatterns
             else
                 return move1.Value.CompareTo(move2.Value);
         }
+
+        internal int Evaluate()
+        {
+            int value = Strategies[SideToMove].Evaluate(this);
+            return value;
+        }
     }
 
     internal interface IStrategy
@@ -161,7 +168,7 @@ namespace Patterns.AlgorithmicPatterns
         {
             if (depth == 0)
             {
-                return [new Move(game.SideToMove, 0, game.Pieces)];
+                return [new Move(game.SideToMove, 0, game.Evaluate() )];
             }
 
             var moves = game.GetAvailableMoves();
