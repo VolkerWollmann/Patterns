@@ -18,13 +18,23 @@ namespace Patterns.AlgorithmicPatterns
         internal SideToMove SideToMove;
         internal int PiecesToTake;
         internal int Value;
-
+        internal MoveList StrongestVariant = [];
         internal Move(SideToMove sideToMove, int piecesToTake, int value)
         {
             SideToMove = sideToMove;
             PiecesToTake = piecesToTake;
             Value = value;
         }
+
+        /// <summary>
+        /// For evaluation of board only
+        /// </summary>
+        /// <param name="sideToMove"></param>
+        /// <param name="value"></param>
+        internal Move(SideToMove sideToMove, int value) : this(sideToMove, -1, value)
+        {
+        }
+
 
         internal static Move WorstMove(SideToMove sideToMove)
         {
@@ -42,7 +52,19 @@ namespace Patterns.AlgorithmicPatterns
 
         public override string ToString()
         {
-            return $"{SideToMove} (Move: {PiecesToTake}, Value: {Value})";
+            string s = $"{SideToMove} (Move: {PiecesToTake}, Value: {Value})";
+            return s;
+        }
+
+        public string ToStringWithResponse()
+        {
+            string s = ToString();
+            foreach (var move in StrongestVariant)
+            {
+                s = s + move;
+            }
+
+            return s;
         }
     }
 
@@ -135,10 +157,13 @@ namespace Patterns.AlgorithmicPatterns
         /// <returns></returns>
         internal int CompareMoves(Move move1, Move move2)
         {
+            int result;
             if (SideToMove == SideToMove.Maximize)
-                return -move1.Value.CompareTo(move2.Value);
+                result = move1.Value.CompareTo(move2.Value);
             else
-                return move1.Value.CompareTo(move2.Value);
+                result = -move1.Value.CompareTo(move2.Value);
+
+            return result;
         }
 
         internal int Evaluate()
@@ -164,17 +189,16 @@ namespace Patterns.AlgorithmicPatterns
 
     internal class MinMaxSearch
     {
-        public MoveList FindBestMove(Game game, int depth)
+        public Move FindBestMove(Game game, int depth)
         {
             if (depth == 0)
             {
-                return [new Move(game.SideToMove, 0, game.Evaluate() )];
+                return new Move(game.SideToMove, game.Evaluate());
             }
 
             var moves = game.GetAvailableMoves();
 
             Move bestMove = game.GetWorstMove();
-            MoveList bestAnswerList = new MoveList();
             
             for (int i = 1; i < moves.Count; i++)
             {
@@ -182,19 +206,20 @@ namespace Patterns.AlgorithmicPatterns
 
                 game.ApplyMove(move);
 
-                MoveList result = FindBestMove(game, depth - 1);
+                Move result = FindBestMove(game, depth - 1);
 
                 game.UndoMove(move);
 
-                if (game.CompareMoves(result[0], bestMove) > 0)
+                if (game.CompareMoves(result, bestMove) > 0)
                 {
                         bestMove = move;
-                        bestAnswerList = result;
+                        bestMove.Value = result.Value;
+                        bestMove.StrongestVariant = result.StrongestVariant;
+                        bestMove.StrongestVariant.AddAtBeginning(bestMove);
                 }
             }
 
-            bestAnswerList.AddAtBeginning(bestMove);
-            return bestAnswerList;
+            return bestMove;
         }
     }
     public class MinMaxSearchExample
@@ -205,8 +230,8 @@ namespace Patterns.AlgorithmicPatterns
             var game = new Game(strategy, strategy);
             var search = new MinMaxSearch();
             
-            MoveList bestMoveList = search.FindBestMove(game, 3);
-            string result = bestMoveList.ToString();
+            Move bestMoveList = search.FindBestMove(game, 3);
+            string result = bestMoveList.ToStringWithResponse();
             Console.WriteLine($"Best move {game.SideToMove}:");
             Console.WriteLine($"{result}");
 
