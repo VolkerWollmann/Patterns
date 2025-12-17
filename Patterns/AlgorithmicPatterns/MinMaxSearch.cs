@@ -12,40 +12,40 @@ namespace Patterns.AlgorithmicPatterns
         Minimize
     }
 
-    internal class EvaluatedMove
+    internal class Move
     {
         internal SideToMove SideToMove;
-        internal int Move;
+        internal int PiecesToTake;
         internal int Value;
 
-        internal EvaluatedMove(SideToMove sideToMove, int move, int value)
+        internal Move(SideToMove sideToMove, int piecesToTake, int value)
         {
             SideToMove = sideToMove;
-            Move = move;
+            PiecesToTake = piecesToTake;
             Value = value;
         }
 
-        internal static EvaluatedMove WorstMove(SideToMove sideToMove)
+        internal static Move WorstMove(SideToMove sideToMove)
         {
             if (sideToMove == SideToMove.Maximize)
             {
                 // worst move for maximizing side is very low value
-                return new EvaluatedMove(SideToMove.Maximize, 1, -100);
+                return new Move(SideToMove.Maximize, 1, -100);
             }
             else
             {
                 // worst move for minimizing side is very high value
-                return new EvaluatedMove(SideToMove.Minimize, 1, 100);
+                return new Move(SideToMove.Minimize, 1, 100);
             }
         }
 
         public override string ToString()
         {
-            return $"{SideToMove} (Move: {Move}, Value: {Value})";
+            return $"{SideToMove} (Move: {PiecesToTake}, Value: {Value})";
         }
     }
 
-    internal class MoveList : List<EvaluatedMove>
+    internal class MoveList : List<Move>
     {
         
         public override string ToString()
@@ -58,7 +58,7 @@ namespace Patterns.AlgorithmicPatterns
             return sb.ToString();
         }
 
-        internal void AddAtBeginning( EvaluatedMove move )
+        internal void AddAtBeginning( Move move )
         {
             this.Insert(0, move);
         }
@@ -71,31 +71,36 @@ namespace Patterns.AlgorithmicPatterns
     internal class Game
     {
         public SideToMove SideToMove { get; set; } = SideToMove.Maximize;
+        public Dictionary<SideToMove, IStrategy> Strategies = new ();
+        
         readonly Random _random;
 
-        public int Value;
+        public int Pieces;
 
-        public Game()
+        public Game(IStrategy maxStrategy, IStrategy minStrategy)
         {
             _random = new Random();
-            Value = _random.Next(20, 30);
+            Pieces = _random.Next(20, 30);
+            Strategies.Add( SideToMove.Maximize, maxStrategy);
+            Strategies.Add( SideToMove.Minimize, minStrategy);
+            
         }
 
-        internal List<EvaluatedMove> GetAvailableMoves()
+        internal List<Move> GetAvailableMoves()
         {
-            var moves = new List<EvaluatedMove>();
+            var moves = new List<Move>();
 
-            for (int i = 0; i < (Value > 3 ? 3 : Value); i++)
+            for (int i = 0; i < (Pieces > 3 ? 3 : Pieces); i++)
             {
-                moves.Add(new EvaluatedMove(SideToMove, i, 0));
+                moves.Add(new Move(SideToMove, i, 0));
             }
 
             return moves;
         }
 
-        internal EvaluatedMove GetWorstMove()
+        internal Move GetWorstMove()
         {
-            return EvaluatedMove.WorstMove(SideToMove);
+            return Move.WorstMove(SideToMove);
         }
 
         private void ToggleSide()
@@ -105,16 +110,16 @@ namespace Patterns.AlgorithmicPatterns
                 : SideToMove.Maximize;
         }
 
-        internal void ApplyMove(EvaluatedMove move )
+        internal void ApplyMove(Move move )
         {
-            Value += move.Move;
+            Pieces += move.PiecesToTake;
             ToggleSide();
         }
 
-        internal void UndoMove(EvaluatedMove move)
+        internal void UndoMove(Move move)
         {
             ToggleSide();
-            Value -= move.Move;
+            Pieces -= move.PiecesToTake;
         }
 
 
@@ -127,12 +132,26 @@ namespace Patterns.AlgorithmicPatterns
         /// <param name="move1"></param>
         /// <param name="move2"></param>
         /// <returns></returns>
-        internal int CompareMoves(int move1, int move2)
+        internal int CompareMoves(Move move1, Move move2)
         {
             if (SideToMove == SideToMove.Maximize)
-                return -move1.CompareTo(move2);
+                return -move1.Value.CompareTo(move2.Value);
             else
-                return move1.CompareTo(move2);
+                return move1.Value.CompareTo(move2.Value);
+        }
+    }
+
+    internal interface IStrategy
+    {
+        int Evaluate(Game game);
+    }
+    
+    internal class RandomStrategy : IStrategy
+    {
+        private readonly Random _random = new Random();
+        public int Evaluate(Game game)
+        {
+            return _random.Next(-10, 10);
         }
     }
 
@@ -142,17 +161,17 @@ namespace Patterns.AlgorithmicPatterns
         {
             if (depth == 0)
             {
-                return [new EvaluatedMove(game.SideToMove, 0, game.Value)];
+                return [new Move(game.SideToMove, 0, game.Pieces)];
             }
 
             var moves = game.GetAvailableMoves();
 
-            EvaluatedMove bestMove = game.GetWorstMove();
+            Move bestMove = game.GetWorstMove();
             MoveList bestAnswerList = new MoveList();
             
             for (int i = 1; i < moves.Count; i++)
             {
-                EvaluatedMove move = moves[i];
+                Move move = moves[i];
 
                 game.ApplyMove(move);
 
@@ -160,21 +179,10 @@ namespace Patterns.AlgorithmicPatterns
 
                 game.UndoMove(move);
 
-                if (game.SideToMove == SideToMove.Maximize)
+                if (game.CompareMoves(result[0], bestMove) > 0)
                 {
-                    if (result[0].Value > bestMove.Value)
-                    {
                         bestMove = move;
                         bestAnswerList = result;
-                    }
-                }
-                else
-                {
-                    if (result[0].Value < bestMove.Value)
-                    {
-                        bestMove = move;
-                        bestAnswerList = result;
-                    }
                 }
             }
 
@@ -186,7 +194,8 @@ namespace Patterns.AlgorithmicPatterns
     {
         public static void Test()
         {
-            var game = new Game();
+            IStrategy strategy = new RandomStrategy();
+            var game = new Game(strategy, strategy);
             var search = new MinMaxSearch();
             
             MoveList bestMoveList = search.FindBestMove(game, 3);
