@@ -50,6 +50,12 @@ namespace Patterns.AlgorithmicPatterns
             }
         }
 
+        internal void AddReply(Move replyMove)
+        {
+            this.Value = replyMove.Value;
+            this.StrongestVariant = replyMove.StrongestVariant;
+        }
+
         public override string ToString()
         {
             string sideToMove = SideToMove.ToString().Substring(0,3);
@@ -112,7 +118,7 @@ namespace Patterns.AlgorithmicPatterns
         public Game(IStrategy maxStrategy, IStrategy minStrategy)
         {
             _random = new Random();
-            Pieces = _random.Next(20, 30);
+            Pieces = 15;
             Strategies.Add( SideToMove.Maximize, maxStrategy);
             Strategies.Add( SideToMove.Minimize, minStrategy);
             
@@ -122,7 +128,7 @@ namespace Patterns.AlgorithmicPatterns
         {
             var moves = new List<Move>();
 
-            for (int i = 0; i < (Pieces > 3 ? 3 : Pieces); i++)
+            for (int i = 1; i <= (Pieces > 3 ? 3 : Pieces); i++)
             {
                 moves.Add(new Move(SideToMove, i, 0));
             }
@@ -144,14 +150,14 @@ namespace Patterns.AlgorithmicPatterns
 
         internal void ApplyMove(Move move )
         {
-            Pieces += move.PiecesToTake;
+            Pieces -= move.PiecesToTake;
             ToggleSide();
         }
 
         internal void UndoMove(Move move)
         {
             ToggleSide();
-            Pieces -= move.PiecesToTake;
+            Pieces += move.PiecesToTake;
         }
 
 
@@ -192,6 +198,35 @@ namespace Patterns.AlgorithmicPatterns
         private readonly Random _random = new Random();
         public int Evaluate(Game game)
         {
+            if (game.Pieces == 1)
+            {
+                if (game.SideToMove == SideToMove.Maximize)
+                {
+                    return -10;
+                }
+
+                return 10;
+            }
+            
+            return _random.Next(-10, 10);
+        }
+    }
+
+    internal class StrongStrategy : IStrategy
+    {
+        private readonly Random _random = new Random();
+        public int Evaluate(Game game)
+        {
+            if (game.Pieces == 1)
+            {
+                if (game.SideToMove == SideToMove.Maximize)
+                {
+                    return -10;
+                }
+
+                return 10;
+            }
+
             return _random.Next(-10, 10);
         }
     }
@@ -215,15 +250,14 @@ namespace Patterns.AlgorithmicPatterns
 
                 game.ApplyMove(move);
 
-                Move result = FindBestMove(game, depth - 1);
+                Move replyMove = FindBestMove(game, depth - 1);
 
                 game.UndoMove(move);
 
-                if (game.CompareMoves(result, bestMove) > 0)
+                if (game.CompareMoves(replyMove, bestMove) > 0)
                 {
                         bestMove = move;
-                        bestMove.Value = result.Value;
-                        bestMove.StrongestVariant = result.StrongestVariant;
+                        bestMove.AddReply(replyMove);
                         bestMove.StrongestVariant.AddAtBeginning(bestMove);
                 }
             }
@@ -234,9 +268,8 @@ namespace Patterns.AlgorithmicPatterns
     public class MinMaxSearchExample
     {
         public static void Test()
-        {
-            IStrategy strategy = new RandomStrategy();
-            var game = new Game(strategy, strategy);
+        { 
+            var game = new Game(new StrongStrategy(), new RandomStrategy());
             var search = new MinMaxSearch();
             
             Move bestMoveList = search.FindBestMove(game, 3);
