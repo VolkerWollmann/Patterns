@@ -52,18 +52,27 @@ namespace Patterns.AlgorithmicPatterns
 
         public override string ToString()
         {
-            string s = $"{SideToMove} (Move: {PiecesToTake}, Value: {Value})";
+            string sideToMove = SideToMove.ToString().Substring(0,3);
+            string s = $"{sideToMove} (Move: {PiecesToTake}, Value: {Value})";
             return s;
+        }
+
+        private string ShortString()
+        {
+            string sideToMove = SideToMove.ToString().Substring(0, 3);
+            return $"({sideToMove}: {PiecesToTake} Val: {Value} )";
         }
 
         public string ToStringWithResponse()
         {
             string s = ToString();
+            s += "[";
             foreach (var move in StrongestVariant)
             {
-                s = s + move;
+                s = s + move.ShortString();
             }
 
+            s += "]";
             return s;
         }
     }
