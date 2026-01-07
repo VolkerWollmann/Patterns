@@ -8,7 +8,7 @@ namespace PatternTests
     public class AlgorithmicPatternsTests
     {
         [Fact]
-        public void Strategy()
+        public void MinMaxSearch()
         {
             MinMaxSearchExample.Test();
         }
