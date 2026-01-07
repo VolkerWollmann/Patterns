@@ -103,7 +103,7 @@ namespace Patterns.Examples
 
     #endregion
 
-    #region Visitors
+    #region Visitor
 
     internal interface IVisitor
     {
@@ -151,8 +151,8 @@ namespace Patterns.Examples
         }
     }
 
-    #region MaxFinder Visitor
-    internal class MaxFinder : Visitor
+	#region MaxFinder Visitor
+	internal class MaxFinder : Visitor
     {
         public int Max { get; private set; } = int.MinValue;
 
@@ -162,12 +162,13 @@ namespace Patterns.Examples
                 Max = expression.Value;
         }
     }
-    #endregion
-    #endregion
+	#endregion
 
-    #region TransformingVisitor
+	#endregion
 
-    internal interface ITransformingVisitor
+	#region TransformingVisitor
+
+	internal interface ITransformingVisitor
     {
 		internal Expression VisitNumber(Number number);
 		internal Expression VisitAddition(Addition addition);
@@ -213,7 +214,8 @@ namespace Patterns.Examples
         }
     }
 
-    internal class Adder : TransformingVisitor
+	#region concrete visitors
+	internal class Adder : TransformingVisitor
     {
         public override Expression VisitAddition(Addition expression)
         {
@@ -265,6 +267,7 @@ namespace Patterns.Examples
             return expression;
         }
     }
+    #endregion
 
     #endregion
 
