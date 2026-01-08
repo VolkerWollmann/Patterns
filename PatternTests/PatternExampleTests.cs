@@ -13,12 +13,16 @@ namespace PatternTests
             Patterns.Examples.StateExample.Test();
         }
 
-        [Fact]
-        public void Visitor_Simple()
+		[Theory]
+		[InlineData("42", 42)]
+		[InlineData("1 + 2", 2)]
+		[InlineData("1 + 2 + 3", 3)]
+		[InlineData("1 + (2 * 3)", 3)]
+		public void Visitor_Simple(string expression, int expectedResult)
         {
-            VisitorExample.SimpleVisitor();
-        }
-
+            VisitorExample.SimpleVisitor(expression, expectedResult);
+		}
+		
 		[Theory]
 		[InlineData("42", 42)]
 		[InlineData("1 + 2", 3)]
