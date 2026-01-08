@@ -273,109 +273,105 @@ namespace Patterns.Examples
 
     public class VisitorExample
     {
-        public static void SimpleVisitor()
-        {
-            // 3 + ( 5 * 8 )
-            Expression three = new Number(3);
-            Expression five = new Number(5);
-            Expression eight = new Number(8);
-
-            Expression expression = new Addition(three, new Multiplication(five, eight));
-
-            MaxFinder maxFinder = new MaxFinder();
-            expression.Accept(maxFinder);
-
-            Assert.AreEqual(8,maxFinder.Max);
-        }
-
         #region parser
         // Parser class
         internal class ExpressionParser
-		{
-			private readonly Queue<string> _tokens;
-			public ExpressionParser(string input)
-			{
-				_tokens = new Queue<string>(Tokenize(input));
-			}
-			private IEnumerable<string> Tokenize(string input)
-			{
-				var tokens = new List<string>();
-				var current = string.Empty;
-				foreach (var c in input)
-				{
-					if (char.IsWhiteSpace(c)) continue;
-					if (char.IsDigit(c))
-					{
-						current += c;
-					}
-					else
-					{
-						if (!string.IsNullOrEmpty(current))
-						{
-							tokens.Add(current);
-							current = string.Empty;
-						}
-						tokens.Add(c.ToString());
-					}
-				}
-				if (!string.IsNullOrEmpty(current))
-				{
-					tokens.Add(current);
-				}
-				return tokens;
-			}
-			public Expression Parse()
-			{
-				return ParseExpression();
-			}
-			private Expression ParseExpression()
-			{
-				var left = ParseTerm();
-				while (_tokens.Count > 0 && (_tokens.Peek() == "+" || _tokens.Peek() == "-"))
-				{
-					var op = _tokens.Dequeue();
-					var right = ParseTerm();
-					if (op == "+")
-					{
-						left = new Addition(left, right);
-					}
+        {
+            private readonly Queue<string> _tokens;
+            public ExpressionParser(string input)
+            {
+                _tokens = new Queue<string>(Tokenize(input));
+            }
+            private IEnumerable<string> Tokenize(string input)
+            {
+                var tokens = new List<string>();
+                var current = string.Empty;
+                foreach (var c in input)
+                {
+                    if (char.IsWhiteSpace(c)) continue;
+                    if (char.IsDigit(c))
+                    {
+                        current += c;
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(current))
+                        {
+                            tokens.Add(current);
+                            current = string.Empty;
+                        }
+                        tokens.Add(c.ToString());
+                    }
+                }
+                if (!string.IsNullOrEmpty(current))
+                {
+                    tokens.Add(current);
+                }
+                return tokens;
+            }
+            public Expression Parse()
+            {
+                return ParseExpression();
+            }
+            private Expression ParseExpression()
+            {
+                var left = ParseTerm();
+                while (_tokens.Count > 0 && (_tokens.Peek() == "+" || _tokens.Peek() == "-"))
+                {
+                    var op = _tokens.Dequeue();
+                    var right = ParseTerm();
+                    if (op == "+")
+                    {
+                        left = new Addition(left, right);
+                    }
                     else if (op == "-")
                     {
                         left = new Subtraction(left, right);
                     }
                 }
-				return left;
-			}
-			private Expression ParseTerm()
-			{
-				var left = ParseFactor();
+                return left;
+            }
+            private Expression ParseTerm()
+            {
+                var left = ParseFactor();
                 // Handle multiplication and division with stronger binding
                 while (_tokens.Count > 0 && (_tokens.Peek() == "*" || _tokens.Peek() == "/"))
-				{
-					var op = _tokens.Dequeue();
-					var right = ParseFactor();
-					if (op == "*")
-					{
-						left = new Multiplication(left, right);
-					}
-				}
-				return left;
-			}
-			private Expression ParseFactor()
-			{
-				var token = _tokens.Dequeue();
-				if (token == "(")
-				{
-					var expression = ParseExpression();
-					_tokens.Dequeue(); // Consume ")"
-					return expression;
-				}
-				return new Number(int.Parse(token));
-			}
-		}
+                {
+                    var op = _tokens.Dequeue();
+                    var right = ParseFactor();
+                    if (op == "*")
+                    {
+                        left = new Multiplication(left, right);
+                    }
+                }
+                return left;
+            }
+            private Expression ParseFactor()
+            {
+                var token = _tokens.Dequeue();
+                if (token == "(")
+                {
+                    var expression = ParseExpression();
+                    _tokens.Dequeue(); // Consume ")"
+                    return expression;
+                }
+                return new Number(int.Parse(token));
+            }
+        }
         #endregion
 
-        public static void TransformingVisitor(string expressionString, int expectedResult)
+        public static void SimpleVisitor(string expressionString, int expectedResult)
+        {
+            var parser = new ExpressionParser(expressionString);
+            var expression = parser.Parse();
+
+            MaxFinder maxFinder = new MaxFinder();
+            expression.Accept(maxFinder);
+
+            Assert.AreEqual(expectedResult,maxFinder.Max);
+        }
+
+       public static void TransformingVisitor(string expressionString, int expectedResult)
         {
 			var parser = new ExpressionParser(expressionString);
 			var expression = parser.Parse();
