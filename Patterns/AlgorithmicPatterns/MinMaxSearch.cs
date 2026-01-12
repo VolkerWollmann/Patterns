@@ -200,12 +200,7 @@ namespace Patterns.AlgorithmicPatterns
         {
             if (game.Pieces == 1)
             {
-                if (game.SideToMove == SideToMove.Maximize)
-                {
-                    return -10;
-                }
-
-                return 10;
+                return (game.SideToMove == SideToMove.Maximize) ? -10 : 10;
             }
             
             return _random.Next(-10, 10);
@@ -219,15 +214,17 @@ namespace Patterns.AlgorithmicPatterns
         {
             if (game.Pieces == 1)
             {
-                if (game.SideToMove == SideToMove.Maximize)
-                {
-                    return -10;
-                }
-
-                return 10;
+                return (game.SideToMove == SideToMove.Maximize) ? -10 : 10;
             }
 
-            return _random.Next(-10, 10);
+            if (game.Pieces % 4 == 1)
+            {
+                return (game.SideToMove == SideToMove.Maximize) ? -10 : 10;
+            }
+            else
+            {
+                return (game.SideToMove == SideToMove.Maximize) ? 10 : -10;
+            }    
         }
     }
 
@@ -235,7 +232,7 @@ namespace Patterns.AlgorithmicPatterns
     {
         public Move FindBestMove(Game game, int depth)
         {
-            if (depth == 0)
+            if ( (depth == 0) || (game.Pieces == 0))
             {
                 return new Move(game.SideToMove, game.Evaluate());
             }
@@ -272,7 +269,7 @@ namespace Patterns.AlgorithmicPatterns
             var game = new Game(new StrongStrategy(), new RandomStrategy());
             var search = new MinMaxSearch();
             
-            Move bestMoveList = search.FindBestMove(game, 3);
+            Move bestMoveList = search.FindBestMove(game, 4);
             string result = bestMoveList.ToStringWithResponse();
             Console.WriteLine($"Best move {game.SideToMove}:");
             Console.WriteLine($"{result}");
