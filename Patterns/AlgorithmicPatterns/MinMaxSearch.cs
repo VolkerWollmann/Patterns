@@ -16,12 +16,14 @@ namespace Patterns.AlgorithmicPatterns
     internal class Move
     {
         internal SideToMove SideToMove;
+        internal int PiecesBeforeMove;
         internal int PiecesToTake;
         internal int Value;
         internal MoveList StrongestVariant = [];
-        internal Move(SideToMove sideToMove, int piecesToTake, int value)
+        internal Move(SideToMove sideToMove, int piecesBeforeMove,int piecesToTake, int value)
         {
             SideToMove = sideToMove;
+            PiecesBeforeMove = piecesBeforeMove;
             PiecesToTake = piecesToTake;
             Value = value;
         }
@@ -29,24 +31,25 @@ namespace Patterns.AlgorithmicPatterns
         /// <summary>
         /// For evaluation of board only
         /// </summary>
+        /// <param name="piecesBeforeMove"></param>
         /// <param name="sideToMove"></param>
         /// <param name="value"></param>
-        internal Move(SideToMove sideToMove, int value) : this(sideToMove, 0, value)
+        internal Move(SideToMove sideToMove, int piecesBeforeMove, int value) : this(sideToMove, piecesBeforeMove,0, value)
         {
         }
 
 
-        internal static Move WorstMove(SideToMove sideToMove)
+        internal static Move WorstMove(SideToMove sideToMove, int piecesBeforeMove)
         {
             if (sideToMove == SideToMove.Maximize)
             {
                 // worst move for maximizing side is very low value
-                return new Move(SideToMove.Maximize, 1, -100);
+                return new Move(SideToMove.Maximize, piecesBeforeMove,1, -200);
             }
             else
             {
                 // worst move for minimizing side is very high value
-                return new Move(SideToMove.Minimize, 1, 100);
+                return new Move(SideToMove.Minimize, piecesBeforeMove,1, 200);
             }
         }
 
@@ -59,7 +62,7 @@ namespace Patterns.AlgorithmicPatterns
         public override string ToString()
         {
             string sideToMove = SideToMove.ToString().Substring(0,3);
-            string s = $"{sideToMove} (Move: {PiecesToTake}, Value: {Value})";
+            string s = $"{sideToMove} (PiecesBefore: {PiecesBeforeMove} Move: {PiecesToTake}, Value: {Value})";
             return s;
         }
 
@@ -75,7 +78,7 @@ namespace Patterns.AlgorithmicPatterns
             s += "[";
             foreach (var move in StrongestVariant)
             {
-                s = s + move.ShortString();
+                s = s + move.ToString();
             }
 
             s += "]";
@@ -115,10 +118,10 @@ namespace Patterns.AlgorithmicPatterns
 
         public int Pieces;
 
-        public Game(IStrategy strategy)
+        public Game(IStrategy strategy, int pieces)
         {
             _random = new Random();
-            Pieces = 15;
+            Pieces = pieces;
             Strategy = strategy;
         }
 
@@ -128,15 +131,15 @@ namespace Patterns.AlgorithmicPatterns
 
             for (int i = 1; i <= (Pieces > 3 ? 3 : Pieces); i++)
             {
-                moves.Add(new Move(SideToMove, i, 0));
+                moves.Add(new Move(SideToMove, Pieces, i, 0));
             }
 
             return moves;
         }
 
-        internal Move GetWorstMove()
+        internal Move GetWorstMove( )
         {
-            return Move.WorstMove(SideToMove);
+            return Move.WorstMove(SideToMove, Pieces);
         }
 
         private void ToggleSide()
@@ -212,12 +215,12 @@ namespace Patterns.AlgorithmicPatterns
         {
             if (game.Pieces == 1)
             {
-                return (game.SideToMove == SideToMove.Maximize) ? -100 : 100;
+                return (game.SideToMove == SideToMove.Maximize) ? 100 : -100;
             }
 
             if (game.Pieces % 4 == 1)
             {
-                return (game.SideToMove == SideToMove.Maximize) ? -100 : 100;
+                return (game.SideToMove == SideToMove.Maximize) ? 100 : -100;
             }
             else
             {
@@ -233,7 +236,7 @@ namespace Patterns.AlgorithmicPatterns
         {
             if ( (depth == 0) || (game.Pieces == 0))
             {
-                return new Move(game.SideToMove, game.Evaluate());
+                return new Move(game.SideToMove, game.Pieces, game.Evaluate());
             }
 
             var moves = game.GetAvailableMoves();
@@ -265,10 +268,10 @@ namespace Patterns.AlgorithmicPatterns
     {
         public static void Test()
         { 
-            var game = new Game(new StrongStrategy());
+            var game = new Game(new StrongStrategy(), 14);
             var search = new MinMaxSearch();
             
-            Move bestMoveList = search.FindBestMove(game, 4);
+            Move bestMoveList = search.FindBestMove(game, 1);
             string result = bestMoveList.ToStringWithResponse();
             Console.WriteLine($"Best move {game.SideToMove}:");
             Console.WriteLine($"{result}");
