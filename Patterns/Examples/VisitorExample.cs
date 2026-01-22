@@ -5,20 +5,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.Examples
 {
-    #region Tree elements
-
-    #region Accept interfaces
+    #region Accept interface
     internal interface IAcceptVisitor
     {
         internal void Accept(Visitor visitor);
     }
+    #endregion
 
+    #region TransformingVisitor Accept interface
     internal interface IAcceptTransformingVisitor
     {
         internal Expression Accept(TransformingVisitor visitor);
     }
     #endregion
 
+    #region Expression classes
     internal abstract class Expression(Expression? left, Expression? right) : IAcceptVisitor, IAcceptTransformingVisitor
     {
         internal Expression? Left { get; set; } = left;
@@ -103,7 +104,7 @@ namespace Patterns.Examples
 
     #endregion
 
-    #region Visitor
+    #region Visitor interface
 
     internal interface IVisitor
     {
@@ -114,6 +115,10 @@ namespace Patterns.Examples
         internal void VisitDivision(Division division);
         internal void VisitExpression(Expression expression);
     }
+
+    #endregion
+
+    #region Visitor base class
     internal abstract class Visitor : IVisitor
     {
         public virtual void VisitNumber(Number expression)
@@ -150,9 +155,10 @@ namespace Patterns.Examples
                 expression.Right.Accept(this);
         }
     }
+    #endregion
 
-	#region MaxFinder Visitor
-	internal class MaxFinder : Visitor
+    #region MaxFinder Visitor
+    internal class MaxFinder : Visitor
     {
         public int Max { get; private set; } = int.MinValue;
 
@@ -162,13 +168,11 @@ namespace Patterns.Examples
                 Max = expression.Value;
         }
     }
-	#endregion
+    #endregion
 
-	#endregion
+    #region TransformingVisitor interface
 
-	#region TransformingVisitor
-
-	internal interface ITransformingVisitor
+    internal interface ITransformingVisitor
     {
 		internal Expression VisitNumber(Number number);
 		internal Expression VisitAddition(Addition addition);
@@ -178,6 +182,9 @@ namespace Patterns.Examples
         internal Expression VisitDivision(Division division);
         internal Expression VisitExpression(Expression expression);
 	}
+    #endregion
+
+    #region TransformingVisitor base class
     internal abstract class TransformingVisitor : ITransformingVisitor
     {
         public virtual Expression VisitNumber(Number expression)
@@ -213,9 +220,10 @@ namespace Patterns.Examples
             return expression;
         }
     }
+    #endregion
 
-	#region concrete visitors
-	internal class Adder : TransformingVisitor
+    #region concrete transforming visitors
+    internal class Adder : TransformingVisitor
     {
         public override Expression VisitAddition(Addition expression)
         {
@@ -267,8 +275,6 @@ namespace Patterns.Examples
             return expression;
         }
     }
-    #endregion
-
     #endregion
 
     public class VisitorExample
