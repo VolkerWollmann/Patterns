@@ -12,5 +12,11 @@ namespace PatternTests
         {
             MinMaxSearchExample.Test();
         }
+
+        [Fact]
+        public void AlphaBetaPruning()
+        {
+            AlphaBetaExample.Example();
+        }
     }
 }

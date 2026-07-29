@@ -215,17 +215,17 @@ namespace Patterns.AlgorithmicPatterns
         {
             if (game.Pieces == 1)
             {
-                return (game.SideToMove == SideToMove.Maximize) ? 100 : -100;
+                return (game.SideToMove == SideToMove.Maximize) ? -100 : 100;
             }
 
             if (game.Pieces % 4 == 1)
             {
-                return (game.SideToMove == SideToMove.Maximize) ? 100 : -100;
+                return (game.SideToMove == SideToMove.Maximize) ? -100 : 100;
             }
             else
             {
                 return (game.SideToMove == SideToMove.Maximize) ? 
-                    -(100 - game.Pieces) : ( 100 - game.Pieces);
+                    (4 - game.Pieces) : -( 4 - game.Pieces);
             }    
         }
     }
