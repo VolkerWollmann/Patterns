@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Patterns.AlgorithmicPatterns;
 using Xunit;
 
@@ -148,6 +150,141 @@ namespace PatternTests.AlgorithmicPatterns
         public void AnInnerNodeNeedsChildren()
         {
             Assert.Throws<ArgumentException>(() => GameTree.Node());
+        }
+    }
+
+    public class BacktrackingTests
+    {
+        [Fact]
+        public void Backtracking()
+        {
+            BacktrackingExample.Backtracking();
+        }
+
+        // The number of ways n queens fit on an n x n board is long known, so the
+        // search can be checked against it exactly.
+        [Theory]
+        [InlineData(0, 1)]
+        [InlineData(1, 1)]
+        [InlineData(2, 0)]
+        [InlineData(3, 0)]
+        [InlineData(4, 2)]
+        [InlineData(5, 10)]
+        [InlineData(6, 4)]
+        [InlineData(7, 40)]
+        [InlineData(8, 92)]
+        public void FindsEveryArrangementOfQueens(int boardSize, int expectedSolutions)
+        {
+            BacktrackingResult result = BacktrackingExample.Solve(boardSize);
+
+            Assert.Equal(expectedSolutions, result.Count);
+        }
+
+        [Fact]
+        public void NoSolutionPutsTwoQueensInReachOfEachOther()
+        {
+            BacktrackingResult result = BacktrackingExample.Solve(8);
+
+            foreach (int[] solution in result.Solutions)
+            {
+                for (int row = 0; row < solution.Length; row++)
+                {
+                    // Checking a queen against the ones before it covers every pair.
+                    Assert.True(
+                        BacktrackingExample.IsSafe(row, solution[row], solution),
+                        $"Queens attack each other in:\n{BacktrackingExample.Format(solution)}");
+                }
+            }
+        }
+
+        [Fact]
+        public void EverySolutionIsDistinct()
+        {
+            BacktrackingResult result = BacktrackingExample.Solve(8);
+
+            HashSet<string> seen = new HashSet<string>();
+
+            foreach (int[] solution in result.Solutions)
+            {
+                Assert.True(seen.Add(string.Join(",", solution)), "The same solution was reported twice.");
+            }
+        }
+
+        [Fact]
+        public void PruningLooksAtFarFewerSquaresThanPlacingBlindly()
+        {
+            BacktrackingResult result = BacktrackingExample.Solve(8);
+
+            // Placing one queen per row without checking anything means 8^8 boards.
+            Assert.True(result.ExploredPositions < Math.Pow(8, 8) / 1000);
+        }
+
+        [Fact]
+        public void TheSearchStopsOnceEnoughSolutionsAreFound()
+        {
+            BacktrackingResult all = BacktrackingExample.Solve(8);
+            BacktrackingResult first = BacktrackingExample.Solve(8, maxSolutions: 1);
+
+            Assert.Equal(1, first.Count);
+
+            // Stopping early is what saves the work - it does not just trim the list.
+            Assert.True(first.ExploredPositions < all.ExploredPositions);
+
+            // And the one it stops at is the first of the full run.
+            Assert.Equal(all.Solutions[0], first.Solutions[0]);
+        }
+
+        [Fact]
+        public void ABoardCannotHaveANegativeSize()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => BacktrackingExample.Solve(-1));
+        }
+
+        [Fact]
+        public void TheSearchReportsWhenItRunsIntoADeadEnd()
+        {
+            List<BacktrackingStep> steps = new List<BacktrackingStep>();
+
+            BacktrackingExample.Solve(4, onStep: steps.Add);
+
+            // On a 4x4 board the first column of the first row leads nowhere, so the
+            // search has to run into dead ends and take decisions back.
+            Assert.Contains(steps, step => step.Kind == BacktrackingStepKind.DeadEnd);
+            Assert.Contains(steps, step => step.Kind == BacktrackingStepKind.Backtrack);
+            Assert.Equal(2, steps.Count(step => step.Kind == BacktrackingStepKind.Solution));
+        }
+
+        [Fact]
+        public void EveryQueenThatGoesDownComesBackOff()
+        {
+            List<BacktrackingStep> steps = new List<BacktrackingStep>();
+
+            BacktrackingExample.Solve(5, onStep: steps.Add);
+
+            // A completed search unwinds fully: every choose is matched by its undo.
+            Assert.Equal(
+                steps.Count(step => step.Kind == BacktrackingStepKind.Place),
+                steps.Count(step => step.Kind == BacktrackingStepKind.Backtrack));
+        }
+
+        [Fact]
+        public void ADeadEndIsAlwaysFollowedByTakingAQueenBack()
+        {
+            List<BacktrackingStep> steps = new List<BacktrackingStep>();
+
+            BacktrackingExample.Solve(5, onStep: steps.Add);
+
+            for (int i = 0; i < steps.Count - 1; i++)
+            {
+                if (steps[i].Kind != BacktrackingStepKind.DeadEnd)
+                    continue;
+
+                // A dead end hands control straight back to the row above it.
+                BacktrackingStep next = steps[i + 1];
+
+                Assert.Equal(BacktrackingStepKind.Backtrack, next.Kind);
+                Assert.Equal(steps[i].Row - 1, next.Row);
+            }
         }
     }
 }
