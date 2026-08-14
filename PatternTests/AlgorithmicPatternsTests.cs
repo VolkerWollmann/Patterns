@@ -4,7 +4,7 @@ using Xunit;
 
 namespace PatternTests
 {
-    public class AlgorithmicPatternsTests
+    public class GeneticSearchTests
     {
         // The target every search test evolves towards.
         private const string Target = "CAROLIN NOTHEIS";
@@ -78,6 +78,74 @@ namespace PatternTests
         public void SearchRejectsAnEmptyTarget()
         {
             Assert.Throws<ArgumentException>(() => GeneticSearchExample.Search(string.Empty));
+        }
+    }
+
+    public class MinMaxSearchTests
+    {
+        [Fact]
+        public void MinMaxSearch()
+        {
+            MinMaxSearchExample.MinMaxSearch();
+        }
+
+        [Fact]
+        public void MinMaxFindsTheValueOfBestPlay()
+        {
+            // The maximizer can force 5: the right half of the tree is worth only 0
+            // to it, because the opponent would answer with the 0 leaf there.
+            MinMaxSearchResult result = MinMaxSearchExample.MinMax(MinMaxSearchExample.ExampleTree());
+
+            Assert.Equal(5, result.Value);
+
+            // Without pruning every leaf has to be scored.
+            Assert.Equal(8, result.EvaluatedLeaves);
+            Assert.Equal(0, result.PrunedBranches);
+        }
+
+        [Fact]
+        public void PruningReachesTheSameValueWithLessWork()
+        {
+            GameTree tree = MinMaxSearchExample.ExampleTree();
+
+            MinMaxSearchResult minMax = MinMaxSearchExample.MinMax(tree);
+            MinMaxSearchResult alphaBeta = MinMaxSearchExample.AlphaBeta(tree);
+
+            // This is what pruning guarantees: the result never changes.
+            Assert.Equal(minMax.Value, alphaBeta.Value);
+
+            Assert.True(alphaBeta.EvaluatedLeaves < minMax.EvaluatedLeaves);
+            Assert.True(alphaBeta.PrunedBranches > 0);
+        }
+
+        [Fact]
+        public void PruningSkipsTheBranchesThatCannotMatter()
+        {
+            MinMaxSearchResult result = MinMaxSearchExample.AlphaBeta(MinMaxSearchExample.ExampleTree());
+
+            // Scored are 3, 5, 6, 1 and 2. The leaf 9 is cut off once 6 already beats
+            // what the minimizer can hold, and the whole (0, -1) subtree is skipped
+            // once the right half cannot reach the 5 the maximizer already has.
+            Assert.Equal(5, result.EvaluatedLeaves);
+            Assert.Equal(2, result.PrunedBranches);
+        }
+
+        [Fact]
+        public void SearchingFromTheMinimizerFlipsTheOutcome()
+        {
+            GameTree tree = MinMaxSearchExample.ExampleTree();
+
+            MinMaxSearchResult minMax = MinMaxSearchExample.MinMax(tree, maximizing: false);
+            MinMaxSearchResult alphaBeta = MinMaxSearchExample.AlphaBeta(tree, maximizing: false);
+
+            Assert.Equal(minMax.Value, alphaBeta.Value);
+            Assert.NotEqual(5, minMax.Value);
+        }
+
+        [Fact]
+        public void AnInnerNodeNeedsChildren()
+        {
+            Assert.Throws<ArgumentException>(() => GameTree.Node());
         }
     }
 }
