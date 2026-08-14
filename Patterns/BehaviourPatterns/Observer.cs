@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.BehaviourPatterns
 {
@@ -57,8 +56,11 @@ namespace Patterns.BehaviourPatterns
     class ConcreteObserver : Observer
     {
         private readonly string _Name;
-        private string ObserverState    = string.Empty;
         private ConcreteSubject _Subject;
+
+        // What the observer picked up the last time it was notified. Visible to the
+        // test project, because this is the very effect the pattern is about.
+        internal string ObserverState { get; private set; } = string.Empty;
 
         // Constructor
         public ConcreteObserver(
@@ -97,7 +99,6 @@ namespace Patterns.BehaviourPatterns
             ConcreteSubject s = new ConcreteSubject();
 
             ConcreteObserver concreteObserverX = new ConcreteObserver(s, "X");
-            Assert.IsNotNull(concreteObserverX.Subject);
             s.Attach(concreteObserverX);
             s.Attach(new ConcreteObserver(s, "Y"));
             s.Attach(new ConcreteObserver(s, "Z"));

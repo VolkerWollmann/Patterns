@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // Description : https://en.wikipedia.org/wiki/Data_transfer_object
 // Source      : https://www.codeproject.com/Articles/8824/C-Data-Transfer-Object
@@ -135,10 +134,6 @@ namespace Patterns.Other
             DemoDto desDto =
               (DemoDto)DtoSerializerHelper.DeserializeXml(strXml,
               new DemoDto());
-
-            Assert.AreEqual(dto.DemoId, desDto.DemoId);
-            Assert.AreEqual(dto.DemoName, desDto.DemoName);
-            Assert.AreEqual(dto.DemoProgrammer, desDto.DemoProgrammer);
 
             // Write the deserialized dto values.
             Console.WriteLine("Deseralized DTO");

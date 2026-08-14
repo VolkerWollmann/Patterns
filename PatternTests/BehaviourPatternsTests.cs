@@ -1,11 +1,11 @@
 ﻿
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 using Patterns.BehaviourPatterns;
 using Xunit;
 
 namespace PatternTests
 {
-    [TestClass]
     public class BehaviourPatternsTests
     {
         [Fact]
@@ -74,6 +74,68 @@ namespace PatternTests
         public void TemplateMethod()
         {
             TemplateMethodExample.Example();
+        }
+
+        [Fact]
+        public void IteratorVisitsEveryItemInOrder()
+        {
+            IReadOnlyList<string> visited = IteratorExample.Iterator();
+
+            Assert.Equal(new[] { "Item A", "Item B", "Item C", "Item D" }, visited);
+        }
+
+        [Fact]
+        public void NotifyingTheSubjectUpdatesEveryObserver()
+        {
+            ConcreteSubject subject = new ConcreteSubject();
+
+            ConcreteObserver x = new ConcreteObserver(subject, "X");
+            ConcreteObserver y = new ConcreteObserver(subject, "Y");
+            subject.Attach(x);
+            subject.Attach(y);
+
+            subject.SubjectState = "ABC";
+            subject.Notify();
+
+            Assert.Equal("ABC", x.ObserverState);
+            Assert.Equal("ABC", y.ObserverState);
+        }
+
+        [Fact]
+        public void ADetachedObserverStopsBeingUpdated()
+        {
+            ConcreteSubject subject = new ConcreteSubject();
+
+            ConcreteObserver observer = new ConcreteObserver(subject, "X");
+            subject.Attach(observer);
+
+            subject.SubjectState = "first";
+            subject.Notify();
+
+            subject.Detach(observer);
+            subject.SubjectState = "second";
+            subject.Notify();
+
+            // The observer never heard about the second change.
+            Assert.Equal("first", observer.ObserverState);
+        }
+
+        [Fact]
+        public void AContextAlwaysHasAState()
+        {
+            Assert.Throws<ArgumentNullException>(() => new Context(null!));
+        }
+
+        [Fact]
+        public void HandlingSwitchesTheContextToTheNextState()
+        {
+            Context context = new Context(new ConcreteStateA());
+
+            context.Request();
+            Assert.IsType<ConcreteStateB>(context.State);
+
+            context.Request();
+            Assert.IsType<ConcreteStateA>(context.State);
         }
     }
 }

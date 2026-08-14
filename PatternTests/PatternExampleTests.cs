@@ -1,10 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Patterns.Examples;
+﻿using Patterns.Examples;
 using Xunit;
 
 namespace PatternTests
 {
-    [TestClass]
     public class PatternExampleTests
     {
         [Fact]
@@ -20,7 +18,7 @@ namespace PatternTests
 		[InlineData("1 + (2 * 3)", 3)]
 		public void Visitor_Simple(string expression, int expectedResult)
         {
-            VisitorExample.SimpleVisitor(expression, expectedResult);
+            Assert.Equal(expectedResult, VisitorExample.SimpleVisitor(expression));
 		}
 		
 		[Theory]
@@ -33,7 +31,7 @@ namespace PatternTests
         [InlineData("43-1", 42)]
         public void Visitor_Transforming(string expression, int expectedResult)
         {
-            VisitorExample.TransformingVisitor(expression,expectedResult);
+            Assert.Equal(expectedResult, VisitorExample.TransformingVisitor(expression));
         }
 
         [Fact]

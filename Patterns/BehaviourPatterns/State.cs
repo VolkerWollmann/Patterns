@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 
 namespace Patterns.BehaviourPatterns
 {
@@ -43,12 +42,14 @@ namespace Patterns.BehaviourPatterns
     /// </summary>
     public class Context
     {
-        private State _state;
+        // Assigned through the State property, which rejects null.
+        private State _state = null!;
         // Constructor
         public Context(State state)
         {
+            ArgumentNullException.ThrowIfNull(state);
+
             this.State = state;
-            Assert.IsNotNull(this._state);
         }
         // Gets or sets the state
         public State State
@@ -56,7 +57,8 @@ namespace Patterns.BehaviourPatterns
             get => _state;
             set
             {
-                _state = value;
+                // The context is never without a state - the pattern relies on it.
+                _state = value ?? throw new ArgumentNullException(nameof(value));
                 Console.WriteLine("State: " + _state.GetType().Name);
             }
         }

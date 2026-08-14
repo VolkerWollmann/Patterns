@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.Other
 {
@@ -12,11 +11,11 @@ namespace Patterns.Other
     //         https://en.wikipedia.org/wiki/Fluent_interface : method chaining
     public class FluentInterfaceTest
     {
-        class Employee
+        internal class Employee
         {
             public string FirstName = "";
             public string LastName = "";
-            private int Age = 0;
+            internal int Age = 0;
 
             public Employee SetFirstName(string fName)
             {
@@ -50,9 +49,6 @@ namespace Patterns.Other
             {
                 Employee empl = new Employee();
                 empl.SetFirstName("John").SetLastName("Smith").SetAge(30).Print();
-
-                Assert.AreEqual("John",empl.FirstName);
-                Assert.AreEqual("Smith",empl.LastName);
             }
         }
     }

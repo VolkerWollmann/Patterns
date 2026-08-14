@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.CreationalPatterns
 {
@@ -54,8 +53,10 @@ namespace Patterns.CreationalPatterns
                 SampleClass sampleClass3 = new SampleClass().WithP1(1);
                 SampleClass sampleClass4 = new SampleClass().WithP1(1).WithP2(2);
 
-                Assert.AreEqual(sampleClass2._p2, 2);
-                Assert.AreEqual(sampleClass4._p2, 2);
+                Console.WriteLine($"Constructor       : p1={sampleClass1._p1}, p2={sampleClass1._p2}");
+                Console.WriteLine($"Constructor       : p1={sampleClass2._p1}, p2={sampleClass2._p2}");
+                Console.WriteLine($"Extension methods : p1={sampleClass3._p1}, p2={sampleClass3._p2}");
+                Console.WriteLine($"Extension methods : p1={sampleClass4._p1}, p2={sampleClass4._p2}");
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.Examples
 {
@@ -366,7 +365,8 @@ namespace Patterns.Examples
         }
         #endregion
 
-        public static void SimpleVisitor(string expressionString, int expectedResult)
+        // Returns the largest number the visitor found in the expression.
+        public static int SimpleVisitor(string expressionString)
         {
             var parser = new ExpressionParser(expressionString);
             var expression = parser.Parse();
@@ -374,10 +374,11 @@ namespace Patterns.Examples
             MaxFinder maxFinder = new MaxFinder();
             expression.Accept(maxFinder);
 
-            Assert.AreEqual(expectedResult,maxFinder.Max);
+            return maxFinder.Max;
         }
 
-       public static void TransformingVisitor(string expressionString, int expectedResult)
+        // Returns the value the visitors reduced the expression down to.
+        public static int TransformingVisitor(string expressionString)
         {
 			var parser = new ExpressionParser(expressionString);
 			var expression = parser.Parse();
@@ -391,8 +392,7 @@ namespace Patterns.Examples
                 visitors.ForEach(visitor => { expression = expression.Accept(visitor); });
             }
 
-            // Assert : Visitors did the right job
-            Assert.AreEqual(expectedResult,((Number)expression).Value);
+            return ((Number)expression).Value;
         }
     }
 }

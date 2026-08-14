@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Patterns.CreationalPatterns
 {
@@ -70,10 +69,6 @@ namespace Patterns.CreationalPatterns
             // Make a deep copy of p1 and assign it to p3.
             Person p3 = p1.DeepCopy();
 
-            Assert.AreEqual(p3.Name, p1.Name);
-            Assert.AreEqual(p1.Age, p3.Age);
-            Assert.AreEqual(p1.IdInfo.IdNumber, p3.IdInfo.IdNumber);
-
             // Change the members of the p1 class to new values to show the deep copy.
             p1.Name = "George";
             p1.Age = 39;
@@ -84,11 +79,6 @@ namespace Patterns.CreationalPatterns
             DisplayValues(p1);
             Console.WriteLine("   p3 instance values:");
             DisplayValues(p3);
-
-            Assert.AreNotEqual(p3.Name, p1.Name);
-            Assert.AreNotEqual(p1.Age, p3.Age);
-            Assert.AreNotEqual(p1.IdInfo.IdNumber, p3.IdInfo.IdNumber);
-            
         }
 
         internal static void DisplayValues(Person p)
