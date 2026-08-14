@@ -127,6 +127,65 @@ namespace PatternTests
         }
 
         [Fact]
+        public void NullObject()
+        {
+            NullObjectExample.NullObject();
+        }
+
+        [Fact]
+        public void TheServiceWorksWithoutBeingGivenALog()
+        {
+            NullObjectExample.OrderService service = new NullObjectExample.OrderService();
+
+            // No log, no null check, no NullReferenceException.
+            Assert.Equal(4.5m, service.Place("Bolt", 3, 1.5m));
+        }
+
+        [Fact]
+        public void ALogChangesNothingAboutTheResult()
+        {
+            RecordingLog log = new RecordingLog();
+
+            decimal withLog = new NullObjectExample.OrderService(log).Place("Bolt", 3, 1.5m);
+            decimal withoutLog = new NullObjectExample.OrderService().Place("Bolt", 3, 1.5m);
+
+            // The null object is neutral: it swallows the messages without altering
+            // what the service does.
+            Assert.Equal(withLog, withoutLog);
+        }
+
+        [Fact]
+        public void TheServiceStillLogsWhenThereIsSomethingToLogTo()
+        {
+            RecordingLog log = new RecordingLog();
+
+            new NullObjectExample.OrderService(log).Place("Bolt", 3, 1.5m);
+
+            Assert.Equal(2, log.Messages.Count);
+            Assert.Contains("3 x Bolt", log.Messages[0]);
+        }
+
+        [Fact]
+        public void TheNullLogIsSharedAndSwallowsEverything()
+        {
+            Assert.Same(NullObjectExample.NullLog.Instance, NullObjectExample.NullLog.Instance);
+
+            // Stateless, so it can be handed out to anybody without a care.
+            NullObjectExample.NullLog.Instance.Write("goes nowhere");
+        }
+
+        // The same seam the null object plugs into also serves a test.
+        private sealed class RecordingLog : NullObjectExample.ILog
+        {
+            public List<string> Messages { get; } = new List<string>();
+
+            public void Write(string message)
+            {
+                Messages.Add(message);
+            }
+        }
+
+        [Fact]
         public void HandlingSwitchesTheContextToTheNextState()
         {
             Context context = new Context(new ConcreteStateA());
