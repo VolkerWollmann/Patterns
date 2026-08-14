@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Patterns.BehaviourPatterns
 {
@@ -73,13 +73,9 @@ namespace Patterns.BehaviourPatterns
         // Gets next iteration item
         public override object? Next()
         {
-            object? ret = null;
-            if (Current < Aggregate.Count - 1)
-            {
-                ret = Aggregate[++Current];
-            }
+            Current++;
 
-            return ret;
+            return Current < Aggregate.Count ? Aggregate[Current] : null;
         }
 
         // Gets current iteration item
@@ -88,10 +84,11 @@ namespace Patterns.BehaviourPatterns
             return Aggregate[Current];
         }
 
-        // Gets whether iterations are complete
+        // Gets whether iterations are complete. Done means past the last item, not
+        // standing on it - otherwise the last item is never handed out.
         public override bool IsDone()
         {
-            return (Current+1) >= Aggregate.Count;
+            return Current >= Aggregate.Count;
         }
     }
     /// <summary>
@@ -103,7 +100,8 @@ namespace Patterns.BehaviourPatterns
         /// <summary>
         /// Entry point into console application.
         /// </summary>
-        public static void Iterator()
+        // Returns what the traversal visited, so the order can be checked from outside.
+        public static IReadOnlyList<string> Iterator()
         {
             ConcreteAggregate aggregate = new ConcreteAggregate
             {
@@ -118,14 +116,19 @@ namespace Patterns.BehaviourPatterns
 
             Console.WriteLine("Iterating over collection:");
 
+            List<string> visited = new List<string>();
+
             Console.WriteLine(iterator.First());
             while (!iterator.IsDone())
             {
-                Console.WriteLine(iterator.CurrentItem());
+                // Not done yet, so there is an item.
+                object item = iterator.CurrentItem()!;
+                Console.WriteLine(item);
+                visited.Add((string)item);
                 iterator.Next();
             }
 
-            Assert.IsTrue( iterator.IsDone() );
+            return visited;
         }
     }
 }
