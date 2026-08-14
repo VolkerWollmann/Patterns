@@ -153,6 +153,97 @@ namespace PatternTests.AlgorithmicPatterns
         }
     }
 
+    public class MoveOrderingTests
+    {
+        [Fact]
+        public void MoveOrdering()
+        {
+            MoveOrderingExample.MoveOrdering();
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(42)]
+        [InlineData(2024)]
+        public void EveryOrderingAgreesOnTheValue(int seed)
+        {
+            GameTree tree = MoveOrderingExample.RandomTree(4, 5, new Random(seed));
+
+            int plain = MinMaxSearchExample.MinMax(tree).Value;
+
+            // Ordering is free to change the work, never the answer.
+            Assert.Equal(plain, MoveOrderingExample.AlphaBeta(tree, MoveOrder.AsGiven).Value);
+            Assert.Equal(plain, MoveOrderingExample.AlphaBeta(tree, MoveOrder.BestFirst).Value);
+            Assert.Equal(plain, MoveOrderingExample.AlphaBeta(tree, MoveOrder.WorstFirst).Value);
+        }
+
+        // Knuth and Moore showed that alpha-beta with perfect ordering examines the
+        // smallest tree any correct search can get away with:
+        // b^ceil(d/2) + b^floor(d/2) - 1 leaves. Perfect ordering hits it exactly,
+        // whatever the tree happens to contain.
+        [Theory]
+        [InlineData(2, 4)]
+        [InlineData(2, 6)]
+        [InlineData(3, 4)]
+        [InlineData(4, 4)]
+        [InlineData(4, 5)]
+        [InlineData(5, 3)]
+        public void PerfectOrderingReachesTheMinimalTree(int branchingFactor, int depth)
+        {
+            int minimalTree =
+                (int)(Math.Pow(branchingFactor, Math.Ceiling(depth / 2.0))
+                    + Math.Pow(branchingFactor, Math.Floor(depth / 2.0))
+                    - 1);
+
+            foreach (int seed in new[] { 1, 42, 2024 })
+            {
+                GameTree tree = MoveOrderingExample.RandomTree(branchingFactor, depth, new Random(seed));
+
+                MinMaxSearchResult best = MoveOrderingExample.AlphaBeta(tree, MoveOrder.BestFirst);
+
+                Assert.Equal(minimalTree, best.EvaluatedLeaves);
+            }
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(42)]
+        [InlineData(2024)]
+        public void OrderingDecidesHowMuchPruningIsWorth(int seed)
+        {
+            GameTree tree = MoveOrderingExample.RandomTree(4, 5, new Random(seed));
+
+            int plain = MinMaxSearchExample.MinMax(tree).EvaluatedLeaves;
+            int asGiven = MoveOrderingExample.AlphaBeta(tree, MoveOrder.AsGiven).EvaluatedLeaves;
+            int bestFirst = MoveOrderingExample.AlphaBeta(tree, MoveOrder.BestFirst).EvaluatedLeaves;
+            int worstFirst = MoveOrderingExample.AlphaBeta(tree, MoveOrder.WorstFirst).EvaluatedLeaves;
+
+            // Pruning never costs more than searching everything ...
+            Assert.True(asGiven <= plain);
+            Assert.True(worstFirst <= plain);
+
+            // ... and no ordering beats the perfect one.
+            Assert.True(bestFirst <= asGiven);
+            Assert.True(bestFirst <= worstFirst);
+
+            // The bad ordering gives almost the whole gain away: it stays within a
+            // tenth of the unpruned search, while the good one is an order of
+            // magnitude below it.
+            Assert.True(worstFirst > plain * 0.9);
+            Assert.True(bestFirst < plain / 10.0);
+        }
+
+        [Fact]
+        public void ATreeNeedsSensibleDimensions()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => MoveOrderingExample.RandomTree(0, 3, new Random(42)));
+
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => MoveOrderingExample.RandomTree(2, -1, new Random(42)));
+        }
+    }
+
     public class BacktrackingTests
     {
         [Fact]

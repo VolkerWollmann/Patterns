@@ -77,12 +77,19 @@ namespace Patterns.AlgorithmicPatterns
         }
     }
 
+    // Counts the work a search does, so variants of it can be compared.
+    internal class SearchCounter
+    {
+        public int EvaluatedLeaves;
+        public int PrunedBranches;
+    }
+
     public class MinMaxSearchExample
     {
         // Plain MinMax: every leaf of the tree is scored, no shortcuts.
         public static MinMaxSearchResult MinMax(GameTree root, bool maximizing = true)
         {
-            Counter counter = new Counter();
+            SearchCounter counter = new SearchCounter();
             int value = MinMax(root, maximizing, counter);
 
             return new MinMaxSearchResult(value, counter.EvaluatedLeaves, counter.PrunedBranches);
@@ -92,13 +99,13 @@ namespace Patterns.AlgorithmicPatterns
         // The value is always identical to the one MinMax returns.
         public static MinMaxSearchResult AlphaBeta(GameTree root, bool maximizing = true)
         {
-            Counter counter = new Counter();
+            SearchCounter counter = new SearchCounter();
             int value = AlphaBeta(root, maximizing, int.MinValue, int.MaxValue, counter);
 
             return new MinMaxSearchResult(value, counter.EvaluatedLeaves, counter.PrunedBranches);
         }
 
-        private static int MinMax(GameTree node, bool maximizing, Counter counter)
+        private static int MinMax(GameTree node, bool maximizing, SearchCounter counter)
         {
             if (node.IsLeaf)
             {
@@ -117,7 +124,7 @@ namespace Patterns.AlgorithmicPatterns
             return best;
         }
 
-        private static int AlphaBeta(GameTree node, bool maximizing, int alpha, int beta, Counter counter)
+        private static int AlphaBeta(GameTree node, bool maximizing, int alpha, int beta, SearchCounter counter)
         {
             if (node.IsLeaf)
             {
@@ -175,13 +182,6 @@ namespace Patterns.AlgorithmicPatterns
                 GameTree.Node(
                     GameTree.Node(GameTree.Leaf(1), GameTree.Leaf(2)),
                     GameTree.Node(GameTree.Leaf(0), GameTree.Leaf(-1))));
-        }
-
-        // Counts the work a search does, so both variants can be compared.
-        private class Counter
-        {
-            public int EvaluatedLeaves;
-            public int PrunedBranches;
         }
 
         public static void MinMaxSearch()
