@@ -2,7 +2,9 @@ using System;
 using Patterns.AlgorithmicPatterns;
 using Xunit;
 
-namespace PatternTests
+// Mirrors the library's Patterns.AlgorithmicPatterns namespace, which gives the
+// Test Explorer a node to group both test classes under.
+namespace PatternTests.AlgorithmicPatterns
 {
     public class GeneticSearchTests
     {
