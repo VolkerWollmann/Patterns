@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -10,7 +11,7 @@ using System.Windows.Input;
 // (View) and from the business data (Model). The View knows the ViewModel, the ViewModel
 // knows the Model - never the other way round. The only channels pointing back at the View
 // are INotifyPropertyChanged (see Observer) and ICommand (see Command). That is precisely
-// why a ViewModel can be exercised without any UI framework, as the tests do.
+// why a ViewModel can be exercised without any UI framework, as MvvmExample below does.
 
 namespace Patterns.ArchitecturalPatterns
 {
@@ -33,9 +34,9 @@ namespace Patterns.ArchitecturalPatterns
 
     class InMemoryCustomerRepository : ICustomerRepository
     {
-        // What the repository was asked to store. Visible to the test project, because
-        // this is the effect a command execution is supposed to have.
-        internal List<Customer> Saved { get; } = new List<Customer>();
+        // What the repository was asked to store - the effect a command execution
+        // is supposed to have.
+        public List<Customer> Saved { get; } = new List<Customer>();
 
         public void Save(Customer customer)
         {
@@ -130,7 +131,7 @@ namespace Patterns.ArchitecturalPatterns
                 _Model.Name = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(DisplayName));
-                IsDirty = true;
+                MarkDirty();
             }
         }
 
@@ -145,7 +146,7 @@ namespace Patterns.ArchitecturalPatterns
                 _Model.Balance = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(DisplayName));
-                IsDirty = true;
+                MarkDirty();
             }
         }
 
@@ -168,6 +169,16 @@ namespace Patterns.ArchitecturalPatterns
 
         private bool CanSave() => IsDirty && !string.IsNullOrWhiteSpace(Name);
 
+        /// <summary>
+        /// An edit happened. CanSave also looks at Name, so re-evaluating the command only
+        /// when IsDirty flips would leave the View showing a stale button.
+        /// </summary>
+        private void MarkDirty()
+        {
+            IsDirty = true;
+            SaveCommand.RaiseCanExecuteChanged();
+        }
+
         private void Save()
         {
             _Repository.Save(_Model);
@@ -183,13 +194,16 @@ namespace Patterns.ArchitecturalPatterns
     {
         private readonly CustomerViewModel _ViewModel;
 
-        // Every property the bindings refreshed, in order. Visible to the test project,
-        // because "the View is updated automatically" is the claim being made here.
-        internal List<string> RenderedProperties { get; } = new List<string>();
+        private readonly string _Title;
 
-        public CustomerView(CustomerViewModel viewModel)
+        // Every property the bindings refreshed, in order - "the View is updated
+        // automatically" is the claim being made here, so it is written down.
+        public List<string> RenderedProperties { get; } = new List<string>();
+
+        public CustomerView(CustomerViewModel viewModel, string title = "View")
         {
             _ViewModel = viewModel;
+            _Title = title;
 
             // This is what a XAML binding does under the hood.
             _ViewModel.PropertyChanged += OnViewModelPropertyChanged;
@@ -201,13 +215,13 @@ namespace Patterns.ArchitecturalPatterns
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             RenderedProperties.Add(e.PropertyName ?? "");
-            Console.WriteLine("View refreshes '{0}' -> {1}", e.PropertyName, _ViewModel.DisplayName);
+            Console.WriteLine("{0} refreshes '{1}' -> {2}", _Title, e.PropertyName, _ViewModel.DisplayName);
         }
 
         private void OnSaveCommandCanExecuteChanged(object? sender, EventArgs e)
         {
             SaveButtonEnabled = _ViewModel.SaveCommand.CanExecute(null);
-            Console.WriteLine("Save button enabled: {0}", SaveButtonEnabled);
+            Console.WriteLine("{0}: save button enabled: {1}", _Title, SaveButtonEnabled);
         }
 
         /// <summary>
@@ -230,18 +244,64 @@ namespace Patterns.ArchitecturalPatterns
         public static void Mvvm()
         {
             InMemoryCustomerRepository repository = new InMemoryCustomerRepository();
-            CustomerViewModel viewModel = new CustomerViewModel(new Customer(), repository);
+            Customer model = new Customer();
+            CustomerViewModel viewModel = new CustomerViewModel(model, repository);
             CustomerView view = new CustomerView(viewModel);
 
-            // Nothing has been edited yet, so the button the View shows is disabled and
-            // a click does nothing at all.
+            // 1. Nothing has been edited yet. The command reports that it cannot run, so
+            //    the View disables its button - and a click really does nothing.
+            Debug.Assert(!viewModel.SaveCommand.CanExecute(null), "an untouched form has nothing to save");
             view.ClickSave();
+            Debug.Assert(repository.Saved.Count == 0, "a disabled command must not reach the model");
 
-            // The user types - the ViewModel notifies, the View re-renders itself.
+            // 2. The user types. The ViewModel writes through to the Model and notifies;
+            //    the View re-renders without ever having asked.
             viewModel.Name = "Customer1";
             viewModel.Balance = 100.5m;
 
+            Debug.Assert(model.Name == "Customer1", "the ViewModel writes through to the Model");
+            Debug.Assert(view.RenderedProperties.Contains(nameof(CustomerViewModel.Name)));
+
+            // 3. A derived property is refreshed along with the one it is computed from -
+            //    the ViewModel has to say so explicitly, nobody works that out for it.
+            Debug.Assert(view.RenderedProperties.Contains(nameof(CustomerViewModel.DisplayName)));
+            Debug.Assert(viewModel.DisplayName == "Customer1 (100.50)", "formatting belongs to the ViewModel");
+
+            // 4. Writing the same value again changes nothing, so no notification is sent.
+            //    Without this guard, bindings notify in circles.
+            int renderCount = view.RenderedProperties.Count;
+            viewModel.Name = "Customer1";
+            Debug.Assert(view.RenderedProperties.Count == renderCount, "an unchanged value must stay quiet");
+
+            // 5. The edit made the command executable, and the View learned about it
+            //    through CanExecuteChanged instead of polling.
+            Debug.Assert(view.SaveButtonEnabled, "an edited, valid form can be saved");
+
+            // 6. Validation lives in the ViewModel, not in the View: an empty name
+            //    disables the button again.
+            viewModel.Name = "";
+            Debug.Assert(!view.SaveButtonEnabled, "an invalid form cannot be saved");
+            viewModel.Name = "Customer1";
+
+            // 7. The click reaches the Model through the command - the View knows neither
+            //    the repository nor the Customer.
             view.ClickSave();
+            Debug.Assert(repository.Saved.Count == 1);
+            Debug.Assert(ReferenceEquals(repository.Saved[0], model), "it is the very Model the ViewModel wraps");
+
+            // 8. After saving there is nothing left to save, and the button goes back down.
+            Debug.Assert(!viewModel.IsDirty);
+            Debug.Assert(!view.SaveButtonEnabled);
+
+            // 9. The ViewModel holds no reference to any View, so a second one can bind to
+            //    the same instance and both are served. That is also why a test - or a
+            //    console, as here - can stand in for the real user interface.
+            CustomerView secondView = new CustomerView(viewModel, "Second view");
+            viewModel.Balance = 250m;
+
+            Debug.Assert(secondView.RenderedProperties.Contains(nameof(CustomerViewModel.Balance)));
+            Debug.Assert(view.RenderedProperties.Contains(nameof(CustomerViewModel.Balance)));
+            Debug.Assert(secondView.SaveButtonEnabled && view.SaveButtonEnabled);
         }
     }
 }
