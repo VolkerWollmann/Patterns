@@ -13,4 +13,13 @@ namespace PatternTests.ArchitecturalPatterns
             MvvmExample.Mvvm();
         }
     }
+
+    public class MvpTests
+    {
+        [Fact]
+        public void Mvp()
+        {
+            MvpExample.Mvp();
+        }
+    }
 }
