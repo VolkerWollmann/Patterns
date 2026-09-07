@@ -378,4 +378,228 @@ namespace PatternTests.AlgorithmicPatterns
             }
         }
     }
+
+    public class SoftmaxPolicyTests
+    {
+        // Pizza disappoints most often, the salad is the best thing on the menu -
+        // which is exactly what the guest has to find out.
+        private static readonly IReadOnlyList<Dish> Menu = SoftmaxPolicyExample.ExampleMenu();
+
+        [Fact]
+        public void SoftmaxPolicy()
+        {
+            SoftmaxPolicyExample.SoftmaxPolicy();
+        }
+
+        [Fact]
+        public void ProbabilitiesAreADistributionOrderedLikeTheEstimates()
+        {
+            IReadOnlyList<double> probabilities =
+                SoftmaxPolicyExample.Probabilities(new[] { 0.2, 0.9, 0.5 }, 0.4);
+
+            Assert.Equal(1.0, probabilities.Sum(), 10);
+
+            // Nothing on the menu is ever ruled out - that is the point of the policy.
+            Assert.All(probabilities, chance => Assert.True(chance > 0.0));
+
+            // The better the estimate, the likelier the dish.
+            Assert.True(probabilities[1] > probabilities[2]);
+            Assert.True(probabilities[2] > probabilities[0]);
+        }
+
+        [Fact]
+        public void ATemperatureNearZeroTurnsThePolicyGreedy()
+        {
+            IReadOnlyList<double> probabilities = SoftmaxPolicyExample.Probabilities(
+                new[] { 0.2, 0.9, 0.5 }, SoftmaxPolicyExample.MinimumTemperature);
+
+            Assert.Equal(1.0, probabilities[1], 6);
+        }
+
+        [Fact]
+        public void AHighTemperatureSpreadsTheChancesOutEvenly()
+        {
+            IReadOnlyList<double> probabilities =
+                SoftmaxPolicyExample.Probabilities(new[] { 0.2, 0.9, 0.5 }, 1000.0);
+
+            Assert.All(probabilities, chance => Assert.Equal(1.0 / 3.0, chance, 3));
+        }
+
+        [Fact]
+        public void OnlyTheDifferencesBetweenTheEstimatesMatter()
+        {
+            // Softmax is shift invariant, which is what lets the implementation
+            // subtract the largest estimate to keep exp() in range.
+            IReadOnlyList<double> plain =
+                SoftmaxPolicyExample.Probabilities(new[] { 0.2, 0.9, 0.5 }, 0.4);
+
+            IReadOnlyList<double> shifted =
+                SoftmaxPolicyExample.Probabilities(new[] { 100.2, 100.9, 100.5 }, 0.4);
+
+            for (int dish = 0; dish < plain.Count; dish++)
+            {
+                Assert.Equal(plain[dish], shifted[dish], 10);
+            }
+        }
+
+        [Fact]
+        public void EveryDishOwnsItsSliceOfTheWheel()
+        {
+            double[] probabilities = { 0.2, 0.3, 0.5 };
+
+            Assert.Equal(0, SoftmaxPolicyExample.Choose(probabilities, new DrawnAt(0.0)));
+            Assert.Equal(0, SoftmaxPolicyExample.Choose(probabilities, new DrawnAt(0.199)));
+            Assert.Equal(1, SoftmaxPolicyExample.Choose(probabilities, new DrawnAt(0.2)));
+            Assert.Equal(1, SoftmaxPolicyExample.Choose(probabilities, new DrawnAt(0.499)));
+            Assert.Equal(2, SoftmaxPolicyExample.Choose(probabilities, new DrawnAt(0.5)));
+            Assert.Equal(2, SoftmaxPolicyExample.Choose(probabilities, new DrawnAt(0.999999)));
+        }
+
+        [Fact]
+        public void TheGuestFindsTheBestDishWithoutEverBeingToldWhichItIs()
+        {
+            SoftmaxLearningResult result = SoftmaxPolicyExample.Learn(
+                Menu, temperature: 1.0, cooling: 0.99, random: new Random(18));
+
+            Assert.Equal("Salat", result.FavouriteDish);
+
+            // And what they learned about it matches what the kitchen really does.
+            Assert.True(Math.Abs(result.Estimates[2] - Menu[2].ChanceOfBeingGood) < 0.05);
+        }
+
+        [Fact]
+        public void TryingThingsOutKeepsEveryDishOnTheTable()
+        {
+            SoftmaxLearningResult hot = SoftmaxPolicyExample.Learn(
+                Menu, temperature: 1.0, random: new Random(18));
+
+            // A hot policy never settles. It keeps ordering the weak dishes, which is
+            // what makes its estimates good and its lunches mediocre.
+            Assert.All(hot.Orders, count => Assert.True(count > 100));
+
+            for (int dish = 0; dish < Menu.Count; dish++)
+            {
+                Assert.True(Math.Abs(hot.Estimates[dish] - Menu[dish].ChanceOfBeingGood) < 0.1);
+            }
+
+            Assert.True(hot.AverageReward < Menu.Max(dish => dish.ChanceOfBeingGood));
+        }
+
+        [Fact]
+        public void CoolingDownEatsBetterThanStayingHotOrStartingCold()
+        {
+            SoftmaxLearningResult hot = SoftmaxPolicyExample.Learn(
+                Menu, temperature: 1.0, random: new Random(18));
+
+            SoftmaxLearningResult cold = SoftmaxPolicyExample.Learn(
+                Menu, temperature: 0.02, random: new Random(18));
+
+            SoftmaxLearningResult cooling = SoftmaxPolicyExample.Learn(
+                Menu, temperature: 1.0, cooling: 0.99, random: new Random(18));
+
+            // The cold guest settles before knowing anything: on this seed the pizza is
+            // good on day one, and they never look at the menu again - even though the
+            // pizza is the worst of the three.
+            Assert.Equal("Pizza", cold.FavouriteDish);
+            Assert.Equal(cold.Days, cold.Orders[0]);
+            Assert.True(cold.AverageReward < hot.AverageReward);
+
+            // Trying everything first and settling later beats both.
+            Assert.True(cooling.AverageReward > hot.AverageReward);
+            Assert.True(cooling.AverageReward > cold.AverageReward);
+        }
+
+        [Fact]
+        public void AnEstimateIsTheMeanOfEveryPlateOfThatDish()
+        {
+            // One dish is always good, the other never is.
+            SoftmaxLearningResult result = SoftmaxPolicyExample.Learn(
+                new[] { new Dish("Pasta", 1.0), new Dish("Pizza", 0.0) },
+                days: 200,
+                temperature: 1.0,
+                random: new Random(7));
+
+            Assert.Equal(1.0, result.Estimates[0]);
+            Assert.Equal(0.0, result.Estimates[1]);
+
+            // So every good lunch came from the dish the kitchen can cook.
+            Assert.Equal(result.Orders[0], result.TotalReward);
+            Assert.Equal(result.Days, result.Orders.Sum());
+        }
+
+        [Fact]
+        public void EveryLunchIsReportedWithTheChancesItWasChosenOn()
+        {
+            List<SoftmaxLearningStep> lunches = new List<SoftmaxLearningStep>();
+
+            SoftmaxPolicyExample.Learn(
+                Menu, days: 50, temperature: 1.0, random: new Random(18), onLunch: lunches.Add);
+
+            Assert.Equal(50, lunches.Count);
+            Assert.Equal(1, lunches[0].Day);
+
+            // Nothing is known yet, so the first choice is a uniform one.
+            Assert.All(lunches[0].Probabilities, chance => Assert.Equal(1.0 / 3.0, chance, 10));
+
+            Assert.All(lunches, lunch => Assert.Equal(1.0, lunch.Probabilities.Sum(), 10));
+        }
+
+        [Fact]
+        public void TheTemperatureNeverCoolsDownToZero()
+        {
+            List<SoftmaxLearningStep> lunches = new List<SoftmaxLearningStep>();
+
+            SoftmaxPolicyExample.Learn(
+                Menu, days: 200, temperature: 1.0, cooling: 0.5, random: new Random(18),
+                onLunch: lunches.Add);
+
+            // At zero the softmax would divide by zero, so the schedule stops short.
+            Assert.All(lunches, lunch => Assert.True(lunch.Temperature >= SoftmaxPolicyExample.MinimumTemperature));
+            Assert.Equal(SoftmaxPolicyExample.MinimumTemperature, lunches[^1].Temperature);
+        }
+
+        [Fact]
+        public void AGuestWhoNeverEatsHasNothingToShow()
+        {
+            SoftmaxLearningResult result = SoftmaxPolicyExample.Learn(Menu, days: 0);
+
+            Assert.Equal(0.0, result.AverageReward);
+            Assert.All(result.Orders, count => Assert.Equal(0, count));
+        }
+
+        [Fact]
+        public void APolicyNeedsAMenuAndAPositiveTemperature()
+        {
+            Assert.Throws<ArgumentException>(
+                () => SoftmaxPolicyExample.Probabilities(Array.Empty<double>(), 1.0));
+
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => SoftmaxPolicyExample.Probabilities(new[] { 0.5 }, 0.0));
+
+            Assert.Throws<ArgumentException>(() => SoftmaxPolicyExample.Learn(Array.Empty<Dish>()));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SoftmaxPolicyExample.Learn(Menu, days: -1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SoftmaxPolicyExample.Learn(Menu, temperature: -1.0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SoftmaxPolicyExample.Learn(Menu, cooling: 1.5));
+
+            // A dish is good some of the time, all of the time or never.
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Dish("Pizza", 1.5));
+        }
+
+        // A Random that always draws the same number, so one single choice can be
+        // pinned down exactly.
+        private class DrawnAt : Random
+        {
+            private readonly double drawn;
+
+            public DrawnAt(double drawn)
+            {
+                this.drawn = drawn;
+            }
+
+            public override double NextDouble()
+            {
+                return drawn;
+            }
+        }
+    }
 }
