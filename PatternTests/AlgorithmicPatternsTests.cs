@@ -50,4 +50,13 @@ namespace PatternTests.AlgorithmicPatterns
             SoftmaxPolicyExample.SoftmaxPolicy();
         }
     }
+
+    public class LinearPolicyTests
+    {
+        [Fact]
+        public void LinearPolicy()
+        {
+            LinearPolicyExample.LinearPolicy();
+        }
+    }
 }
