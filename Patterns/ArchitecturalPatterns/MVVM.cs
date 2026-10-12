@@ -265,7 +265,8 @@ namespace Patterns.ArchitecturalPatterns
             // 3. A derived property is refreshed along with the one it is computed from -
             //    the ViewModel has to say so explicitly, nobody works that out for it.
             Debug.Assert(view.RenderedProperties.Contains(nameof(CustomerViewModel.DisplayName)));
-            Debug.Assert(viewModel.DisplayName == "Customer1 (100.50)", "formatting belongs to the ViewModel");
+            //    The balance is formatted for the user's culture: 100.50 here, 100,50 in Germany.
+            Debug.Assert(viewModel.DisplayName == $"Customer1 ({100.5m:0.00})", "formatting belongs to the ViewModel");
 
             // 4. Writing the same value again changes nothing, so no notification is sent.
             //    Without this guard, bindings notify in circles.
